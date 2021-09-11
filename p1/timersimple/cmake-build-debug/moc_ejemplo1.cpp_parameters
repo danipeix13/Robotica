@@ -1,0 +1,4 @@
+-I/home/danipeix/Descargas/timersimple/cmake-build-debug
+-o
+/home/danipeix/Descargas/timersimple/cmake-build-debug/moc_ejemplo1.cpp
+/home/danipeix/Descargas/timersimple/ejemplo1.h
