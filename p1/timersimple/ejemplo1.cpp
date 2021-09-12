@@ -14,6 +14,7 @@ ejemplo1::ejemplo1(): Ui_Counter()
 ejemplo1::~ejemplo1()
 {}
 
+
 void ejemplo1::doButton()
 {
 	static bool stopped = false;
@@ -21,9 +22,10 @@ void ejemplo1::doButton()
 	if(stopped)
 		mytimer.stop();
 	else
-		mytimer.start(500);
+		mytimer.start(100);
 	qDebug() << "click on button";
 }
+
 
 void ejemplo1::cuenta()
 {

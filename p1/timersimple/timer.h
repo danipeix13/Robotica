@@ -14,14 +14,14 @@ class Timer
     public:
 
         /*
-         * Set the time value when the timer starts running
+         * Sets the time value when the timer starts running
          */
         Timer(){
             begin = std::chrono::steady_clock::now();
         };
 
         /*
-         * Use a thread that calls a function everytime the period conclude.
+         * Uses a thread with a lambda that calls a function f everytime that the period conclude.
          */
         template <class callable>
         void connect(callable&& f)
@@ -38,7 +38,7 @@ class Timer
         };
 
         /*
-         *
+         * Starts the timer with a period p
          */
         void start(int p)
         {
@@ -47,22 +47,22 @@ class Timer
         };
 
         /*
-         *
+         * Stops the timer
          */
         void stop() { go.store(!go); };
 
         /*
-         *
+         * Changes the timer period to p
          */
         void setPeriod(int p) { period.store(p) ;};
 
         /*
-         *
+         * Returns the period value
          */
         int getPeriod() { return period; };
 
         /*
-         *
+         * Prints the elapsed time since the timer is initiated
          */
         void elapsedTime(){
             end = std::chrono::steady_clock::now();
