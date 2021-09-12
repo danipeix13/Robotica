@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/danipeix/Descargas/timersimple/ejemplo1.cpp" "/home/danipeix/Descargas/timersimple/cmake-build-debug/CMakeFiles/ejemplo1.dir/ejemplo1.cpp.o"
-  "/home/danipeix/Descargas/timersimple/main.cpp" "/home/danipeix/Descargas/timersimple/cmake-build-debug/CMakeFiles/ejemplo1.dir/main.cpp.o"
-  "/home/danipeix/Descargas/timersimple/cmake-build-debug/moc_ejemplo1.cpp" "/home/danipeix/Descargas/timersimple/cmake-build-debug/CMakeFiles/ejemplo1.dir/moc_ejemplo1.cpp.o"
+  "/home/danipeix/Escritorio/Robotica/p1/timersimple/ejemplo1.cpp" "/home/danipeix/Escritorio/Robotica/p1/timersimple/cmake-build-debug/CMakeFiles/ejemplo1.dir/ejemplo1.cpp.o"
+  "/home/danipeix/Escritorio/Robotica/p1/timersimple/main.cpp" "/home/danipeix/Escritorio/Robotica/p1/timersimple/cmake-build-debug/CMakeFiles/ejemplo1.dir/main.cpp.o"
+  "/home/danipeix/Escritorio/Robotica/p1/timersimple/cmake-build-debug/moc_ejemplo1.cpp" "/home/danipeix/Escritorio/Robotica/p1/timersimple/cmake-build-debug/CMakeFiles/ejemplo1.dir/moc_ejemplo1.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

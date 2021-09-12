@@ -7,7 +7,7 @@ ejemplo1::ejemplo1(): Ui_Counter()
 	show();
 	connect(button, SIGNAL(clicked()), this, SLOT(doButton()));
 	
-	mytimer.connect(std::bind(&ejemplo1::cuenta, this));
+	mytimer.connect(std::bind(&ejemplo1::cuenta, this));//Connect the thre
     mytimer.start(500);    
 }
 
