@@ -24,33 +24,107 @@
 \textit{Cáceres, Spain} \\
 \textit{lubonilla@alumnos.unex.es}}
 }
-
 \maketitle
 
-\begin{abstract}
-This document is a model and instructions for \LaTeX.
-This and the IEEEtran.cls file define the components of your paper [title, text, heads, etc.]. *CRITICAL: Do Not Use Symbols, Special Characters, Footnotes, 
-or Math in Paper Title or Abstract.
-\end{abstract}
-
-\begin{IEEEkeywords}
-component, formatting, style, styling, insert
-\end{IEEEkeywords}
-
 \section{Introduction}
-This document is a model and instructions for \LaTeX.
-Please observe the conference page limits. 
+This document contains the process of developing an autonomous robot software in several phases. 
 
-\section{Ease of Use}
+\section{Tools}
 
-\subsection{Maintaining the Integrity of the Specifications}
+\subsection{Linux}
+It is the operating system that we are going to use during the whole project. Linux is a community of open-source Unix like operating systems that are based on the Linux Kernel.
 
-The IEEEtran class file is used to format your paper and style the text. All margins, 
-column widths, line spaces, and text fonts are prescribed; please do not 
-alter them. You may note peculiarities. For example, the head margin
-measures proportionately more than is customary. This measurement 
-and others are deliberate, using specifications that anticipate your paper 
-as one part of the entire proceedings, and not as an independent document. 
-Please do not revise any of the current designations.
+The reason why we have chosen Linux is because it is the most suitable operating system to manage the tools that we need to develop our software.
+
+\subsection{CLion}
+CLion is the IDE we have chosen to develop the code. It has been created by JetBrains. CLion is powerful and makes easier to manage large projects. 
+
+In order to install CLion,  we have to open a terminal and type:
+
+\texttt{sudo apt-get install clion}
+
+After using this command an error may appear. To solve it, we only have to add "--classic" after the previous command:
+
+\texttt{!! --classic} \\
+(\texttt{!!} references the last executed command)
+
+\subsection{GCC}
+\textcolor{red}{//TODO} \\
+
+It can be installed from the terminal, typing: \\
+\texttt{sudo apt-get install g++}
+
+\subsection{Git}
+It is the most popular distributed version control system. All programmers may have a local copy of the project they are working on, and also a remote copy is also located in GitHub. This tool allow all the developers of the same project to work separately and avoid losing their work while merging the code. 
+
+It can be installed from the terminal, typing:
+\texttt{sudo apt-get install git git-annex}
+
+\subsection{Qt5}
+Qt5 is the most recent version of the Qt software. Qt is a set of libraries that enable developers to create UIs faster and more intuitively, based in object oriented programming. It also offers the slots and signals mechanisms, that can be used to develop event oriented code. 
+It can be installed from the terminal, typing: \\
+\texttt{sudo apt-get install qt5-default}
+
+\subsection{CMake}
+It is code genarating multiplatform tool. It is a higher level version of the Unix's "make". It can control the compilation process of a project by using some configuration files.
+
+It can be installed from the terminal, typing:
+\texttt{sudo apt-get install cmake make cmake-qt-gui}
+
+\subsection{Overleaf}
+Overleaf is a collaborative online writing and publishing tool that makes the entire process of writing, editing and publishing scientific papers much faster and easier. It is an online program that only requires to have an account to use it. 
+
+\section{First phase: Chronometer}
+In this phase we are going to create a chronometer with a button that control it. The main purpose is learning some advantages that the Qt5 libraries provides us, the use of threads and the std library.
+
+\subsection{Using QTimer}
+In this case the use of QTimer class, from the Qt library, simplify our code. The timer is linked to a function which is called in a period of time, this period is chosen by the programmer in the timer's declaration. In this example the called function is the one which updates the chronometer number.
+
+To begin with, we need some variables: the number that is going to be shown, the timer limit -the period- and a flag that specifies if the chronometer is stopped or not. After that, timer must be created and linked with the function we want to be called.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=4cm]{img_constructor.png}
+    \caption{Ejemplo1 constructor's code}
+\end{figure}
+
+Now we must implement the function that updates the chronometer number. We just update the time variable that is shown in the LCD display. This function is called everytime the timer's period ends.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=4cm]{img_updatedisplay.png}
+    \caption{Update display method's code}
+\end{figure}
+
+The last implementation is the functionality of the button. It will change the status of the chronometer, stopped or not. Also it has to restart the period of the timer otherwise the numbers will not be displayed the same time.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=4cm]{img_doButton.png}
+    \caption{Button functionality method's code}
+\end{figure}
+
+\subsection{Timer implemented with the std library}
+This time, we can not use the QTimer class, but a Timer class has been implemented instead. Hence, we have to implement the features we were asked for by using only this class' code.
+
+First of all, we need to create two new methods. One of them will be able to set the timer's period to a given number, and the other one will be able to return the period's value. These are both implementations:
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=4cm]{img_getSet.png}
+    \caption{Getter and setter implementation}
+\end{figure}
+
+After that, we need to implement the last method. Is aim will be showing the elapsed time since the timer was created. In order to do so, we have added two \textcolor{red}{//TODO}. The first clock is initialized when the timer is created, and the second one is initialized when the method is called. Subtracting both time references, we can obtain the elapsed time we are searching for. So, here we have the implementation of this methods:
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=4cm]{img_elapsedTime.png}
+    \caption{Elapsed time getter's code}
+\end{figure}
+
+\subsection{std Library: std::thread}
+In the second Timer's implementation, the one made without using the QTimer library, the use of \texttt{std::thread} is shown. In this case, \textcolor{red}{//TODO: Optional} \\
+
 
 \end{document}
