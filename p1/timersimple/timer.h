@@ -54,17 +54,17 @@ class Timer
         void stop() { go.store(!go); };
 
         /*
-         * Changes the timer period to p
+         * Changes the timer's period to p
          */
         void setPeriod(int p) { period.store(p) ;};
 
         /*
-         * Returns the period value
+         * Returns the period's value
          */
         int getPeriod() { return period; };
 
         /*
-         * Prints the elapsed time since the timer is initiated
+         * Prints the elapsed time since the timer was initiated
          */
         void elapsedTime(){
             end = std::chrono::steady_clock::now();

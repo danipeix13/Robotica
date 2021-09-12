@@ -22,7 +22,7 @@ class ejemplo1 : public QWidget, public Ui_Counter
 
     public slots:
         /*
-         * Method that change the chrono's behaviour. If the chrono is running it will stop and viceversa.
+         * Changes the chrono's behaviour. If the chrono is running it will stop and viceversa.
          */
 	    void doButton();
 
