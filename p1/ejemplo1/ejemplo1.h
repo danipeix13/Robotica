@@ -8,10 +8,20 @@ class ejemplo1 : public QWidget, public Ui_Counter
 {
     Q_OBJECT
     public:
+        /*
+         * Constructor method
+         */
         ejemplo1();
 
     public slots:
+        /*
+         * Starts and stops the timer
+         */
         void doButton();
+
+        /*
+         * Shows a new value on the display
+         */
         void updateDisplay();
 
     private:
