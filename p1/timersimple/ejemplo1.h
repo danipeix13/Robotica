@@ -11,12 +11,12 @@ class ejemplo1 : public QWidget, public Ui_Counter
     Q_OBJECT
     public:
         /*
-         * Constructor's method that starts the user interface . It links the button with its event and the timer with the function "cuenta"
+         * Constructor method that starts the user interface . It links the button with its event and the timer with the function "cuenta"
          */
         ejemplo1();
 
         /*
-        * Destructor's method
+        * Destructor method
         */
         virtual ~ejemplo1();
 

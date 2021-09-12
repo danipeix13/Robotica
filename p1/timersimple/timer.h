@@ -8,13 +8,15 @@
 #include <cstdio>
 #include <iostream>
 
-//Manual Timer
+/*
+* Class that simulates the Qtimer using the std library
+*/
 class Timer
 {
     public:
 
         /*
-         * Sets the time value when the timer starts running
+         * Constructor method that sets the time value when the timer starts running
          */
         Timer(){
             begin = std::chrono::steady_clock::now();
