@@ -124,8 +124,7 @@ After that, we need to implement the last method. Is aim will be showing the ela
 \end{figure}
 
 \subsection{The std library, std::thread}
-In the second Timer's implementation, the one made without the QTimer library, the use of \texttt{std::thread} is shown. In this case, this functionality of the std library is used to implement the periodical calls to the timer's attached method. This is achieved by sleeping the thread as long as the period's duration, inside a \texttt{while(true)} loop. This little functions is written as a lambda function, at the thread's declaration. 
-
+In the second Timer's implementation, the one made without the QTimer library, the use of \texttt{std::thread} is shown. In this case, this functionality of the std library is used to implement the periodical calls to the timer's attached method. This is achieved by sleeping the thread as long as the period's duration, inside a \texttt{while(true)} loop. This little functions is written as a lambda function, at the thread's declaration.
 
 \begin{figure}[htp]
     \centering
@@ -134,4 +133,19 @@ In the second Timer's implementation, the one made without the QTimer library, t
 \end{figure}
 
 The use of \texttt{std::thread} allow a concurrent execution between the timer's event and the main.
+
+\subsection{Creative changes}
+
+\subsubsection{Invert button}
+We have been pondering the possibility of making a new button to make the chronometer reversible. So, we have created a new button and linked it with a new method called "invert". This one changes the flag which controls the behaviour of the chronometer, the method "cuenta" has been changed, adding this flag. As a result, the chronometer can count upwards or downwards, as we wish.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=7cm]{img_invert.png}
+    \caption{Invert's code}
+\end{figure}
+
+\subsubsection{Dynamic texts}
+We thought that having buttons that control two states each and both states have the same text is quite strange (for instance, when the timer is stopped, the button says "STOP"), so we decided to change the texts of the buttons when they are clicked (now if the timer is stopped, the button says "START"). This has been done also for the invert button.
+
 \end{document}

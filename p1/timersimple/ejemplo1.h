@@ -27,7 +27,7 @@ class ejemplo1 : public QWidget, public Ui_Counter
 	    void doButton();
 
         /*
-        *
+        * Swaps chronometer's behaviour between upwards and downwards (upwards as default).
         */
         void invert();
 
@@ -37,7 +37,7 @@ class ejemplo1 : public QWidget, public Ui_Counter
         bool inverted = false;
 
         /*
-        * Prints the chrono's number using the UI
+        * Prints the chrono's number using the UI.
         */
         void cuenta();
 
