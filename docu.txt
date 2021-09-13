@@ -49,7 +49,7 @@ After using this command an error may appear. To solve it, we only have to add "
 (\texttt{!!} references the last executed command)
 
 \subsection{GCC}
-\textcolor{red}{//TODO} \\
+Is an integrated compilator if GNU's project. It works with C, C++, Objective C and Fortran. It is able to compile a program in any of this languages, generates an executable binary program in the machine's language. 
 
 It can be installed from the terminal, typing: \\
 \texttt{sudo apt-get install g++}
@@ -84,7 +84,7 @@ To begin with, we need some variables: the number that is going to be shown, the
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=4cm]{img_constructor.png}
+    \includegraphics[width=7cm]{img_constructor.png}
     \caption{Ejemplo1 constructor's code}
 \end{figure}
 
@@ -92,7 +92,7 @@ Now we must implement the function that updates the chronometer number. We just 
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=4cm]{img_updatedisplay.png}
+    \includegraphics[width=7cm]{img_updatedisplay.png}
     \caption{Update display method's code}
 \end{figure}
 
@@ -100,31 +100,38 @@ The last implementation is the functionality of the button. It will change the s
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=4cm]{img_doButton.png}
+    \includegraphics[width=7cm]{img_doButton.png}
     \caption{Button functionality method's code}
 \end{figure}
 
 \subsection{Timer implemented with the std library}
-This time, we can not use the QTimer class, but a Timer class has been implemented instead. Hence, we have to implement the features we were asked for by using only this class' code.
+This time, we can not use QTimer, but a Timer class has been implemented instead. Hence, we have to implement the features we were asked for by using only this class' code.
 
 First of all, we need to create two new methods. One of them will be able to set the timer's period to a given number, and the other one will be able to return the period's value. These are both implementations:
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=4cm]{img_getSet.png}
+    \includegraphics[width=7cm]{img_getSet.png}
     \caption{Getter and setter implementation}
 \end{figure}
 
-After that, we need to implement the last method. Is aim will be showing the elapsed time since the timer was created. In order to do so, we have added two \textcolor{red}{//TODO}. The first clock is initialized when the timer is created, and the second one is initialized when the method is called. Subtracting both time references, we can obtain the elapsed time we are searching for. So, here we have the implementation of this methods:
+After that, we need to implement the last method. Is aim will be showing the elapsed time since the timer was created. In order to calculate it, we have added two \texttt{std::chrono::steady\textunderscore clock::time\textunderscore point} objects. The first time reference is taken when the timer is created, and the second one is taken when the method is called. Subtracting both time references, we can obtain the elapsed time we are searching for. So, here we have the implementation of this method:
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=4cm]{img_elapsedTime.png}
+    \includegraphics[width=7cm]{img_elapsedTime2.png}
     \caption{Elapsed time getter's code}
 \end{figure}
 
-\subsection{std Library: std::thread}
-In the second Timer's implementation, the one made without using the QTimer library, the use of \texttt{std::thread} is shown. In this case, \textcolor{red}{//TODO: Optional} \\
+\subsection{The std library, std::thread}
+In the second Timer's implementation, the one made without the QTimer library, the use of \texttt{std::thread} is shown. In this case, this functionality of the std library is used to implement the periodical calls to the timer's attached method. This is achieved by sleeping the thread as long as the period's duration, inside a \texttt{while(true)} loop. This little functions is written as a lambda function, at the thread's declaration. 
 
 
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=7cm]{img_stdthread.png}
+    \caption{Thread's code}
+\end{figure}
+
+The use of \texttt{std::thread} allow a concurrent execution between the timer's event and the main.
 \end{document}
