@@ -19,16 +19,19 @@ void ejemplo1::doButton()
 {
 	static bool stopped = false;
 	stopped = !stopped;
-	if(stopped)
-		mytimer.stop();
-	else
-		mytimer.start(timerPeriod);
-	qDebug() << "click on button";
+	if(stopped) {
+        mytimer.stop();
+        button->setText("START");
+    } else {
+        mytimer.start(timerPeriod);
+        button->setText("STOP");
+    }
 }
 
 void ejemplo1::invert()
 {
     inverted = !inverted;
+    invertButton->setText((inverted) ? "DOWNWARDS (invert)" : "UPWARDS (invert)");
 }
 
 void ejemplo1::cuenta()

@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+/home/danipeix/Escritorio/Robotica/p1/timersimple/cmake-build-debug/moc_ejemplo1.cpp
+../ejemplo1.h
+/home/danipeix/Escritorio/Robotica/p1/timersimple/ejemplo1.h
+QtCore/qbytearray.h
+-
+QtCore/qmetatype.h
+-
+
 /home/danipeix/Escritorio/Robotica/p1/timersimple/ejemplo1.cpp
 ejemplo1.h
 /home/danipeix/Escritorio/Robotica/p1/timersimple/ejemplo1.h
@@ -19,6 +27,12 @@ chrono
 -
 timer.h
 /home/danipeix/Escritorio/Robotica/p1/timersimple/timer.h
+
+/home/danipeix/Escritorio/Robotica/p1/timersimple/main.cpp
+QApplication
+-
+ejemplo1.h
+/home/danipeix/Escritorio/Robotica/p1/timersimple/ejemplo1.h
 
 /home/danipeix/Escritorio/Robotica/p1/timersimple/timer.h
 thread

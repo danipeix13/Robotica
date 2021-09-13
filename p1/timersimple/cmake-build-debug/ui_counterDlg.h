@@ -49,7 +49,7 @@ public:
     {
         Counter->setWindowTitle(QApplication::translate("Counter", "Counter", nullptr));
         button->setText(QApplication::translate("Counter", "STOP", nullptr));
-        invertButton->setText(QApplication::translate("Counter", "INVERT", nullptr));
+        invertButton->setText(QApplication::translate("Counter", "UPWARDS (invert)", nullptr));
     } // retranslateUi
 
 };
