@@ -21,16 +21,21 @@ class Ui_Counter
 {
 public:
     QPushButton *button;
+    QPushButton *invertButton;
+
     QLCDNumber *lcdNumber;
 
     void setupUi(QWidget *Counter)
     {
         if (Counter->objectName().isEmpty())
             Counter->setObjectName(QString::fromUtf8("Counter"));
-        Counter->resize(400, 300);
+        Counter->resize(400, 500);
         button = new QPushButton(Counter);
         button->setObjectName(QString::fromUtf8("button"));
         button->setGeometry(QRect(80, 180, 251, 71));
+        invertButton = new QPushButton(Counter);
+        invertButton->setObjectName(QString::fromUtf8("invertButton"));
+        invertButton->setGeometry(QRect(80, 320, 251, 71));
         lcdNumber = new QLCDNumber(Counter);
         lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
         lcdNumber->setGeometry(QRect(50, 40, 301, 91));
@@ -44,6 +49,7 @@ public:
     {
         Counter->setWindowTitle(QApplication::translate("Counter", "Counter", nullptr));
         button->setText(QApplication::translate("Counter", "STOP", nullptr));
+        invertButton->setText(QApplication::translate("Counter", "INVERT", nullptr));
     } // retranslateUi
 
 };

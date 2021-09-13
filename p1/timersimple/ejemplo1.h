@@ -26,14 +26,20 @@ class ejemplo1 : public QWidget, public Ui_Counter
          */
 	    void doButton();
 
+        /*
+        *
+        */
+        void invert();
+
     private:
         Timer mytimer, mytimerLong;
-        int cont = 0, trick = 5;
-
+        int cont = 0, trick = 5, timerPeriod = 500;
+        bool inverted = false;
         /*
         * Prints the chrono's number using the UI
         */
         void cuenta();
+
 };
 
 #endif // ejemplo1_H
