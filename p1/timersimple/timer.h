@@ -68,7 +68,8 @@ class Timer
          */
         void elapsedTime(){
             end = std::chrono::steady_clock::now();
-            std::cout << "Elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "ms" << std::endl;
+            auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+            std::cout << "Elapsed time: " << difference << "ms" << std::endl;
         };
 
         
