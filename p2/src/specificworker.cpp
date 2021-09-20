@@ -36,21 +36,6 @@ SpecificWorker::~SpecificWorker()
 
 bool SpecificWorker::setParams(RoboCompCommonBehavior::ParameterList params)
 {
-//	THE FOLLOWING IS JUST AN EXAMPLE
-//	To use innerModelPath parameter you should uncomment specificmonitor.cpp readConfig method content
-//	try
-//	{
-//		RoboCompCommonBehavior::Parameter par = params.at("InnerModelPath");
-//		std::string innermodel_path = par.value;
-//		innerModel = std::make_shared(innermodel_path);
-//	}
-//	catch(const std::exception &e) { qFatal("Error reading config params"); }
-
-
-
-
-
-
 	return true;
 }
 
@@ -71,20 +56,23 @@ void SpecificWorker::initialize(int period)
 
 void SpecificWorker::compute()
 {
-	//computeCODE
-	//QMutexLocker locker(mutex);
-	//try
-	//{
-	//  camera_proxy->getYImage(0,img, cState, bState);
-	//  memcpy(image_gray.data, &img[0], m_width*m_height*sizeof(uchar));
-	//  searchTags(image_gray);
-	//}
-	//catch(const Ice::Exception &e)
-	//{
-	//  std::cout << "Error reading from Camera" << e << std::endl;
-	//}
-	
-	
+    int umbral = 50;
+    int currentAdv =0, currentRot=0;
+    bool random = false;
+
+    /*
+     * 1. Ordenas ldata (segun la distancia, x.dist)
+     * 2. Coges ldata[0] menor umbral -> ANGULO
+     * 3. (angulo >180) ? 0,4 : -0,4;
+     */
+
+    auto ldata = laser_proxy->getLaserData();
+    for(auto x : ldata)
+        if(x.dist < umbral)
+            random = true;
+    differentialrobot_proxy->setSpeedBase((random) ? 0 : 400, (random) ? 0.4 : 0.0);
+    qDebug() << ldata.size();
+    sleep(0.5);
 }
 
 int SpecificWorker::startup_check()
