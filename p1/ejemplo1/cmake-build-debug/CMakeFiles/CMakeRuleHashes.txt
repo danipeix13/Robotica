@@ -1,3 +1,3 @@
 # Hashes of file build rules.
-129a765d8b4abcad635d729a70e1cad1 moc_ejemplo1.cpp
-c3f51b3eb8499099c4ea071c956051db ui_counterDlg.h
+a36a7b56df0911f89aef1464176751f5 moc_ejemplo1.cpp
+c1fce12d461968b2d6a3ff631b9b70fa ui_counterDlg.h
