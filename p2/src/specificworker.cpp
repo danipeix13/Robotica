@@ -1,22 +1,5 @@
-/*
- *    Copyright (C) 2021 by YOUR NAME HERE
- *
- *    This file is part of RoboComp
- *
- *    RoboComp is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU General Public License as published by
- *    the Free Software Foundation, either version 3 of the License, or
- *    (at your option) any later version.
- *
- *    RoboComp is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU General Public License for more details.
- *
- *    You should have received a copy of the GNU General Public License
- *    along with RoboComp.  If not, see <http://www.gnu.org/licenses/>.
- */
 #include "specificworker.h"
+#include "cppitertools/sliding_window.hpp"
 
 /**
 * \brief Default constructor
@@ -44,35 +27,47 @@ void SpecificWorker::initialize(int period)
 	std::cout << "Initialize worker" << std::endl;
 	this->Period = period;
 	if(this->startup_check_flag)
-	{
 		this->startup_check();
-	}
 	else
-	{
 		timer.start(Period);
-	}
-
 }
 
 void SpecificWorker::compute()
 {
-    int umbral = 50;
-    int currentAdv =0, currentRot=0;
-    bool random = false;
+    //dist < x1 --> dist = y1
+    //dist > x2 --> dist = y2
+    //else      --> dist = m * dist + n
+    //int x1 = 600, x2 = 1000, y1 = 0, y2 = 600, residue = 300, trim = 3; //COPPELIA VALUES
+    float x1 = 650.0, x2 = 1250.0, y1 = 0.0, y2 = 0.6, residue = 0.1, trim = 3.0;   //GIRAFF ROBO VALUES
+    float adv, rot = 0.8, m = (y2 - y1) * 1. / (x2 - x1) , n = y1 - m * x1 + residue;
 
-    /*
-     * 1. Ordenas ldata (segun la distancia, x.dist)
-     * 2. Coges ldata[0] menor umbral -> ANGULO
-     * 3. (angulo >180) ? 0,4 : -0,4;
-     */
+    if(auto ldata = laser_proxy->getLaserData(); !ldata.empty()) {
+        //Using only distance values
+        std::vector<float> distances;
+        for(auto point : ldata)
+            distances.push_back(point.dist);
 
-    auto ldata = laser_proxy->getLaserData();
-    for(auto x : ldata)
-        if(x.dist < umbral)
-            random = true;
-    differentialrobot_proxy->setSpeedBase((random) ? 0 : 400, (random) ? 0.4 : 0.0);
-    qDebug() << ldata.size();
-    sleep(0.5);
+        //Filter, try to fix laser measure errors
+        if(distances[0] < 200)
+            distances[0] = 200;
+        for(auto &&window : iter::sliding_window(distances, 2)){
+            if(window[1] < 200)
+                window[1] = window[0];
+        }
+
+        //Sort and take the lower distance value
+        int limit = distances.size()/trim;
+        std::sort(distances.begin() + limit, distances.end() - limit, [=](float a, float b){return a < b;});
+        float minValue = distances[limit];
+
+        //Set the speeds depending on minValue, x1, x2, y1, y2
+        bool stop = minValue < x1, slow = minValue < x2;
+        adv = (stop) ? y1 : (slow) ? m * minValue + n : y2;
+        try{
+            std::cout << adv << std::endl;
+            differentialrobot_proxy->setSpeedBase(adv, (stop) ? rot : 0);
+        }catch(const Ice::Exception &e){ std::cout << e.what() << std::endl;}
+    }
 }
 
 int SpecificWorker::startup_check()
@@ -81,33 +76,3 @@ int SpecificWorker::startup_check()
 	QTimer::singleShot(200, qApp, SLOT(quit()));
 	return 0;
 }
-
-
-
-
-/**************************************/
-// From the RoboCompDifferentialRobot you can call this methods:
-// this->differentialrobot_proxy->correctOdometer(...)
-// this->differentialrobot_proxy->getBasePose(...)
-// this->differentialrobot_proxy->getBaseState(...)
-// this->differentialrobot_proxy->resetOdometer(...)
-// this->differentialrobot_proxy->setOdometer(...)
-// this->differentialrobot_proxy->setOdometerPose(...)
-// this->differentialrobot_proxy->setSpeedBase(...)
-// this->differentialrobot_proxy->stopBase(...)
-
-/**************************************/
-// From the RoboCompDifferentialRobot you can use this types:
-// RoboCompDifferentialRobot::TMechParams
-
-/**************************************/
-// From the RoboCompLaser you can call this methods:
-// this->laser_proxy->getLaserAndBStateData(...)
-// this->laser_proxy->getLaserConfData(...)
-// this->laser_proxy->getLaserData(...)
-
-/**************************************/
-// From the RoboCompLaser you can use this types:
-// RoboCompLaser::LaserConfData
-// RoboCompLaser::TData
-
