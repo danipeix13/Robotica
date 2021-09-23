@@ -1,7 +1,7 @@
-/home/danipeix/Escritorio/Robotica/p1/ejemplo1/cmake-build-debug/CMakeFiles/install/strip.dir
-/home/danipeix/Escritorio/Robotica/p1/ejemplo1/cmake-build-debug/CMakeFiles/install/local.dir
-/home/danipeix/Escritorio/Robotica/p1/ejemplo1/cmake-build-debug/CMakeFiles/ejemplo1.dir
-/home/danipeix/Escritorio/Robotica/p1/ejemplo1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/danipeix/Escritorio/Robotica/p1/ejemplo1/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/danipeix/Escritorio/Robotica/p1/ejemplo1/cmake-build-debug/CMakeFiles/install.dir
-/home/danipeix/Escritorio/Robotica/p1/ejemplo1/cmake-build-debug/CMakeFiles/list_install_components.dir
+/home/lucas/Escritorio/4Carrera/Robotica/p1/ejemplo1/cmake-build-debug/CMakeFiles/install/strip.dir
+/home/lucas/Escritorio/4Carrera/Robotica/p1/ejemplo1/cmake-build-debug/CMakeFiles/install/local.dir
+/home/lucas/Escritorio/4Carrera/Robotica/p1/ejemplo1/cmake-build-debug/CMakeFiles/ejemplo1.dir
+/home/lucas/Escritorio/4Carrera/Robotica/p1/ejemplo1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/lucas/Escritorio/4Carrera/Robotica/p1/ejemplo1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/lucas/Escritorio/4Carrera/Robotica/p1/ejemplo1/cmake-build-debug/CMakeFiles/install.dir
+/home/lucas/Escritorio/4Carrera/Robotica/p1/ejemplo1/cmake-build-debug/CMakeFiles/list_install_components.dir
