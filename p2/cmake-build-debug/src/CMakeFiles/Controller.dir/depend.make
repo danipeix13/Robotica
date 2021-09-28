@@ -1701,7 +1701,7 @@ src/CMakeFiles/Controller.dir/opt/robocomp/classes/rapplication/rapplication.cpp
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qwineventnotifier.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qxmlstream.h
 src/CMakeFiles/Controller.dir/opt/robocomp/classes/sigwatch/sigwatch.cpp.o: \
- ../../../../../../opt/robocomp/classes/sigwatch/sigwatch.h \
+ ../../../../../opt/robocomp/classes/sigwatch/sigwatch.h \
  /opt/robocomp/classes/sigwatch/sigwatch.cpp \
  /opt/robocomp/classes/sigwatch/sigwatch.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QDebug \

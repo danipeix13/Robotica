@@ -24,11 +24,13 @@ GenericBase.h
 Laser.h
 -
 
-/home/danipeix/Escritorio/Robotica/p2/src/specificworker.cpp
+/home/alumno/Robotica/p2/src/specificworker.cpp
 specificworker.h
-/home/danipeix/Escritorio/Robotica/p2/src/specificworker.h
+/home/alumno/Robotica/p2/src/specificworker.h
+chrono
+-
 
-/home/danipeix/Escritorio/Robotica/p2/src/specificworker.h
+/home/alumno/Robotica/p2/src/specificworker.h
 genericworker.h
 -
 innermodel/innermodel.h

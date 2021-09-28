@@ -47,6 +47,9 @@ public slots:
 private:
 	std::shared_ptr < InnerModel > innerModel;
 	bool startup_check_flag;
+    int estado, sleep;
+    float rot, adv;
+    void girar(), avanzar(), espiral();
 
 };
 

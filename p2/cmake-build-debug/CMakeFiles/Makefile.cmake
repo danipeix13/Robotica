@@ -190,7 +190,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "src/CMakeFiles/ICES__home_danipeix_Escritorio_Robotica_p2_src.dir/DependInfo.cmake"
+  "src/CMakeFiles/ICES__home_alumno_Robotica_p2_src.dir/DependInfo.cmake"
   "src/CMakeFiles/Controller.dir/DependInfo.cmake"
   "src/CMakeFiles/Controller_autogen.dir/DependInfo.cmake"
   )
