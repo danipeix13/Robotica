@@ -10,7 +10,6 @@
 SpecificWorker::SpecificWorker(TuplePrx tprx, bool startup_check) : GenericWorker(tprx)
 {
 	this->startup_check_flag = startup_check;
-    estado = AVANZAR;
 }
 
 /**
@@ -39,9 +38,12 @@ void SpecificWorker::initialize(int period)
 
 void SpecificWorker::compute()
 {
-    float stop_threshold = 600, trim = 3;
+    static int estado;
+    float stop_threshold = 600, trim = 3, adv, rot;
+    int sleep;
 
-    if( auto ldata = laser_proxy->getLaserData(); !ldata.empty()) {
+    if( auto ldata = laser_proxy->getLaserData(); !ldata.empty())
+    {
         int limit = ldata.size()/trim;
         std::sort(ldata.begin() + limit, ldata.end() - limit, [](auto &a , auto  &b){return a.dist < b.dist;});
         float minValue = ldata[limit].dist;
@@ -49,15 +51,16 @@ void SpecificWorker::compute()
             estado = GIRAR;
     }
 
-    switch (estado){
+    switch (estado)
+    {
         case GIRAR:
-            girar();
+            estado = girar(adv, rot, sleep);
             break;
         case AVANZAR:
-            avanzar();
+            estado = avanzar(adv, rot, sleep);
             break;
         case ESPIRAL:
-            espiral();
+            estado = espiral(adv, rot, sleep);
             break;
         default:
             cout << "ERES TONTO X NO CONTROLAR LOS ESTADOS XD" << endl;
@@ -90,24 +93,28 @@ void SpecificWorker::compute()
 //    }
 }
 
-void SpecificWorker::girar(){
+int SpecificWorker::girar(float &adv, float &rot, int &sleep)
+{
     rot = 0.8;
     adv = 0;
-    estado = AVANZAR;
     sleep = 1000;
+    return AVANZAR;
 }
 
-void SpecificWorker::avanzar(){
+int SpecificWorker::avanzar(float &adv, float &rot, int &sleep){
     rot = 0;
     adv = 1000;
-    estado = ESPIRAL;
     sleep = 1000;
+    return ESPIRAL;
+
 }
 
-void SpecificWorker::espiral(){
+int SpecificWorker::espiral(float &adv, float &rot, int &sleep)
+{
     rot = 0.3;
     adv = 1000;
     sleep = 0;
+    return ESPIRAL;
 }
 
 int SpecificWorker::startup_check()

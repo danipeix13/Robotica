@@ -38,19 +38,19 @@ public:
 	~SpecificWorker();
 	bool setParams(RoboCompCommonBehavior::ParameterList params);
 
-
-
 public slots:
 	void compute();
 	int startup_check();
 	void initialize(int period);
+
 private:
 	std::shared_ptr < InnerModel > innerModel;
 	bool startup_check_flag;
-    int estado, sleep;
+    int sleep;
     float rot, adv;
-    void girar(), avanzar(), espiral();
-
+    int girar(float &adv, float &rot, int &sleep);
+    int avanzar(float &adv, float &rot, int &sleep);
+    int espiral(float &adv, float &rot, int &sleep);
 };
 
 #endif
