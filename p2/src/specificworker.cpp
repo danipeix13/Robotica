@@ -39,7 +39,7 @@ void SpecificWorker::initialize(int period)
 void SpecificWorker::compute()
 {
     static int estado;
-    float stop_threshold = 600, trim = 3, adv, rot;
+    float stop_threshold = 600, trim = 3;
     int sleep;
 
     if( auto ldata = laser_proxy->getLaserData(); !ldata.empty())
