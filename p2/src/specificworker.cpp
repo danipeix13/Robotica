@@ -36,84 +36,66 @@ void SpecificWorker::initialize(int period)
     std::srand(std::time(nullptr));
 }
 
-void SpecificWorker::compute()
-{
-    static int estado;
-    float stop_threshold = 600, trim = 3;
-    int sleep;
+void SpecificWorker::compute() {
+    static int estado = ESPIRAL;
+    int stop_threshold = 700, trim = 3;
 
-    if( auto ldata = laser_proxy->getLaserData(); !ldata.empty())
-    {
-        int limit = ldata.size()/trim;
-        std::sort(ldata.begin() + limit, ldata.end() - limit, [](auto &a , auto  &b){return a.dist < b.dist;});
+    if (auto ldata = laser_proxy->getLaserData(); !ldata.empty()) {
+        int limit = ldata.size() / trim;
+        std::sort(ldata.begin() + limit, ldata.end() - limit, [](auto &a, auto &b) { return a.dist < b.dist; });
         float minValue = ldata[limit].dist;
-        if(minValue < stop_threshold)
+        if (minValue < stop_threshold)
             estado = GIRAR;
     }
 
-    switch (estado)
-    {
+    switch (estado) {
         case GIRAR:
-            estado = girar(adv, rot, sleep);
+            estado = girar();
             break;
         case AVANZAR:
-            estado = avanzar(adv, rot, sleep);
+            estado = avanzar();
+            advEspiral = 0;
+            rotEspiral = 2;
             break;
         case ESPIRAL:
-            estado = espiral(adv, rot, sleep);
+            estado = espiral();
             break;
         default:
             cout << "ERES TONTO X NO CONTROLAR LOS ESTADOS XD" << endl;
     }
-
-    differentialrobot_proxy->setSpeedBase(adv, rot);
-    std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
-
-
-//
-//    float stop_threshold = 600, residue = 200, adv = 1000, rot = 1.3;
-//
-//    if( auto ldata = laser_proxy->getLaserData(); !ldata.empty()) {
-//        //Using only distance values
-//        std::vector<float> distances;
-//        for(auto &point : ldata)
-//            distances.push_back(point.dist);
-//
-//        //Sort and take the lower distance value
-//        int limit = distances.size()/trim;
-//        std::sort(distances.begin() + limit, distances.end() - limit, [](float a, float b){return a < b;});
-//        float minValue = distances[limit];
-//
-//        //Set the speeds depending on minValue SWITCH
-//        if(minValue < stop_threshold) { //
-//            differentialrobot_proxy->setSpeedBase(0, /*(std::rand()%2) ? rot : */-rot);
-//            std::this_thread::sleep_for(std::chrono::milliseconds(std::rand() % 2250));//random
-//        } else
-//            differentialrobot_proxy->setSpeedBase(adv, 0);
-//    }
 }
 
-int SpecificWorker::girar(float &adv, float &rot, int &sleep)
+int SpecificWorker::girar()
 {
-    rot = 0.8;
-    adv = 0;
-    sleep = 1000;
+
+    differentialrobot_proxy->setSpeedBase(100, -2);
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
     return AVANZAR;
 }
 
-int SpecificWorker::avanzar(float &adv, float &rot, int &sleep){
-    rot = 0;
-    adv = 1000;
-    sleep = 1000;
+int SpecificWorker::avanzar()
+{
+    differentialrobot_proxy->setSpeedBase(1000, 0);
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
     return ESPIRAL;
-
 }
 
-int SpecificWorker::espiral(float &adv, float &rot, int &sleep)
-{
-    rot = 0.3;
-    adv = 1000;
-    sleep = 0;
+int SpecificWorker::espiral() {
+
+    // adv = x; rot = y(x);
+    if (advEspiral < 500)
+        advEspiral += 10;
+    else if(advEspiral < 800)
+        advEspiral += 8;
+    else if (advEspiral < 1000)
+    {
+        advEspiral += 6;
+        rotEspiral -= 0.0025;
+    }
+    else
+        rotEspiral -= 0.002;
+
+    differentialrobot_proxy->setSpeedBase(advEspiral, rotEspiral);
     return ESPIRAL;
 }
 

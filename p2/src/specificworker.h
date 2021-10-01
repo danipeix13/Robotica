@@ -46,11 +46,10 @@ public slots:
 private:
 	std::shared_ptr < InnerModel > innerModel;
 	bool startup_check_flag;
-    int sleep;
-    float rot, adv;
-    int girar(float &adv, float &rot, int &sleep);
-    int avanzar(float &adv, float &rot, int &sleep);
-    int espiral(float &adv, float &rot, int &sleep);
+    float advEspiral, rotEspiral;
+    int girar();
+    int avanzar();
+    int espiral();
 };
 
 #endif
