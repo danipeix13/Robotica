@@ -34,42 +34,42 @@ void SpecificWorker::initialize(int period)
 	else
 		timer.start(Period);
     std::srand(std::time(nullptr));
+    rotEspiral = 1.75;
+    advEspiral = 0;
 }
 
 void SpecificWorker::compute() {
+
     static int estado = ESPIRAL;
-    int stop_threshold = 700, trim = 3;
+    int stop_threshold = 700, continue_threshold = 1000, trim = 4;
 
     if (auto ldata = laser_proxy->getLaserData(); !ldata.empty()) {
+
         int limit = ldata.size() / trim;
         std::sort(ldata.begin() + limit, ldata.end() - limit, [](auto &a, auto &b) { return a.dist < b.dist; });
-        float minValue = ldata[limit].dist;
-        if (minValue < stop_threshold)
-            estado = GIRAR;
-    }
+        float minValue_front = ldata[limit].dist;
 
-    switch (estado) {
-        case GIRAR:
-            estado = girar();
-            break;
-        case AVANZAR:
-            estado = avanzar();
-            advEspiral = 0;
-            rotEspiral = 2;
-            break;
-        case ESPIRAL:
-            estado = espiral();
-            break;
-        default:
-            cout << "ERES TONTO X NO CONTROLAR LOS ESTADOS XD" << endl;
+        if (minValue_front < stop_threshold)
+            estado = GIRAR;
+
+        switch (estado) {
+            case GIRAR:
+                estado = girar();
+                break;
+            case AVANZAR:
+                estado = avanzar();
+                break;
+            case ESPIRAL:
+                estado = espiral();
+                break;
+        }
     }
 }
 
 int SpecificWorker::girar()
 {
-
     differentialrobot_proxy->setSpeedBase(100, -2);
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    cout << "GIRAR" << endl;
     return AVANZAR;
 }
 
@@ -77,24 +77,29 @@ int SpecificWorker::avanzar()
 {
     differentialrobot_proxy->setSpeedBase(1000, 0);
     std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    advEspiral = 0;
+    rotEspiral = 1.75;
+    cout << "AVANZAR" << endl;
     return ESPIRAL;
 }
 
 int SpecificWorker::espiral() {
 
-    // adv = x; rot = y(x);
-    if (advEspiral < 500)
+    if (advEspiral < 500){
         advEspiral += 10;
-    else if(advEspiral < 800)
+        cout << "ESPIRAL 1" << endl;
+    } else if(advEspiral < 800) {
         advEspiral += 8;
-    else if (advEspiral < 1000)
-    {
+        cout << "ESPIRAL 2" << endl;
+    } else if (advEspiral < 1000) {
         advEspiral += 6;
-        rotEspiral -= 0.0025;
+        rotEspiral -= 0.0005;
+        cout << "ESPIRAL 3" << endl;
+    } else {
+        rotEspiral -= 0.004;
+        cout << "ESPIRAL 4" << endl;
     }
-    else
-        rotEspiral -= 0.002;
-
+    cout << "ADV: " << advEspiral << "  ROT:    " << rotEspiral << endl;
     differentialrobot_proxy->setSpeedBase(advEspiral, rotEspiral);
     return ESPIRAL;
 }
