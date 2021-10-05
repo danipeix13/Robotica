@@ -30,6 +30,8 @@
 #include <genericworker.h>
 #include <innermodel/innermodel.h>
 
+#define ADV_MAX 1000
+#define ROT_MAX  2
 class SpecificWorker : public GenericWorker
 {
 Q_OBJECT
@@ -47,7 +49,8 @@ public slots:
 private:
 	std::shared_ptr < InnerModel > innerModel;
 	bool startup_check_flag;
-
+    int sectores(RoboCompLaser::TLaserData laser);
+    float seguirPegado();
 };
 
 #endif
