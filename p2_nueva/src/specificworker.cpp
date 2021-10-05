@@ -6,6 +6,8 @@
 SpecificWorker::SpecificWorker(TuplePrx tprx, bool startup_check) : GenericWorker(tprx)
 {
 	this->startup_check_flag = startup_check;
+    iter = 0;
+    threshold = 600;
 }
 
 /**
@@ -50,7 +52,9 @@ void SpecificWorker::compute()
 }
 
 int SpecificWorker::sectores(RoboCompLaser::TLaserData laser){
-    int threashold = 600;
+    iter++;
+//    if(iter % 2 == 0)
+        threshold++;
     RoboCompLaser::TLaserData sectA (laser.begin(), laser.begin()+laser.size()/3);
     RoboCompLaser::TLaserData sectB (laser.begin()+laser.size()/3, laser.end()-laser.size()/3);
     RoboCompLaser::TLaserData sectC (laser.end()-laser.size()/3, laser.end());
@@ -58,11 +62,11 @@ int SpecificWorker::sectores(RoboCompLaser::TLaserData laser){
     std::sort(sectB.begin(), sectB.end(), [](auto &a, auto &b){return a.dist<b.dist;});
     std::sort(sectC.begin(), sectC.end(), [](auto &a, auto &b){return a.dist<b.dist;});
     int x = 0;
-    if(sectA[0].dist < threashold)
+    if(sectA[0].dist < threshold)
         x += 1;
-    if(sectB[0].dist < threashold)
+    if(sectB[0].dist < threshold)
         x += 2;
-    if(sectB[0].dist < threashold)
+    if(sectB[0].dist < threshold)
         x += 4;
     return x;
 }
