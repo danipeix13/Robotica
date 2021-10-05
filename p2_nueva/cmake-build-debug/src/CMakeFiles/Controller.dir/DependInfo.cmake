@@ -8,20 +8,20 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CommonBehavior.cpp" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/CommonBehavior.cpp.o"
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Controller_autogen/mocs_compilation.cpp" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/Controller_autogen/mocs_compilation.cpp.o"
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/DifferentialRobot.cpp" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/DifferentialRobot.cpp.o"
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/GenericBase.cpp" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/GenericBase.cpp.o"
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Laser.cpp" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/Laser.cpp.o"
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/src/commonbehaviorI.cpp" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/commonbehaviorI.cpp.o"
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/src/genericmonitor.cpp" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/genericmonitor.cpp.o"
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/src/genericworker.cpp" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/genericworker.cpp.o"
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/src/main.cpp" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/main.cpp.o"
-  "/opt/robocomp/classes/qlog/qlog.cpp" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/opt/robocomp/classes/qlog/qlog.cpp.o"
-  "/opt/robocomp/classes/rapplication/rapplication.cpp" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/opt/robocomp/classes/rapplication/rapplication.cpp.o"
-  "/opt/robocomp/classes/sigwatch/sigwatch.cpp" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/opt/robocomp/classes/sigwatch/sigwatch.cpp.o"
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/src/specificmonitor.cpp" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/specificmonitor.cpp.o"
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/src/specificworker.cpp" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/specificworker.cpp.o"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CommonBehavior.cpp" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/CommonBehavior.cpp.o"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Controller_autogen/mocs_compilation.cpp" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/Controller_autogen/mocs_compilation.cpp.o"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/DifferentialRobot.cpp" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/DifferentialRobot.cpp.o"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/GenericBase.cpp" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/GenericBase.cpp.o"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Laser.cpp" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/Laser.cpp.o"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/src/commonbehaviorI.cpp" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/commonbehaviorI.cpp.o"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/src/genericmonitor.cpp" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/genericmonitor.cpp.o"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/src/genericworker.cpp" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/genericworker.cpp.o"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/src/main.cpp" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/main.cpp.o"
+  "/opt/robocomp/classes/qlog/qlog.cpp" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/opt/robocomp/classes/qlog/qlog.cpp.o"
+  "/opt/robocomp/classes/rapplication/rapplication.cpp" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/opt/robocomp/classes/rapplication/rapplication.cpp.o"
+  "/opt/robocomp/classes/sigwatch/sigwatch.cpp" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/opt/robocomp/classes/sigwatch/sigwatch.cpp.o"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/src/specificmonitor.cpp" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/specificmonitor.cpp.o"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/src/specificworker.cpp" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller.dir/specificworker.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -68,10 +68,10 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
 
 # Pairs of files generated by the same build rule.
 set(CMAKE_MULTIPLE_OUTPUT_PAIRS
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CommonBehavior.h" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CommonBehavior.cpp"
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/DifferentialRobot.h" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/DifferentialRobot.cpp"
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/GenericBase.h" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/GenericBase.cpp"
-  "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Laser.h" "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Laser.cpp"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CommonBehavior.h" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CommonBehavior.cpp"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/DifferentialRobot.h" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/DifferentialRobot.cpp"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/GenericBase.h" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/GenericBase.cpp"
+  "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Laser.h" "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Laser.cpp"
   )
 
 

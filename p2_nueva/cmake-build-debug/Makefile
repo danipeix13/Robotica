@@ -57,10 +57,10 @@ RM = /snap/clion/164/bin/cmake/linux/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/danipeix/Escritorio/Robotica/p2_nueva
+CMAKE_SOURCE_DIR = /home/alumno/Escritorio/Robotica/p2_nueva
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug
+CMAKE_BINARY_DIR = /home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,9 +132,9 @@ install/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/CMakeFiles /home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/CMakeFiles /home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -162,19 +162,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named ICES__home_danipeix_Escritorio_Robotica_p2_nueva_src
-
-# Build rule for target.
-ICES__home_danipeix_Escritorio_Robotica_p2_nueva_src: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ICES__home_danipeix_Escritorio_Robotica_p2_nueva_src
-.PHONY : ICES__home_danipeix_Escritorio_Robotica_p2_nueva_src
-
-# fast build rule for target.
-ICES__home_danipeix_Escritorio_Robotica_p2_nueva_src/fast:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/ICES__home_danipeix_Escritorio_Robotica_p2_nueva_src.dir/build.make src/CMakeFiles/ICES__home_danipeix_Escritorio_Robotica_p2_nueva_src.dir/build
-.PHONY : ICES__home_danipeix_Escritorio_Robotica_p2_nueva_src/fast
-
-#=============================================================================
 # Target rules for targets named Controller
 
 # Build rule for target.
@@ -186,6 +173,19 @@ Controller: cmake_check_build_system
 Controller/fast:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/Controller.dir/build.make src/CMakeFiles/Controller.dir/build
 .PHONY : Controller/fast
+
+#=============================================================================
+# Target rules for targets named ICES__home_alumno_Escritorio_Robotica_p2_nueva_src
+
+# Build rule for target.
+ICES__home_alumno_Escritorio_Robotica_p2_nueva_src: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ICES__home_alumno_Escritorio_Robotica_p2_nueva_src
+.PHONY : ICES__home_alumno_Escritorio_Robotica_p2_nueva_src
+
+# fast build rule for target.
+ICES__home_alumno_Escritorio_Robotica_p2_nueva_src/fast:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/ICES__home_alumno_Escritorio_Robotica_p2_nueva_src.dir/build.make src/CMakeFiles/ICES__home_alumno_Escritorio_Robotica_p2_nueva_src.dir/build
+.PHONY : ICES__home_alumno_Escritorio_Robotica_p2_nueva_src/fast
 
 #=============================================================================
 # Target rules for targets named Controller_autogen
@@ -213,7 +213,7 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... Controller_autogen"
-	@echo "... ICES__home_danipeix_Escritorio_Robotica_p2_nueva_src"
+	@echo "... ICES__home_alumno_Escritorio_Robotica_p2_nueva_src"
 	@echo "... Controller"
 .PHONY : help
 

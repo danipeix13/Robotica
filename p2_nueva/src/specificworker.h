@@ -49,7 +49,7 @@ public slots:
 private:
 	std::shared_ptr < InnerModel > innerModel;
 	bool startup_check_flag;
-    int threshold, iter;
+    float threshold;
     int sectores(RoboCompLaser::TLaserData laser);
     float seguirPegado();
 };

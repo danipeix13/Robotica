@@ -1,4 +1,5 @@
 #include "specificworker.h"
+#include <eigen3/Eigen/Dense>
 
 /**
 * \brief Default constructor
@@ -6,8 +7,7 @@
 SpecificWorker::SpecificWorker(TuplePrx tprx, bool startup_check) : GenericWorker(tprx)
 {
 	this->startup_check_flag = startup_check;
-    iter = 0;
-    threshold = 600;
+    threshold = 620.0;
 }
 
 /**
@@ -43,7 +43,7 @@ void SpecificWorker::compute()
             case 1:
                 cout << "PEG" << endl; adv = 1000; rot = seguirPegado();   break;
             default:
-                cout << "ROT" << endl; adv = 0;    rot = 0.5;
+                cout << "ROT" << endl; adv = 50;    rot = 0.4;
         }
         cout << adv << " - " << rot << endl;
         differentialrobot_proxy->setSpeedBase(adv, rot);
@@ -52,9 +52,7 @@ void SpecificWorker::compute()
 }
 
 int SpecificWorker::sectores(RoboCompLaser::TLaserData laser){
-    iter++;
-//    if(iter % 2 == 0)
-        threshold++;
+    threshold += 1.1;
     RoboCompLaser::TLaserData sectA (laser.begin(), laser.begin()+laser.size()/3);
     RoboCompLaser::TLaserData sectB (laser.begin()+laser.size()/3, laser.end()-laser.size()/3);
     RoboCompLaser::TLaserData sectC (laser.end()-laser.size()/3, laser.end());

@@ -1,4 +1,4 @@
-# Install script for directory: /home/danipeix/Escritorio/Robotica/p2_nueva
+# Install script for directory: /home/alumno/Escritorio/Robotica/p2_nueva
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -51,12 +51,12 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/opt/robocomp/etc-default" TYPE FILE RENAME "Controller.conf" FILES "/home/danipeix/Escritorio/Robotica/p2_nueva/etc/config")
+file(INSTALL DESTINATION "/opt/robocomp/etc-default" TYPE FILE RENAME "Controller.conf" FILES "/home/alumno/Escritorio/Robotica/p2_nueva/etc/config")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/cmake_install.cmake")
+  include("/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/cmake_install.cmake")
 
 endif()
 
@@ -68,5 +68,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

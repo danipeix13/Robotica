@@ -1,12 +1,12 @@
 {
-	"BUILD_DIR" : "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Controller_autogen",
-	"CMAKE_BINARY_DIR" : "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug",
-	"CMAKE_CURRENT_BINARY_DIR" : "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src",
-	"CMAKE_CURRENT_SOURCE_DIR" : "/home/danipeix/Escritorio/Robotica/p2_nueva/src",
+	"BUILD_DIR" : "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Controller_autogen",
+	"CMAKE_BINARY_DIR" : "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/alumno/Escritorio/Robotica/p2_nueva/src",
 	"CMAKE_EXECUTABLE" : "/snap/clion/164/bin/cmake/linux/bin/cmake",
 	"CMAKE_LIST_FILES" : 
 	[
-		"/home/danipeix/Escritorio/Robotica/p2_nueva/src/CMakeLists.txt",
+		"/home/alumno/Escritorio/Robotica/p2_nueva/src/CMakeLists.txt",
 		"/opt/robocomp/cmake/robocomp.cmake",
 		"/opt/robocomp/cmake/modules/qt.cmake",
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5ConfigVersion.cmake",
@@ -68,7 +68,7 @@
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5Network_QConnmanEnginePlugin.cmake",
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5Network_QGenericEnginePlugin.cmake",
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Network/Qt5Network_QNetworkManagerEnginePlugin.cmake",
-		"/home/danipeix/Escritorio/Robotica/p2_nueva/src/CMakeListsSpecific.txt",
+		"/home/alumno/Escritorio/Robotica/p2_nueva/src/CMakeListsSpecific.txt",
 		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/FindIce.cmake",
 		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/SelectLibraryConfigurations.cmake",
 		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/SelectLibraryConfigurations.cmake",
@@ -79,6 +79,9 @@
 		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/CheckIncludeFile.cmake",
 		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/CheckCSourceCompiles.cmake",
 		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/Internal/CheckSourceCompiles.cmake",
+		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/CheckIncludeFile.c.in",
+		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/CheckFunctionExists.c",
+		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/CheckFunctionExists.c",
 		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/FindPackageHandleStandardArgs.cmake",
 		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/FindPackageMessage.cmake",
 		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/FindIce.cmake",
@@ -88,37 +91,37 @@
 		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/FindPackageHandleStandardArgs.cmake",
 		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/FindPackageMessage.cmake"
 	],
-	"CMAKE_SOURCE_DIR" : "/home/danipeix/Escritorio/Robotica/p2_nueva",
+	"CMAKE_SOURCE_DIR" : "/home/alumno/Escritorio/Robotica/p2_nueva",
 	"DEP_FILE" : "",
 	"DEP_FILE_RULE_NAME" : "",
 	"HEADERS" : 
 	[
 		[
-			"/home/danipeix/Escritorio/Robotica/p2_nueva/src/commonbehaviorI.h",
+			"/home/alumno/Escritorio/Robotica/p2_nueva/src/commonbehaviorI.h",
 			"MU",
 			"EWIEGA46WW/moc_commonbehaviorI.cpp",
 			null
 		],
 		[
-			"/home/danipeix/Escritorio/Robotica/p2_nueva/src/genericmonitor.h",
+			"/home/alumno/Escritorio/Robotica/p2_nueva/src/genericmonitor.h",
 			"MU",
 			"EWIEGA46WW/moc_genericmonitor.cpp",
 			null
 		],
 		[
-			"/home/danipeix/Escritorio/Robotica/p2_nueva/src/genericworker.h",
+			"/home/alumno/Escritorio/Robotica/p2_nueva/src/genericworker.h",
 			"MU",
 			"EWIEGA46WW/moc_genericworker.cpp",
 			null
 		],
 		[
-			"/home/danipeix/Escritorio/Robotica/p2_nueva/src/specificmonitor.h",
+			"/home/alumno/Escritorio/Robotica/p2_nueva/src/specificmonitor.h",
 			"MU",
 			"EWIEGA46WW/moc_specificmonitor.cpp",
 			null
 		],
 		[
-			"/home/danipeix/Escritorio/Robotica/p2_nueva/src/specificworker.h",
+			"/home/alumno/Escritorio/Robotica/p2_nueva/src/specificworker.h",
 			"MU",
 			"EWIEGA46WW/moc_specificworker.cpp",
 			null
@@ -143,8 +146,8 @@
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
-	"INCLUDE_DIR" : "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Controller_autogen/include",
-	"MOC_COMPILATION_FILE" : "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Controller_autogen/mocs_compilation.cpp",
+	"INCLUDE_DIR" : "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Controller_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Controller_autogen/mocs_compilation.cpp",
 	"MOC_DEFINITIONS" : 
 	[
 		"ICE_CPP11_MAPPING",
@@ -166,11 +169,11 @@
 	],
 	"MOC_INCLUDES" : 
 	[
-		"/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src",
-		"/home/danipeix/Escritorio/Robotica/p2_nueva/src",
+		"/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src",
+		"/home/alumno/Escritorio/Robotica/p2_nueva/src",
 		"/opt/robocomp/include",
 		"/classes",
-		"/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug",
+		"/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug",
 		"/opt/robocomp/classes",
 		"/opt/robocomp/libs",
 		"/opt/robocomp/interfaces",
@@ -185,10 +188,10 @@
 		"/usr/include/x86_64-linux-gnu/qt5/QtXml",
 		"/usr/include/x86_64-linux-gnu/qt5/QtXmlPatterns",
 		"/usr/include/x86_64-linux-gnu/qt5/QtNetwork",
-		"/usr/include/c++/9",
-		"/usr/include/x86_64-linux-gnu/c++/9",
-		"/usr/include/c++/9/backward",
-		"/usr/lib/gcc/x86_64-linux-gnu/9/include",
+		"/usr/include/c++/10",
+		"/usr/include/x86_64-linux-gnu/c++/10",
+		"/usr/include/c++/10/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/10/include",
 		"/usr/local/include",
 		"/usr/include/x86_64-linux-gnu",
 		"/usr/include"
@@ -204,52 +207,48 @@
 		"-c",
 		"/snap/clion/164/bin/cmake/linux/share/cmake-3.20/Modules/CMakeCXXCompilerABI.cpp"
 	],
-	"MOC_PREDEFS_FILE" : "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Controller_autogen/moc_predefs.h",
+	"MOC_PREDEFS_FILE" : "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Controller_autogen/moc_predefs.h",
 	"MOC_RELAXED_MODE" : false,
 	"MOC_SKIP" : 
 	[
-		"/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CommonBehavior.cpp",
-		"/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/DifferentialRobot.cpp",
-		"/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/GenericBase.cpp",
-		"/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Laser.cpp"
+		"/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CommonBehavior.cpp",
+		"/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/DifferentialRobot.cpp",
+		"/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/GenericBase.cpp",
+		"/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Laser.cpp"
 	],
 	"MULTI_CONFIG" : false,
-	"PARALLEL" : 4,
-	"PARSE_CACHE_FILE" : "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller_autogen.dir/ParseCache.txt",
+	"PARALLEL" : 8,
+	"PARSE_CACHE_FILE" : "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller_autogen.dir/ParseCache.txt",
 	"QT_MOC_EXECUTABLE" : "/usr/lib/qt5/bin/moc",
 	"QT_UIC_EXECUTABLE" : "/usr/lib/qt5/bin/uic",
 	"QT_VERSION_MAJOR" : 5,
 	"QT_VERSION_MINOR" : 12,
-	"SETTINGS_FILE" : "/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller_autogen.dir/AutogenUsed.txt",
+	"SETTINGS_FILE" : "/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
 		[
-			"/home/danipeix/Escritorio/Robotica/p2_nueva/src/commonbehaviorI.cpp",
+			"/home/alumno/Escritorio/Robotica/p2_nueva/src/commonbehaviorI.cpp",
 			"MU",
 			null
 		],
 		[
-			"/home/danipeix/Escritorio/Robotica/p2_nueva/src/genericmonitor.cpp",
+			"/home/alumno/Escritorio/Robotica/p2_nueva/src/genericmonitor.cpp",
 			"MU",
 			null
 		],
 		[
-			"/home/danipeix/Escritorio/Robotica/p2_nueva/src/genericworker.cpp",
+			"/home/alumno/Escritorio/Robotica/p2_nueva/src/genericworker.cpp",
+			"MU",
+			null
+		],
+		[ "/home/alumno/Escritorio/Robotica/p2_nueva/src/main.cpp", "MU", null ],
+		[
+			"/home/alumno/Escritorio/Robotica/p2_nueva/src/specificmonitor.cpp",
 			"MU",
 			null
 		],
 		[
-			"/home/danipeix/Escritorio/Robotica/p2_nueva/src/main.cpp",
-			"MU",
-			null
-		],
-		[
-			"/home/danipeix/Escritorio/Robotica/p2_nueva/src/specificmonitor.cpp",
-			"MU",
-			null
-		],
-		[
-			"/home/danipeix/Escritorio/Robotica/p2_nueva/src/specificworker.cpp",
+			"/home/alumno/Escritorio/Robotica/p2_nueva/src/specificworker.cpp",
 			"MU",
 			null
 		],
@@ -261,10 +260,10 @@
 	"UIC_SEARCH_PATHS" : [],
 	"UIC_SKIP" : 
 	[
-		"/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CommonBehavior.cpp",
-		"/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/DifferentialRobot.cpp",
-		"/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/GenericBase.cpp",
-		"/home/danipeix/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Laser.cpp"
+		"/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CommonBehavior.cpp",
+		"/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/DifferentialRobot.cpp",
+		"/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/GenericBase.cpp",
+		"/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/Laser.cpp"
 	],
 	"UIC_UI_FILES" : [],
 	"VERBOSITY" : 0
