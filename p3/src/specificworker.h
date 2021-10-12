@@ -44,7 +44,7 @@ public slots:
 	void compute();
 	int startup_check();
 	void initialize(int period);
-    void new_target_slot(QPointF p , bool b);
+    void new_target_slot(QPointF p);
 
 private:
 	std::shared_ptr < InnerModel > innerModel;
@@ -58,6 +58,11 @@ private:
         QPointF punto;
         bool activo;
     };
+    void draw_laser(const RoboCompLaser::TLaserData &ldata);
+    std::tuple<float, float> polars2cartesians(std::tuple<float, float> pols, float correction);
+    std::tuple<float, float> cartesians2polars(std::tuple<float, float> carts);
+    QPointF target;
+    std::tuple<float, float> world2robot(RoboCompGenericBase::TBaseState bState);
 };
 
 #endif
