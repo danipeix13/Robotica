@@ -54,14 +54,14 @@ private:
     QGraphicsPolygonItem *robot_polygon;
     QGraphicsRectItem *laser_in_robot_polygon;
     QPointF last_point;
-    struct target {
-        QPointF punto;
+
+    struct Target
+    {
+        QPointF pos;
         bool activo;
     };
-    void draw_laser(const RoboCompLaser::TLaserData &ldata);
-    std::tuple<float, float> polars2cartesians(std::tuple<float, float> pols, float correction);
-    std::tuple<float, float> cartesians2polars(std::tuple<float, float> carts);
-    QPointF target;
+    Target target;
+    void draw_laser(const RoboCompLaser::TLaserData &ldata,RoboCompGenericBase::TBaseState bState);
     std::tuple<float, float> world2robot(RoboCompGenericBase::TBaseState bState);
 };
 
