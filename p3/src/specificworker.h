@@ -31,6 +31,7 @@
 #include <innermodel/innermodel.h>
 #include <abstract_graphic_viewer/abstract_graphic_viewer.h>
 #include <eigen3/Eigen/Eigen>
+#include <cppitertools/enumerate.hpp>
 
 class SpecificWorker : public GenericWorker
 {
