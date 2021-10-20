@@ -17,6 +17,11 @@
  *    along with RoboComp.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "specificworker.h"
+#define MAX_ADV_SPEED 1000
+#define AVANZAR 1
+#define BORDEAR 2
+#define VEO_TARGET 3
+#define umbral 300
 
 /**
 * \brief Default constructor
@@ -36,21 +41,6 @@ SpecificWorker::~SpecificWorker()
 
 bool SpecificWorker::setParams(RoboCompCommonBehavior::ParameterList params)
 {
-//	THE FOLLOWING IS JUST AN EXAMPLE
-//	To use innerModelPath parameter you should uncomment specificmonitor.cpp readConfig method content
-//	try
-//	{
-//		RoboCompCommonBehavior::Parameter par = params.at("InnerModelPath");
-//		std::string innermodel_path = par.value;
-//		innerModel = std::make_shared(innermodel_path);
-//	}
-//	catch(const std::exception &e) { qFatal("Error reading config params"); }
-
-
-
-
-
-
 	return true;
 }
 
@@ -58,6 +48,7 @@ void SpecificWorker::initialize(int period)
 {
 	std::cout << "Initialize worker" << std::endl;
 	this->Period = period;
+
 	if(this->startup_check_flag)
 	{
 		this->startup_check();
@@ -66,27 +57,90 @@ void SpecificWorker::initialize(int period)
 	{
 		timer.start(Period);
 	}
-
+    QRect dimensions(-5000, -2500, 10000, 5000);
+    viewer = new AbstractGraphicViewer(this, dimensions);
+    this->resize(900,450);
+    robot_polygon = viewer->add_robot(ROBOT_LENGTH);
+    laser_in_robot_polygon = new QGraphicsRectItem(-10, 10, 20, 20, robot_polygon);
+    laser_in_robot_polygon->setPos(0, 190);     // move this to abstract
+    try
+    {
+        RoboCompGenericBase::TBaseState bState;
+        differentialrobot_proxy->getBaseState(bState);
+        last_point = QPointF(bState.x, bState.z);
+    }
+    catch(const Ice::Exception &e) { std::cout << e.what() << std::endl;}
+    connect(viewer, &AbstractGraphicViewer::new_mouse_coordinates, this, &SpecificWorker::new_target_slot);
+    state = AVANZAR;
 }
 
 void SpecificWorker::compute()
 {
-	//computeCODE
-	//QMutexLocker locker(mutex);
-	//try
-	//{
-	//  camera_proxy->getYImage(0,img, cState, bState);
-	//  memcpy(image_gray.data, &img[0], m_width*m_height*sizeof(uchar));
-	//  searchTags(image_gray);
-	//}
-	//catch(const Ice::Exception &e)
-	//{
-	//  std::cout << "Error reading from Camera" << e << std::endl;
-	//}
-	
-	
+    RoboCompGenericBase::TBaseState bState;
+    differentialrobot_proxy->getBaseState(bState);
+    robot_polygon->setRotation(bState.alpha*180/M_PI);
+    robot_polygon->setPos(bState.x, bState.z);
+    RoboCompLaser::TLaserData ldata;
+    std::tuple<float, float> speeds;
+
+    if(ldata = laser_proxy->getLaserData(); not ldata.empty())
+        draw_laser(ldata,bState);
+
+    if(target.activo)
+    {
+        switch(state)
+        {
+            case AVANZAR:
+                std::sort(ldata.begin() + ldata.size()/3, ldata.end() - ldata.size()/3,
+                          [](auto &a, auto &b){ return a.dist < b.dist;});
+                if(ldata[ldata.size()/3].dist < 600)
+                    state = BORDEAR;
+                else if(false)
+                   ;
+                else
+                    speeds = avanzar(bState);
+                break;
+            case BORDEAR:
+                bordear();
+                break;
+            case VEO_TARGET:
+
+                break;
+
+        }
+
+    }
+    auto &[adv, rot] = speeds;
+
+    try
+    {
+        differentialrobot_proxy->setSpeedBase(adv, rot);
+    }
+    catch (const Ice::Exception &e){ std::cout << e.what() << std::endl;};
+
 }
 
+////////////////////////////////////////////////////////////////////////////////
+std::tuple<float, float> SpecificWorker::avanzar(RoboCompGenericBase::TBaseState bState)
+{
+    float rot = 0, adv = 0;
+    auto[x, y] = world2robot(bState);
+    float dist = sqrt(pow(x, 2) + pow(y, 2));
+    if(dist > 300)
+    {
+        rot = atan2(-y, x) + M_PI_2;
+        float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0, reduc_angle = pow(M_E, -pow(rot, 2));
+        adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
+    }
+    return make_tuple(adv, rot);
+}
+
+std::tuple<float, float> SpecificWorker::bordear(RoboCompGenericBase::TBaseState bState, RoboCompLaser::TLaserData ldata)
+{
+    float rot = 0, adv = 0;
+
+}
+////////////////////////////////////////////////////////////////////////////////
 int SpecificWorker::startup_check()
 {
 	std::cout << "Startup check" << std::endl;
@@ -94,32 +148,48 @@ int SpecificWorker::startup_check()
 	return 0;
 }
 
+void SpecificWorker::new_target_slot(QPointF p)
+{
+    target.pos = p;
+    qInfo() << p << endl;
+    RoboCompGenericBase::TBaseState bState;
+    differentialrobot_proxy->getBaseState(bState);
+    target.recta = QRectF(target.pos, QPointF(bState.x,bState.z));
+    target.activo = true;
+}
+
+////////////////////////////////////////////////////////////////////
+
+void SpecificWorker::draw_laser(const RoboCompLaser::TLaserData &ldata, RoboCompGenericBase::TBaseState bState) // robot coordinates
+{
+    static QGraphicsItem *laser_polygon = nullptr;
+    // code to delete any existing laser graphic element
+    if(laser_polygon != nullptr)
+        viewer->scene.removeItem(laser_polygon);
+    //robot base Qpointf
+
+    QPolygonF poly;//vector
+    // code to fill poly with the laser polar coordinates (angle, dist) transformed to cartesian coordinates (x,y), all in the robot's reference system
+    poly << QPointF(0,0);
+    for(auto &p : ldata)
+        poly << QPointF(p.dist * sin(p.angle), p.dist * cos(p.angle));
+
+    QColor color("Red");
+    color.setAlpha(40);
+    laser_polygon = viewer->scene.addPolygon(laser_in_robot_polygon->mapToScene(poly), QPen(QColor("DarkGreen"), 30), QBrush(color));
+    laser_polygon->setZValue(3);
+}
+
+std::tuple<float, float> SpecificWorker::world2robot(RoboCompGenericBase::TBaseState bState)
+{   //TODO: transpose
+    float angle = bState.alpha;
+    Eigen::Vector2f T(bState.x, bState.z), point_in_world(target.pos.x(),target.pos.y());
+    Eigen::Matrix2f R;
+    R <<  cos(angle), sin(angle),
+         -sin(angle), cos(angle);
+    Eigen::Vector2f point_in_robot = R * (point_in_world - T);
+    return make_tuple(point_in_robot[0], point_in_robot[1]);//return target from robot's pov
+}
 
 
-
-/**************************************/
-// From the RoboCompDifferentialRobot you can call this methods:
-// this->differentialrobot_proxy->correctOdometer(...)
-// this->differentialrobot_proxy->getBasePose(...)
-// this->differentialrobot_proxy->getBaseState(...)
-// this->differentialrobot_proxy->resetOdometer(...)
-// this->differentialrobot_proxy->setOdometer(...)
-// this->differentialrobot_proxy->setOdometerPose(...)
-// this->differentialrobot_proxy->setSpeedBase(...)
-// this->differentialrobot_proxy->stopBase(...)
-
-/**************************************/
-// From the RoboCompDifferentialRobot you can use this types:
-// RoboCompDifferentialRobot::TMechParams
-
-/**************************************/
-// From the RoboCompLaser you can call this methods:
-// this->laser_proxy->getLaserAndBStateData(...)
-// this->laser_proxy->getLaserConfData(...)
-// this->laser_proxy->getLaserData(...)
-
-/**************************************/
-// From the RoboCompLaser you can use this types:
-// RoboCompLaser::LaserConfData
-// RoboCompLaser::TData
 
