@@ -44,10 +44,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /snap/clion/164/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/169/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /snap/clion/164/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/169/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -68,7 +68,7 @@ include src/CMakeFiles/Controller_autogen.dir/progress.make
 
 src/CMakeFiles/Controller_autogen:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target Controller"
-	cd /home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src && /snap/clion/164/bin/cmake/linux/bin/cmake -E cmake_autogen /home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller_autogen.dir/AutogenInfo.json Debug
+	cd /home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src && /snap/clion/169/bin/cmake/linux/bin/cmake -E cmake_autogen /home/alumno/Escritorio/Robotica/p2_nueva/cmake-build-debug/src/CMakeFiles/Controller_autogen.dir/AutogenInfo.json Debug
 
 Controller_autogen: src/CMakeFiles/Controller_autogen
 Controller_autogen: src/CMakeFiles/Controller_autogen.dir/build.make

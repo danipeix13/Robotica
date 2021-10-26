@@ -18,9 +18,6 @@
  */
 #include "specificworker.h"
 #define MAX_ADV_SPEED 1000
-#define AVANZAR 1
-#define BORDEAR 2
-#define VEO_TARGET 3
 #define umbral 300
 
 /**
@@ -71,7 +68,7 @@ void SpecificWorker::initialize(int period)
     }
     catch(const Ice::Exception &e) { std::cout << e.what() << std::endl;}
     connect(viewer, &AbstractGraphicViewer::new_mouse_coordinates, this, &SpecificWorker::new_target_slot);
-    state = AVANZAR;
+    state = Estado::IDLE;
 }
 
 void SpecificWorker::compute()
@@ -83,33 +80,62 @@ void SpecificWorker::compute()
     RoboCompLaser::TLaserData ldata;
     std::tuple<float, float> speeds;
 
-    if(ldata = laser_proxy->getLaserData(); not ldata.empty())
-        draw_laser(ldata,bState);
+    QPolygonF poly;
 
-    if(target.activo)
-    {
+    if(ldata = laser_proxy->getLaserData(); not ldata.empty()) {
+        //vector
+        // code to fill poly with the laser polar coordinates (angle, dist) transformed to cartesian coordinates (x,y), all in the robot's reference system
+        poly << QPointF(0, 0);
+        for (auto &p: ldata)
+            poly << QPointF(p.dist * sin(p.angle), p.dist * cos(p.angle));
+        draw_laser(poly, bState);
+    }
+
+
         switch(state)
         {
-            case AVANZAR:
+            case Estado::IDLE:
+                if(target.activo)
+                    state = Estado::AVANZAR;
+                break;
+            case Estado::AVANZAR:
+                cout << "avanzar" << endl;
                 std::sort(ldata.begin() + ldata.size()/3, ldata.end() - ldata.size()/3,
                           [](auto &a, auto &b){ return a.dist < b.dist;});
                 if(ldata[ldata.size()/3].dist < 600)
-                    state = BORDEAR;
-                else if(false)
-                   ;
+                    state = Estado::BORDEAR;
                 else
                     speeds = avanzar(bState);
                 break;
-            case BORDEAR:
-                bordear();
+            case Estado::BORDEAR:
+                cout << "bordear ";
+
+                if(check_target(poly,bState))
+                    state = Estado::VEO_TARGET;
+                else if(check_line(bState))
+                    state = Estado::AVANZAR;
+                else
+                    speeds = bordear(bState,ldata);
                 break;
-            case VEO_TARGET:
+            case Estado::VEO_TARGET:
+
+                cout << "TARGEEEEEEEEEEEEEEEEET" << endl;
+                speeds = avanzar(bState);
+                QPointF bsRobot(bState.x,bState.z);
+                QPointF distVector = target.pos - bsRobot;
+
+                if(sqrt(pow(distVector.x(),2) + pow(distVector.y(),2)) < 300)
+                {
+                    cout << "Hemos llegado ! :)" << endl;
+                    target.activo = false;
+                    state = Estado::IDLE;
+                }
+
 
                 break;
 
         }
 
-    }
     auto &[adv, rot] = speeds;
 
     try
@@ -138,8 +164,46 @@ std::tuple<float, float> SpecificWorker::avanzar(RoboCompGenericBase::TBaseState
 std::tuple<float, float> SpecificWorker::bordear(RoboCompGenericBase::TBaseState bState, RoboCompLaser::TLaserData ldata)
 {
     float rot = 0, adv = 0;
+    std::sort(ldata.begin() + ldata.size()/3, ldata.end() - ldata.size()/3,
+              [](auto &a, auto &b){ return a.dist < b.dist;});
+
+    if(ldata[ldata.size()/3].dist < 600) {
+        rot = 1;
+        cout << "--> girar" << endl;
+    }else {
+        rot = seguirPegado(ldata);
+        adv = MAX_ADV_SPEED / 4;
+        cout << "--> pegao" << endl;
+    }
+    return make_tuple(adv, rot);
 
 }
+
+float SpecificWorker::seguirPegado(RoboCompLaser::TLaserData ldata){
+    float rot = 0.0, x = 0.5;
+    RoboCompLaser::TLaserData sectA (ldata.begin(), ldata.begin() + ldata.size() / 3);
+    float ref1 = sectA[40].dist, ref2 = sectA[55].dist;
+    if(abs(ref1 - ref2) > 5)
+        rot = (2*x) / (1 + pow(M_E, (ref2 - ref1)/5)) - x;
+
+    return rot;
+}
+
+bool SpecificWorker::check_target(QPolygonF poly,RoboCompGenericBase::TBaseState bState)
+{
+    auto [a, b] = world2robot(bState);
+    cout << a << " " << b << endl;
+    return poly.containsPoint(QPointF(a,b),Qt::OddEvenFill);
+}
+
+bool SpecificWorker::check_line(RoboCompGenericBase::TBaseState bState)
+{
+    auto [a, b] = world2robot(bState);
+    float distance = (abs(target.a*a + target.b*b + target.c)) / sqrt(pow(target.a, 2) + pow(target.b, 2));
+    return distance < 100;
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////
 int SpecificWorker::startup_check()
 {
@@ -154,25 +218,21 @@ void SpecificWorker::new_target_slot(QPointF p)
     qInfo() << p << endl;
     RoboCompGenericBase::TBaseState bState;
     differentialrobot_proxy->getBaseState(bState);
-    target.recta = QRectF(target.pos, QPointF(bState.x,bState.z));
+    target.a = bState.x - target.pos.x();
+    target.b = target.pos.y() - bState.z;
+    target.c = (-target.b)*bState.z + (-target.a)*bState.x;
     target.activo = true;
 }
 
 ////////////////////////////////////////////////////////////////////
 
-void SpecificWorker::draw_laser(const RoboCompLaser::TLaserData &ldata, RoboCompGenericBase::TBaseState bState) // robot coordinates
+void SpecificWorker::draw_laser(QPolygonF poly, RoboCompGenericBase::TBaseState bState) // robot coordinates
 {
     static QGraphicsItem *laser_polygon = nullptr;
     // code to delete any existing laser graphic element
     if(laser_polygon != nullptr)
         viewer->scene.removeItem(laser_polygon);
     //robot base Qpointf
-
-    QPolygonF poly;//vector
-    // code to fill poly with the laser polar coordinates (angle, dist) transformed to cartesian coordinates (x,y), all in the robot's reference system
-    poly << QPointF(0,0);
-    for(auto &p : ldata)
-        poly << QPointF(p.dist * sin(p.angle), p.dist * cos(p.angle));
 
     QColor color("Red");
     color.setAlpha(40);

@@ -48,19 +48,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /snap/clion/164/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/169/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /snap/clion/164/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/169/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alumno/Robotica/p2
+CMAKE_SOURCE_DIR = /home/alumno/Escritorio/Robotica/p2
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alumno/Robotica/p2/cmake-build-debug
+CMAKE_BINARY_DIR = /home/alumno/Escritorio/Robotica/p2/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -68,31 +68,31 @@ CMAKE_BINARY_DIR = /home/alumno/Robotica/p2/cmake-build-debug
 # Special rule for the target install/strip
 install/strip: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/snap/clion/164/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+	/snap/clion/169/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip
 
 # Special rule for the target install/strip
 install/strip/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/snap/clion/164/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+	/snap/clion/169/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/snap/clion/164/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+	/snap/clion/169/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local
 
 # Special rule for the target install/local
 install/local/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/snap/clion/164/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+	/snap/clion/169/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/snap/clion/164/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/snap/clion/169/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -102,7 +102,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/snap/clion/164/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/snap/clion/169/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -121,20 +121,20 @@ list_install_components/fast: list_install_components
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/snap/clion/164/bin/cmake/linux/bin/cmake -P cmake_install.cmake
+	/snap/clion/169/bin/cmake/linux/bin/cmake -P cmake_install.cmake
 .PHONY : install
 
 # Special rule for the target install
 install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/snap/clion/164/bin/cmake/linux/bin/cmake -P cmake_install.cmake
+	/snap/clion/169/bin/cmake/linux/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alumno/Robotica/p2/cmake-build-debug/CMakeFiles /home/alumno/Robotica/p2/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alumno/Escritorio/Robotica/p2/cmake-build-debug/CMakeFiles /home/alumno/Escritorio/Robotica/p2/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alumno/Robotica/p2/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alumno/Escritorio/Robotica/p2/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -162,17 +162,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named ICES__home_alumno_Robotica_p2_src
+# Target rules for targets named ICES__home_alumno_Escritorio_Robotica_p2_src
 
 # Build rule for target.
-ICES__home_alumno_Robotica_p2_src: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ICES__home_alumno_Robotica_p2_src
-.PHONY : ICES__home_alumno_Robotica_p2_src
+ICES__home_alumno_Escritorio_Robotica_p2_src: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ICES__home_alumno_Escritorio_Robotica_p2_src
+.PHONY : ICES__home_alumno_Escritorio_Robotica_p2_src
 
 # fast build rule for target.
-ICES__home_alumno_Robotica_p2_src/fast:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/ICES__home_alumno_Robotica_p2_src.dir/build.make src/CMakeFiles/ICES__home_alumno_Robotica_p2_src.dir/build
-.PHONY : ICES__home_alumno_Robotica_p2_src/fast
+ICES__home_alumno_Escritorio_Robotica_p2_src/fast:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/ICES__home_alumno_Escritorio_Robotica_p2_src.dir/build.make src/CMakeFiles/ICES__home_alumno_Escritorio_Robotica_p2_src.dir/build
+.PHONY : ICES__home_alumno_Escritorio_Robotica_p2_src/fast
 
 #=============================================================================
 # Target rules for targets named Controller
@@ -213,7 +213,7 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... Controller_autogen"
-	@echo "... ICES__home_alumno_Robotica_p2_src"
+	@echo "... ICES__home_alumno_Escritorio_Robotica_p2_src"
 	@echo "... Controller"
 .PHONY : help
 

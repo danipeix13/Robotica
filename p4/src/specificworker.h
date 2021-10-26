@@ -58,16 +58,23 @@ private:
 
     struct Target
     {
-        QRectF recta;
+        float a,b,c;
         QPointF pos;
         bool activo;
     };
-    int state;
+
+
+    enum class Estado{AVANZAR, IDLE, BORDEAR, VEO_TARGET};
+    Estado state;
     Target target;
-    void draw_laser(const RoboCompLaser::TLaserData &ldata,RoboCompGenericBase::TBaseState bState);
+    void draw_laser(QPolygonF poly, RoboCompGenericBase::TBaseState bState);
     std::tuple<float, float> world2robot(RoboCompGenericBase::TBaseState bState);
     std::tuple<float, float> avanzar(RoboCompGenericBase::TBaseState bState);
     std::tuple<float, float> bordear(RoboCompGenericBase::TBaseState bState, RoboCompLaser::TLaserData ldata);
+    float seguirPegado(RoboCompLaser::TLaserData ldata);
+    bool check_target(QPolygonF poly, RoboCompGenericBase::TBaseState bState);
+    bool check_line(RoboCompGenericBase::TBaseState bState);
+
 };
 
 #endif
