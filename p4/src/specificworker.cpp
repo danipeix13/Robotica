@@ -54,7 +54,7 @@ void SpecificWorker::initialize(int period)
 	{
 		timer.start(Period);
 	}
-    QRect dimensions(-5000, -2500, 10000, 5000);
+    QRect dimensions(-10000, -5000, 20000, 10000);
     viewer = new AbstractGraphicViewer(this, dimensions);
     this->resize(900,450);
     robot_polygon = viewer->add_robot(ROBOT_LENGTH);
@@ -102,7 +102,7 @@ void SpecificWorker::compute()
                 cout << "avanzar" << endl;
                 std::sort(ldata.begin() + ldata.size()/3, ldata.end() - ldata.size()/3,
                           [](auto &a, auto &b){ return a.dist < b.dist;});
-                if(ldata[ldata.size()/3].dist < 600)
+                if(ldata[ldata.size()/3].dist < 300)
                     state = Estado::BORDEAR;
                 else
                     speeds = avanzar(bState);
@@ -130,8 +130,6 @@ void SpecificWorker::compute()
                     target.activo = false;
                     state = Estado::IDLE;
                 }
-
-
                 break;
 
         }
@@ -156,7 +154,7 @@ std::tuple<float, float> SpecificWorker::avanzar(RoboCompGenericBase::TBaseState
     {
         rot = atan2(-y, x) + M_PI_2;
         float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0, reduc_angle = pow(M_E, -pow(rot, 2));
-        adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
+        adv = MAX_ADV_SPEED * reduc_distance * reduc_angle/2;
     }
     return make_tuple(adv, rot);
 }
@@ -167,7 +165,7 @@ std::tuple<float, float> SpecificWorker::bordear(RoboCompGenericBase::TBaseState
     std::sort(ldata.begin() + ldata.size()/3, ldata.end() - ldata.size()/3,
               [](auto &a, auto &b){ return a.dist < b.dist;});
 
-    if(ldata[ldata.size()/3].dist < 600) {
+    if(ldata[ldata.size()/3].dist < 300) {
         rot = 1;
         cout << "--> girar" << endl;
     }else {
@@ -198,9 +196,17 @@ bool SpecificWorker::check_target(QPolygonF poly,RoboCompGenericBase::TBaseState
 
 bool SpecificWorker::check_line(RoboCompGenericBase::TBaseState bState)
 {
+    //static float min_distance = std::numeric_limits<float>::max();
     auto [a, b] = world2robot(bState);
     float distance = (abs(target.a*a + target.b*b + target.c)) / sqrt(pow(target.a, 2) + pow(target.b, 2));
-    return distance < 100;
+    bool estoy = distance < 100;
+    //if(estoy){
+//        auto distance2point = (P-R).norm();
+//        if (distance2point >= min_distance)
+//           return false;
+//        min_distance = distance2point;
+    //}
+    return estoy;
 }
 
 

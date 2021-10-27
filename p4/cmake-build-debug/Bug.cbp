@@ -209,10 +209,16 @@
 		<Unit filename="/home/alumno/Escritorio/Robotica/p4/cmake-build-debug/src/CommonBehavior.cpp.rule">
 			<Option target="Bug"/>
 		</Unit>
+		<Unit filename="/home/alumno/Escritorio/Robotica/p4/cmake-build-debug/src/CommonBehavior.h">
+			<Option target="Bug"/>
+		</Unit>
 		<Unit filename="/home/alumno/Escritorio/Robotica/p4/cmake-build-debug/src/DifferentialRobot.cpp">
 			<Option target="Bug"/>
 		</Unit>
 		<Unit filename="/home/alumno/Escritorio/Robotica/p4/cmake-build-debug/src/DifferentialRobot.cpp.rule">
+			<Option target="Bug"/>
+		</Unit>
+		<Unit filename="/home/alumno/Escritorio/Robotica/p4/cmake-build-debug/src/DifferentialRobot.h">
 			<Option target="Bug"/>
 		</Unit>
 		<Unit filename="/home/alumno/Escritorio/Robotica/p4/cmake-build-debug/src/GenericBase.cpp">
@@ -221,10 +227,16 @@
 		<Unit filename="/home/alumno/Escritorio/Robotica/p4/cmake-build-debug/src/GenericBase.cpp.rule">
 			<Option target="Bug"/>
 		</Unit>
+		<Unit filename="/home/alumno/Escritorio/Robotica/p4/cmake-build-debug/src/GenericBase.h">
+			<Option target="Bug"/>
+		</Unit>
 		<Unit filename="/home/alumno/Escritorio/Robotica/p4/cmake-build-debug/src/Laser.cpp">
 			<Option target="Bug"/>
 		</Unit>
 		<Unit filename="/home/alumno/Escritorio/Robotica/p4/cmake-build-debug/src/Laser.cpp.rule">
+			<Option target="Bug"/>
+		</Unit>
+		<Unit filename="/home/alumno/Escritorio/Robotica/p4/cmake-build-debug/src/Laser.h">
 			<Option target="Bug"/>
 		</Unit>
 		<Unit filename="/home/alumno/Escritorio/Robotica/p4/cmake-build-debug/src/ui_mainUI.h">
