@@ -75,6 +75,7 @@ private:
     float seguirPegado(RoboCompLaser::TLaserData ldata);
     bool check_target(QPolygonF poly, RoboCompGenericBase::TBaseState bState);
     bool check_line(RoboCompGenericBase::TBaseState bState);
+    bool check_intersect(RoboCompGenericBase::TBaseState bState, RoboCompLaser::TLaserData ldata);
 
 };
 

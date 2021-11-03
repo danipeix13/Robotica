@@ -106,12 +106,13 @@ void SpecificWorker::compute()
                           [](auto &a, auto &b){ return a.dist < b.dist;});
                 if(ldata[ldata.size()/3].dist < umbral)
                     state = Estado::BORDEAR;
+                else if(check_target(poly,bState))
+                    state = Estado::VEO_TARGET;
                 else
                     speeds = avanzar(bState);
                 break;
             case Estado::BORDEAR:
                 cout << "bordear ";
-
                 if(check_target(poly,bState))
                     state = Estado::VEO_TARGET;
                 else if(check_line(bState))
@@ -120,18 +121,22 @@ void SpecificWorker::compute()
                     speeds = bordear(bState,ldata);
                 break;
             case Estado::VEO_TARGET:
-
-                cout << "TARGEEEEEEEEEEEEEEEEET" << endl;
-                speeds = avanzar(bState);
-                QPointF bsRobot(bState.x,bState.z);
-                QPointF distVector = target.pos - bsRobot;
-
-                if(sqrt(pow(distVector.x(),2) + pow(distVector.y(),2)) < umbral)
+                if(check_intersect(bState,ldata))
                 {
-                    cout << "Hemos llegado ! :)" << endl;
-                    target.activo = false;
-                    state = Estado::IDLE;
+                    cout << "TARGEEEEEEEEEEEEEEEEET" << endl;
+                    speeds = avanzar(bState);
+                    QPointF bsRobot(bState.x,bState.z);
+                    QPointF distVector = target.pos - bsRobot;
+
+                    if(sqrt(pow(distVector.x(),2) + pow(distVector.y(),2)) < umbral)
+                    {
+                        cout << "Hemos llegado ! :)" << endl;
+                        target.activo = false;
+                        state = Estado::IDLE;
+                    }
                 }
+                else
+                    state = Estado::AVANZAR;
                 break;
         }
     auto &[adv, rot] = speeds;
@@ -260,5 +265,27 @@ std::tuple<float, float> SpecificWorker::world2robot(RoboCompGenericBase::TBaseS
     return make_tuple(point_in_robot[0], point_in_robot[1]);//return target from robot's pov
 }
 
+bool SpecificWorker::check_intersect(RoboCompGenericBase::TBaseState bState, RoboCompLaser::TLaserData ldata)
+{
+    // create laser polygon
+    QPolygonF laser_poly;
+    for( auto &l : ldata)
+        laser_poly << QPointF(l.dist * sin(l.angle), l.dist * cos(l.angle));
+
+    float semiancho=100;
+// create robot polygon
+    QPolygonF polyRobot;
+    polyRobot << QPointF (bState.x-semiancho, bState.z+semiancho)
+              << QPointF (bState.x+semiancho, bState.z + semiancho)
+              << QPointF (x+semiancho, bState.z - semiancho)
+              << QPointF (bState.x-semiancho, bState.z - semiancho);
+    polyRobot = QTransform().rotate(bState.alpha).map(polyRobot);
+
+// check intersection
+    if (laser_polygon.intersects(polyRobot))
+        return true;
+    else
+        return false;
+}
 
 
