@@ -1,4 +1,0 @@
-Cannot generate into /home/danipeix/Escritorio/Robotica/p4_clase
-It is already used for project /home/alumno/Escritorio/Robotica/p4
-
-Please either delete it manually or select another generation directory
