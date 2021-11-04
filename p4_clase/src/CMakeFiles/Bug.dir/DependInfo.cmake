@@ -4,20 +4,20 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/alumno/Escritorio/Robotica/p4/src/Bug_autogen/mocs_compilation.cpp" "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug.dir/Bug_autogen/mocs_compilation.cpp.o"
-  "/home/alumno/Escritorio/Robotica/p4/src/CommonBehavior.cpp" "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug.dir/CommonBehavior.cpp.o"
-  "/home/alumno/Escritorio/Robotica/p4/src/DifferentialRobot.cpp" "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug.dir/DifferentialRobot.cpp.o"
-  "/home/alumno/Escritorio/Robotica/p4/src/GenericBase.cpp" "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug.dir/GenericBase.cpp.o"
-  "/home/alumno/Escritorio/Robotica/p4/src/Laser.cpp" "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug.dir/Laser.cpp.o"
-  "/home/alumno/Escritorio/Robotica/p4/src/commonbehaviorI.cpp" "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug.dir/commonbehaviorI.cpp.o"
-  "/home/alumno/Escritorio/Robotica/p4/src/genericmonitor.cpp" "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug.dir/genericmonitor.cpp.o"
-  "/home/alumno/Escritorio/Robotica/p4/src/genericworker.cpp" "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug.dir/genericworker.cpp.o"
-  "/home/alumno/Escritorio/Robotica/p4/src/main.cpp" "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug.dir/main.cpp.o"
-  "/opt/robocomp/classes/qlog/qlog.cpp" "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug.dir/opt/robocomp/classes/qlog/qlog.cpp.o"
-  "/opt/robocomp/classes/rapplication/rapplication.cpp" "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug.dir/opt/robocomp/classes/rapplication/rapplication.cpp.o"
-  "/opt/robocomp/classes/sigwatch/sigwatch.cpp" "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug.dir/opt/robocomp/classes/sigwatch/sigwatch.cpp.o"
-  "/home/alumno/Escritorio/Robotica/p4/src/specificmonitor.cpp" "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug.dir/specificmonitor.cpp.o"
-  "/home/alumno/Escritorio/Robotica/p4/src/specificworker.cpp" "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug.dir/specificworker.cpp.o"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/Bug_autogen/mocs_compilation.cpp" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug.dir/Bug_autogen/mocs_compilation.cpp.o"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CommonBehavior.cpp" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug.dir/CommonBehavior.cpp.o"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/DifferentialRobot.cpp" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug.dir/DifferentialRobot.cpp.o"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/GenericBase.cpp" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug.dir/GenericBase.cpp.o"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/Laser.cpp" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug.dir/Laser.cpp.o"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/commonbehaviorI.cpp" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug.dir/commonbehaviorI.cpp.o"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/genericmonitor.cpp" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug.dir/genericmonitor.cpp.o"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/genericworker.cpp" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug.dir/genericworker.cpp.o"
+  "/home/lucas/robocomp/classes/qlog/qlog.cpp" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug.dir/home/lucas/robocomp/classes/qlog/qlog.cpp.o"
+  "/home/lucas/robocomp/classes/rapplication/rapplication.cpp" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug.dir/home/lucas/robocomp/classes/rapplication/rapplication.cpp.o"
+  "/home/lucas/robocomp/classes/sigwatch/sigwatch.cpp" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug.dir/home/lucas/robocomp/classes/sigwatch/sigwatch.cpp.o"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/main.cpp" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug.dir/main.cpp.o"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/specificmonitor.cpp" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug.dir/specificmonitor.cpp.o"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/specificworker.cpp" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug.dir/specificworker.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -43,9 +43,9 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/opt/robocomp/include"
   "/classes"
   "."
-  "/opt/robocomp/classes"
-  "/opt/robocomp/libs"
-  "/opt/robocomp/interfaces"
+  "/home/lucas/robocomp/classes"
+  "/home/lucas/robocomp/libs"
+  "/home/lucas/robocomp/interfaces"
   "/include"
   "/usr/include/x86_64-linux-gnu/qt5"
   "/usr/include/x86_64-linux-gnu/qt5/QtGui"
@@ -61,10 +61,10 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Pairs of files generated by the same build rule.
 set(CMAKE_MULTIPLE_OUTPUT_PAIRS
-  "/home/alumno/Escritorio/Robotica/p4/src/CommonBehavior.h" "/home/alumno/Escritorio/Robotica/p4/src/CommonBehavior.cpp"
-  "/home/alumno/Escritorio/Robotica/p4/src/DifferentialRobot.h" "/home/alumno/Escritorio/Robotica/p4/src/DifferentialRobot.cpp"
-  "/home/alumno/Escritorio/Robotica/p4/src/GenericBase.h" "/home/alumno/Escritorio/Robotica/p4/src/GenericBase.cpp"
-  "/home/alumno/Escritorio/Robotica/p4/src/Laser.h" "/home/alumno/Escritorio/Robotica/p4/src/Laser.cpp"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CommonBehavior.h" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CommonBehavior.cpp"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/DifferentialRobot.h" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/DifferentialRobot.cpp"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/GenericBase.h" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/GenericBase.cpp"
+  "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/Laser.h" "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/Laser.cpp"
   )
 
 

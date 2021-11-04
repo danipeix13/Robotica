@@ -54,7 +54,7 @@ void SpecificWorker::initialize(int period)
 	{
 		timer.start(Period);
 	}
-    QRect dimensions(-10000, -5000, 20000, 10000);
+    QRect dimensions(-5000, -2500, 10000, 5000);
     viewer = new AbstractGraphicViewer(this, dimensions);
     this->resize(900,450);
     robot_polygon = viewer->add_robot(ROBOT_LENGTH);
@@ -277,12 +277,12 @@ bool SpecificWorker::check_intersect(RoboCompGenericBase::TBaseState bState, Rob
     QPolygonF polyRobot;
     polyRobot << QPointF (bState.x-semiancho, bState.z+semiancho)
               << QPointF (bState.x+semiancho, bState.z + semiancho)
-              << QPointF (x+semiancho, bState.z - semiancho)
+              << QPointF (bState.x+semiancho, bState.z - semiancho)
               << QPointF (bState.x-semiancho, bState.z - semiancho);
     polyRobot = QTransform().rotate(bState.alpha).map(polyRobot);
 
 // check intersection
-    if (laser_polygon.intersects(polyRobot))
+    if (laser_poly.intersects(polyRobot))
         return true;
     else
         return false;

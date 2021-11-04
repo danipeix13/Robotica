@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alumno/Escritorio/Robotica/p4
+CMAKE_SOURCE_DIR = /home/lucas/Escritorio/4Carrera/Robotica/p4_clase
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alumno/Escritorio/Robotica/p4
+CMAKE_BINARY_DIR = /home/lucas/Escritorio/4Carrera/Robotica/p4_clase
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -115,8 +115,8 @@ rebuild_cache/fast: rebuild_cache
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/cmake-gui -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -126,9 +126,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alumno/Escritorio/Robotica/p4/CMakeFiles /home/alumno/Escritorio/Robotica/p4/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucas/Escritorio/4Carrera/Robotica/p4_clase/CMakeFiles /home/lucas/Escritorio/4Carrera/Robotica/p4_clase/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alumno/Escritorio/Robotica/p4/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucas/Escritorio/4Carrera/Robotica/p4_clase/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -170,17 +170,17 @@ Bug/fast:
 .PHONY : Bug/fast
 
 #=============================================================================
-# Target rules for targets named ICES__home_alumno_Escritorio_Robotica_p4_src
+# Target rules for targets named ICES__home_lucas_Escritorio_4Carrera_Robotica_p4_clase_src
 
 # Build rule for target.
-ICES__home_alumno_Escritorio_Robotica_p4_src: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ICES__home_alumno_Escritorio_Robotica_p4_src
-.PHONY : ICES__home_alumno_Escritorio_Robotica_p4_src
+ICES__home_lucas_Escritorio_4Carrera_Robotica_p4_clase_src: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ICES__home_lucas_Escritorio_4Carrera_Robotica_p4_clase_src
+.PHONY : ICES__home_lucas_Escritorio_4Carrera_Robotica_p4_clase_src
 
 # fast build rule for target.
-ICES__home_alumno_Escritorio_Robotica_p4_src/fast:
-	$(MAKE) -f src/CMakeFiles/ICES__home_alumno_Escritorio_Robotica_p4_src.dir/build.make src/CMakeFiles/ICES__home_alumno_Escritorio_Robotica_p4_src.dir/build
-.PHONY : ICES__home_alumno_Escritorio_Robotica_p4_src/fast
+ICES__home_lucas_Escritorio_4Carrera_Robotica_p4_clase_src/fast:
+	$(MAKE) -f src/CMakeFiles/ICES__home_lucas_Escritorio_4Carrera_Robotica_p4_clase_src.dir/build.make src/CMakeFiles/ICES__home_lucas_Escritorio_4Carrera_Robotica_p4_clase_src.dir/build
+.PHONY : ICES__home_lucas_Escritorio_4Carrera_Robotica_p4_clase_src/fast
 
 #=============================================================================
 # Target rules for targets named Bug_autogen
@@ -208,7 +208,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... Bug"
-	@echo "... ICES__home_alumno_Escritorio_Robotica_p4_src"
+	@echo "... ICES__home_lucas_Escritorio_4Carrera_Robotica_p4_clase_src"
 	@echo "... Bug_autogen"
 .PHONY : help
 

@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alumno/Escritorio/Robotica/p4
+CMAKE_SOURCE_DIR = /home/lucas/Escritorio/4Carrera/Robotica/p4_clase
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alumno/Escritorio/Robotica/p4
+CMAKE_BINARY_DIR = /home/lucas/Escritorio/4Carrera/Robotica/p4_clase
 
 # Utility rule file for Bug_autogen.
 
@@ -54,8 +54,8 @@ CMAKE_BINARY_DIR = /home/alumno/Escritorio/Robotica/p4
 include src/CMakeFiles/Bug_autogen.dir/progress.make
 
 src/CMakeFiles/Bug_autogen:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/alumno/Escritorio/Robotica/p4/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target Bug"
-	cd /home/alumno/Escritorio/Robotica/p4/src && /usr/bin/cmake -E cmake_autogen /home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug_autogen.dir/AutogenInfo.json ""
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target Bug"
+	cd /home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src && /usr/bin/cmake -E cmake_autogen /home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug_autogen.dir/AutogenInfo.json ""
 
 Bug_autogen: src/CMakeFiles/Bug_autogen
 Bug_autogen: src/CMakeFiles/Bug_autogen.dir/build.make
@@ -68,10 +68,10 @@ src/CMakeFiles/Bug_autogen.dir/build: Bug_autogen
 .PHONY : src/CMakeFiles/Bug_autogen.dir/build
 
 src/CMakeFiles/Bug_autogen.dir/clean:
-	cd /home/alumno/Escritorio/Robotica/p4/src && $(CMAKE_COMMAND) -P CMakeFiles/Bug_autogen.dir/cmake_clean.cmake
+	cd /home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src && $(CMAKE_COMMAND) -P CMakeFiles/Bug_autogen.dir/cmake_clean.cmake
 .PHONY : src/CMakeFiles/Bug_autogen.dir/clean
 
 src/CMakeFiles/Bug_autogen.dir/depend:
-	cd /home/alumno/Escritorio/Robotica/p4 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alumno/Escritorio/Robotica/p4 /home/alumno/Escritorio/Robotica/p4/src /home/alumno/Escritorio/Robotica/p4 /home/alumno/Escritorio/Robotica/p4/src /home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug_autogen.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lucas/Escritorio/4Carrera/Robotica/p4_clase && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lucas/Escritorio/4Carrera/Robotica/p4_clase /home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src /home/lucas/Escritorio/4Carrera/Robotica/p4_clase /home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src /home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug_autogen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : src/CMakeFiles/Bug_autogen.dir/depend
 

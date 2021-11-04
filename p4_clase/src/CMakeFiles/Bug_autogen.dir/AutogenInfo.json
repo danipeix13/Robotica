@@ -1,57 +1,61 @@
 {
-	"BUILD_DIR" : "/home/alumno/Escritorio/Robotica/p4/src/Bug_autogen",
-	"CMAKE_BINARY_DIR" : "/home/alumno/Escritorio/Robotica/p4",
-	"CMAKE_CURRENT_BINARY_DIR" : "/home/alumno/Escritorio/Robotica/p4/src",
-	"CMAKE_CURRENT_SOURCE_DIR" : "/home/alumno/Escritorio/Robotica/p4/src",
+	"BUILD_DIR" : "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/Bug_autogen",
+	"CMAKE_BINARY_DIR" : "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src",
 	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
-	"CMAKE_SOURCE_DIR" : "/home/alumno/Escritorio/Robotica/p4",
+	"CMAKE_SOURCE_DIR" : "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase",
 	"HEADERS" : 
 	[
 		[
-			"/home/alumno/Escritorio/Robotica/p4/src/commonbehaviorI.h",
+			"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/commonbehaviorI.h",
 			"MU",
 			"EWIEGA46WW/moc_commonbehaviorI.cpp"
 		],
 		[
-			"/home/alumno/Escritorio/Robotica/p4/src/genericmonitor.h",
+			"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/genericmonitor.h",
 			"MU",
 			"EWIEGA46WW/moc_genericmonitor.cpp"
 		],
 		[
-			"/home/alumno/Escritorio/Robotica/p4/src/genericworker.h",
+			"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/genericworker.h",
 			"MU",
 			"EWIEGA46WW/moc_genericworker.cpp"
 		],
 		[
-			"/home/alumno/Escritorio/Robotica/p4/src/specificmonitor.h",
+			"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/specificmonitor.h",
 			"MU",
 			"EWIEGA46WW/moc_specificmonitor.cpp"
 		],
 		[
-			"/home/alumno/Escritorio/Robotica/p4/src/specificworker.h",
+			"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/specificworker.h",
 			"MU",
 			"EWIEGA46WW/moc_specificworker.cpp"
 		],
 		[
-			"/opt/robocomp/classes/abstract_graphic_viewer/abstract_graphic_viewer.h",
+			"/home/lucas/robocomp/classes/abstract_graphic_viewer/abstract_graphic_viewer.h",
 			"MU",
-			"WU3NUE3SBC/moc_abstract_graphic_viewer.cpp"
-		],
-		[ "/opt/robocomp/classes/qlog/qlog.h", "MU", "2FGXPJ7LXO/moc_qlog.cpp" ],
-		[
-			"/opt/robocomp/classes/rapplication/rapplication.h",
-			"MU",
-			"QJTTXZVCVU/moc_rapplication.cpp"
+			"RNNRWYZDTF/moc_abstract_graphic_viewer.cpp"
 		],
 		[
-			"/opt/robocomp/classes/sigwatch/sigwatch.h",
+			"/home/lucas/robocomp/classes/qlog/qlog.h",
 			"MU",
-			"A42NFNQRPH/moc_sigwatch.cpp"
+			"GNFZBCUWU5/moc_qlog.cpp"
+		],
+		[
+			"/home/lucas/robocomp/classes/rapplication/rapplication.h",
+			"MU",
+			"ELPKITWYUC/moc_rapplication.cpp"
+		],
+		[
+			"/home/lucas/robocomp/classes/sigwatch/sigwatch.h",
+			"MU",
+			"VDJDW2P2NK/moc_sigwatch.cpp"
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
-	"INCLUDE_DIR" : "/home/alumno/Escritorio/Robotica/p4/src/Bug_autogen/include",
-	"MOC_COMPILATION_FILE" : "/home/alumno/Escritorio/Robotica/p4/src/Bug_autogen/mocs_compilation.cpp",
+	"INCLUDE_DIR" : "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/Bug_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/Bug_autogen/mocs_compilation.cpp",
 	"MOC_DEFINITIONS" : 
 	[
 		"ICE_CPP11_MAPPING",
@@ -74,14 +78,14 @@
 	],
 	"MOC_INCLUDES" : 
 	[
-		"/home/alumno/Escritorio/Robotica/p4/src",
-		"/home/alumno/Escritorio/Robotica/p4/src",
+		"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src",
+		"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src",
 		"/opt/robocomp/include",
 		"/classes",
-		"/home/alumno/Escritorio/Robotica/p4",
-		"/opt/robocomp/classes",
-		"/opt/robocomp/libs",
-		"/opt/robocomp/interfaces",
+		"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase",
+		"/home/lucas/robocomp/classes",
+		"/home/lucas/robocomp/libs",
+		"/home/lucas/robocomp/interfaces",
 		"/include",
 		"/usr/include/x86_64-linux-gnu/qt5",
 		"/usr/include/x86_64-linux-gnu/qt5/QtGui",
@@ -93,10 +97,10 @@
 		"/usr/include/x86_64-linux-gnu/qt5/QtXml",
 		"/usr/include/x86_64-linux-gnu/qt5/QtXmlPatterns",
 		"/usr/include/x86_64-linux-gnu/qt5/QtNetwork",
-		"/usr/include/c++/10",
-		"/usr/include/x86_64-linux-gnu/c++/10",
-		"/usr/include/c++/10/backward",
-		"/usr/lib/gcc/x86_64-linux-gnu/10/include",
+		"/usr/include/c++/9",
+		"/usr/include/x86_64-linux-gnu/c++/9",
+		"/usr/include/c++/9/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/9/include",
 		"/usr/local/include",
 		"/usr/include/x86_64-linux-gnu",
 		"/usr/include"
@@ -112,45 +116,63 @@
 		"-c",
 		"/usr/share/cmake-3.16/Modules/CMakeCXXCompilerABI.cpp"
 	],
-	"MOC_PREDEFS_FILE" : "/home/alumno/Escritorio/Robotica/p4/src/Bug_autogen/moc_predefs.h",
+	"MOC_PREDEFS_FILE" : "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/Bug_autogen/moc_predefs.h",
 	"MOC_RELAXED_MODE" : false,
 	"MOC_SKIP" : 
 	[
-		"/home/alumno/Escritorio/Robotica/p4/src/CommonBehavior.cpp",
-		"/home/alumno/Escritorio/Robotica/p4/src/DifferentialRobot.cpp",
-		"/home/alumno/Escritorio/Robotica/p4/src/GenericBase.cpp",
-		"/home/alumno/Escritorio/Robotica/p4/src/Laser.cpp",
-		"/home/alumno/Escritorio/Robotica/p4/src/ui_mainUI.h"
+		"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CommonBehavior.cpp",
+		"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/DifferentialRobot.cpp",
+		"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/GenericBase.cpp",
+		"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/Laser.cpp",
+		"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/ui_mainUI.h"
 	],
 	"MULTI_CONFIG" : false,
-	"PARALLEL" : 8,
-	"PARSE_CACHE_FILE" : "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug_autogen.dir/ParseCache.txt",
+	"PARALLEL" : 2,
+	"PARSE_CACHE_FILE" : "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug_autogen.dir/ParseCache.txt",
 	"QT_MOC_EXECUTABLE" : "/usr/lib/qt5/bin/moc",
 	"QT_UIC_EXECUTABLE" : "/usr/lib/qt5/bin/uic",
 	"QT_VERSION_MAJOR" : 5,
-	"SETTINGS_FILE" : "/home/alumno/Escritorio/Robotica/p4/src/CMakeFiles/Bug_autogen.dir/AutogenUsed.txt",
+	"SETTINGS_FILE" : "/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CMakeFiles/Bug_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
-		[ "/home/alumno/Escritorio/Robotica/p4/src/commonbehaviorI.cpp", "MU" ],
-		[ "/home/alumno/Escritorio/Robotica/p4/src/genericmonitor.cpp", "MU" ],
-		[ "/home/alumno/Escritorio/Robotica/p4/src/genericworker.cpp", "MU" ],
-		[ "/home/alumno/Escritorio/Robotica/p4/src/main.cpp", "MU" ],
-		[ "/home/alumno/Escritorio/Robotica/p4/src/specificmonitor.cpp", "MU" ],
-		[ "/home/alumno/Escritorio/Robotica/p4/src/specificworker.cpp", "MU" ],
-		[ "/opt/robocomp/classes/qlog/qlog.cpp", "MU" ],
-		[ "/opt/robocomp/classes/rapplication/rapplication.cpp", "MU" ],
-		[ "/opt/robocomp/classes/sigwatch/sigwatch.cpp", "MU" ]
+		[
+			"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/commonbehaviorI.cpp",
+			"MU"
+		],
+		[
+			"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/genericmonitor.cpp",
+			"MU"
+		],
+		[
+			"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/genericworker.cpp",
+			"MU"
+		],
+		[
+			"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/main.cpp",
+			"MU"
+		],
+		[
+			"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/specificmonitor.cpp",
+			"MU"
+		],
+		[
+			"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/specificworker.cpp",
+			"MU"
+		],
+		[ "/home/lucas/robocomp/classes/qlog/qlog.cpp", "MU" ],
+		[ "/home/lucas/robocomp/classes/rapplication/rapplication.cpp", "MU" ],
+		[ "/home/lucas/robocomp/classes/sigwatch/sigwatch.cpp", "MU" ]
 	],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],
 	"UIC_SKIP" : 
 	[
-		"/home/alumno/Escritorio/Robotica/p4/src/CommonBehavior.cpp",
-		"/home/alumno/Escritorio/Robotica/p4/src/DifferentialRobot.cpp",
-		"/home/alumno/Escritorio/Robotica/p4/src/GenericBase.cpp",
-		"/home/alumno/Escritorio/Robotica/p4/src/Laser.cpp",
-		"/home/alumno/Escritorio/Robotica/p4/src/mainUI.ui",
-		"/home/alumno/Escritorio/Robotica/p4/src/ui_mainUI.h"
+		"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/CommonBehavior.cpp",
+		"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/DifferentialRobot.cpp",
+		"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/GenericBase.cpp",
+		"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/Laser.cpp",
+		"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/mainUI.ui",
+		"/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/ui_mainUI.h"
 	],
 	"UIC_UI_FILES" : [],
 	"VERBOSITY" : 0

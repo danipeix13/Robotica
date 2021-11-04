@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/alumno/Escritorio/Robotica/p4/src/specificworker.cpp
+/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/specificworker.cpp
 specificworker.h
-/home/alumno/Escritorio/Robotica/p4/src/specificworker.h
+/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/specificworker.h
 
-/home/alumno/Escritorio/Robotica/p4/src/specificworker.h
+/home/lucas/Escritorio/4Carrera/Robotica/p4_clase/src/specificworker.h
 genericworker.h
 -
 innermodel/innermodel.h
@@ -22,7 +22,7 @@ eigen3/Eigen/Eigen
 cppitertools/enumerate.hpp
 -
 
-/opt/robocomp/classes/abstract_graphic_viewer/abstract_graphic_viewer.h
+/home/lucas/robocomp/classes/abstract_graphic_viewer/abstract_graphic_viewer.h
 QWidget
 -
 QGraphicsScene
@@ -46,9 +46,9 @@ QGraphicsPolygonItem
 iostream
 -
 
-/opt/robocomp/classes/qlog/qlog.h
+/home/lucas/robocomp/classes/qlog/qlog.h
 config.h
-/opt/robocomp/classes/qlog/config.h
+/home/lucas/robocomp/classes/qlog/config.h
 QtCore
 -
 iostream
