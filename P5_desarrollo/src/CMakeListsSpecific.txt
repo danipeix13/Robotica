@@ -13,7 +13,10 @@ SET ( HEADERS
   $ENV{ROBOCOMP}/classes/grid2d/grid.h
 )
 
+set(CMAKE_CXX_STANDARD 20)
 
-SET (LIBS ${LIBS}  )
+add_definitions(-O3 -fmax-errors=1 -fno-char8_t)
+
+SET (LIBS ${LIBS}  tbb )
 
 

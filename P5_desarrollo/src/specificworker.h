@@ -22,8 +22,6 @@
 	@author authorname
 */
 
-
-
 #ifndef SPECIFICWORKER_H
 #define SPECIFICWORKER_H
 
@@ -33,6 +31,7 @@
 #include <abstract_graphic_viewer/abstract_graphic_viewer.h>
 #include <eigen3/Eigen/Eigen>
 #include <cppitertools/enumerate.hpp>
+
 
 class SpecificWorker : public GenericWorker
 {
@@ -63,15 +62,14 @@ private:
         QPointF pos;
         bool activo;
     };
-
-
+    Grid grid;
     enum class Estado{AVANZAR, IDLE, BORDEAR, VEO_TARGET};
     Estado state;
     Target target;
     float min_distance;
     void draw_laser(QPolygonF poly, RoboCompFullPoseEstimation::FullPoseEuler bState);
     std::tuple<float, float> world2robot(RoboCompGenericBase::TBaseState bState);
-
+    Eigen::Vector2f robot2world(const RoboCompFullPoseEstimation::FullPoseEuler &bState, const Eigen::Vector2f &punto);
 };
 
 #endif

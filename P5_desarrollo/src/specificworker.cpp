@@ -17,6 +17,7 @@
  *    along with RoboComp.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "specificworker.h"
+#include <cppitertools/range.hpp>
 #define MAX_ADV_SPEED 1000
 #define umbral 400
 
@@ -60,17 +61,22 @@ void SpecificWorker::initialize(int period)
     robot_polygon = viewer->add_robot(ROBOT_LENGTH);
     laser_in_robot_polygon = new QGraphicsRectItem(-10, 10, 20, 20, robot_polygon);
     laser_in_robot_polygon->setPos(0, 190);     // move this to abstract
+
+    RoboCompFullPoseEstimation::FullPoseEuler r_state;
+
     try
     {
-        RoboCompGenericBase::TBaseState bState;
-        differentialrobot_proxy->getBaseState(bState);
-        last_point = QPointF(bState.x, bState.z);
+        r_state = fullposeestimation_proxy->getFullPoseEuler();
+        robot_polygon->setRotation(r_state.rz*180/M_PI);
+        robot_polygon->setPos(r_state.x, r_state.y);
     }
-    catch(const Ice::Exception &e) { std::cout << e.what() << std::endl;}
+    catch(const Ice::Exception &e){ std::cout << e.what() << std::endl;}
+
     connect(viewer, &AbstractGraphicViewer::new_mouse_coordinates, this, &SpecificWorker::new_target_slot);
     state = Estado::IDLE;
     target.activo = false;
     min_distance = 9999999999;
+    grid.initialize(dimensions, 200, &viewer->scene);
 }
 
 void SpecificWorker::compute()
@@ -89,20 +95,40 @@ void SpecificWorker::compute()
 
     QPolygonF poly;
 
-    if(ldata = laser_proxy->getLaserData(); not ldata.empty()) {
+    if(ldata = laser_proxy->getLaserData(); not ldata.empty())
+    {
         //vector
         // code to fill poly with the laser polar coordinates (angle, dist) transformed to cartesian coordinates (x,y), all in the robot's reference system
         poly << QPointF(0, 0);
         for (auto &p: ldata)
-            poly << QPointF(p.dist * sin(p.angle), p.dist * cos(p.angle));
+        {
+            auto x = p.dist * sin(p.angle), y = p.dist * cos(p.angle);
+            poly << QPointF(x, y);
+
+            Eigen::Vector2f finRayo(x, y);
+            int num_steps = std::ceil(p.dist * 2.0 / grid.TILE_SIZE);
+            for (auto &&step: iter::range(0.0, 1.0-(1./num_steps), 1. / num_steps))
+                    grid.add_miss(robot2world(r_state, step * finRayo));
+
+            if (p.dist <= 4000)
+                grid.add_hit(robot2world(r_state, finRayo));
+            else
+                grid.add_miss(robot2world(r_state, finRayo));
+        }
+        auto change = grid.percentage_changed();
+        static float ant=0;
+        qInfo() << __FUNCTION__ << (change-ant)*100000;
+        ant = change;
+
         draw_laser(poly, r_state);
     }
-    auto &[adv, rot] = speeds;
-    try
-    {
-        differentialrobot_proxy->setSpeedBase(adv, rot);
-    }
-    catch (const Ice::Exception &e){ std::cout << e.what() << std::endl;}
+
+//    auto &[adv, rot] = speeds;
+//    try
+//    {
+//        differentialrobot_proxy->setSpeedBase(adv, rot);
+//    }
+//    catch (const Ice::Exception &e){ std::cout << e.what() << std::endl;}
 
 }
 
@@ -149,6 +175,17 @@ std::tuple<float, float> SpecificWorker::world2robot(RoboCompGenericBase::TBaseS
          -sin(angle), cos(angle);
     Eigen::Vector2f point_in_robot = R * (point_in_world - T);
     return make_tuple(point_in_robot[0], point_in_robot[1]);//return target from robot's pov
+}
+
+Eigen::Vector2f SpecificWorker::robot2world(const RoboCompFullPoseEstimation::FullPoseEuler &bState, const Eigen::Vector2f &punto)
+{   //TODO: transpose
+    float angle = bState.rz;
+    Eigen::Vector2f robot(bState.x, bState.y);
+    Eigen::Matrix2f R;
+    R <<  cos(angle), -sin(angle),
+            sin(angle), cos(angle);
+    Eigen::Vector2f point_in_world = R * punto + robot;
+    return point_in_world;
 }
 
 

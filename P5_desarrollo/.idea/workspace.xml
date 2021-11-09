@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
-    <generated />
+    <generated>
+      <config projectName="Bug" targetName="Bug" />
+      <config projectName="Bug" targetName="ICES__home_alumno_Escritorio_Robotica_P5_desarrollo_src" />
+      <config projectName="Bug" targetName="Bug_autogen" />
+    </generated>
   </component>
   <component name="CMakeSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" BUILD_OPTIONS="-j12" />
+      <configuration PROFILE_NAME="Default" ENABLED="true" GENERATION_DIR="." />
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c64c76ed-ce79-4992-b65b-30896047e1a2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../salabeta_Cc.ttt" beforeDir="false" afterPath="$PROJECT_DIR$/../salabeta_Cc.ttt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../salabeta_intento2.ttt" beforeDir="false" afterPath="$PROJECT_DIR$/../salabeta_intento2.ttt" afterDir="false" />
+    <list default="true" id="995ab8a8-9bff-4bc6-8661-765b33715918" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/p5.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/etc/config" beforeDir="false" afterPath="$PROJECT_DIR$/etc/config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CMakeListsSpecific.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeListsSpecific.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/specificworker.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/specificworker.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/specificworker.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/specificworker.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,10 +31,11 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Default" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectId" id="20PepmSlzYz80CJ66rXjh248eTX" />
+  <component name="ProjectId" id="20geFm1JYRtnJC7B9ewCap4WG9p" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -38,31 +49,50 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="cmake.loaded.for.project" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../robocomp/robocomp/classes/grid2d" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
   </component>
-  <component name="ReadonlyStatusHandler">
-    <option name="SHOW_DIALOG" value="false" />
-  </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="CMake Application.Bug">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Bug" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Bug" TARGET_NAME="Bug" CONFIG_NAME="Default" RUN_TARGET_PROJECT_NAME="Bug" RUN_TARGET_NAME="Bug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Bug_autogen" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Bug" TARGET_NAME="Bug_autogen" CONFIG_NAME="Default">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ICES__home_alumno_Escritorio_Robotica_P5_desarrollo_src" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Bug" TARGET_NAME="ICES__home_alumno_Escritorio_Robotica_P5_desarrollo_src" CONFIG_NAME="Default">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="CMake Application.Bug" />
+      <item itemvalue="CMake Application.Bug_autogen" />
+      <item itemvalue="CMake Application.ICES__home_alumno_Escritorio_Robotica_P5_desarrollo_src" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c64c76ed-ce79-4992-b65b-30896047e1a2" name="Changes" comment="" />
-      <created>1635950834921</created>
+      <changelist id="995ab8a8-9bff-4bc6-8661-765b33715918" name="Changes" comment="" />
+      <created>1636470556704</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1635950834921</updated>
-      <workItem from="1635950836112" duration="1477000" />
-      <workItem from="1635953692766" duration="121000" />
-      <workItem from="1635953825975" duration="17000" />
-      <workItem from="1635953922964" duration="9000" />
-      <workItem from="1635953936386" duration="2198000" />
+      <updated>1636470556704</updated>
+      <workItem from="1636470557925" duration="10547000" />
     </task>
     <servers />
   </component>
