@@ -31,7 +31,7 @@
 #include <abstract_graphic_viewer/abstract_graphic_viewer.h>
 #include <eigen3/Eigen/Eigen>
 #include <cppitertools/enumerate.hpp>
-
+#include <qcustomplot.h>
 
 class SpecificWorker : public GenericWorker
 {
@@ -46,6 +46,7 @@ public slots:
 	int startup_check();
 	void initialize(int period);
     void new_target_slot(QPointF p);
+    void realtime_data_slot(double);
 
 private:
 	std::shared_ptr < InnerModel > innerModel;
@@ -63,13 +64,18 @@ private:
         bool activo;
     };
     Grid grid;
-    enum class Estado{AVANZAR, IDLE, BORDEAR, VEO_TARGET};
-    Estado state;
-    Target target;
-    float min_distance;
     void draw_laser(QPolygonF poly, RoboCompFullPoseEstimation::FullPoseEuler bState);
     std::tuple<float, float> world2robot(RoboCompGenericBase::TBaseState bState);
     Eigen::Vector2f robot2world(const RoboCompFullPoseEstimation::FullPoseEuler &bState, const Eigen::Vector2f &punto);
+
+    // timeserues
+    QCustomPlot *customPlot;
+    QTimer time_series_timer;
+
+    void update_grid(const RoboCompLaser::TLaserData &ldata, const RoboCompFullPoseEstimation::FullPoseEuler &r_state);
+
+    enum class State {IDLE, EXPLORING, TO_MID_ROOM, TO_DOOR, SEARCHING_DOOR};
+    State state = State::IDLE;
 };
 
 #endif
