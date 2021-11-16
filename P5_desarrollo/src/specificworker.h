@@ -63,6 +63,16 @@ private:
         QPointF pos;
         bool activo;
     };
+    struct Door
+    {
+        Eigen::Vector2f dPoint1, dPoint2;
+
+        bool comparar(Door d1, Door d2)
+        {
+            return true; //TODO
+        };
+    };
+
     Grid grid;
     void draw_laser(QPolygonF poly, RoboCompFullPoseEstimation::FullPoseEuler bState);
     std::tuple<float, float> world2robot(RoboCompGenericBase::TBaseState bState);
@@ -75,7 +85,8 @@ private:
     void update_grid(const RoboCompLaser::TLaserData &ldata, const RoboCompFullPoseEstimation::FullPoseEuler &r_state);
 
     enum class State {IDLE, EXPLORING, TO_MID_ROOM, TO_DOOR, SEARCHING_DOOR};
-    State state = State::IDLE;
+    State state;
+    std::vector<Door> puertas;
 };
 
 #endif

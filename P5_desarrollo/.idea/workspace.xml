@@ -3,7 +3,7 @@
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
       <config projectName="Bug" targetName="Bug" />
-      <config projectName="Bug" targetName="ICES__home_alumno_robocomp_components_peix_P5_desarrollo_src" />
+      <config projectName="Bug" targetName="ICES__home_alumno_Escritorio_Robotica_P5_desarrollo_src" />
       <config projectName="Bug" targetName="Bug_autogen" />
     </generated>
   </component>
@@ -13,13 +13,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="995ab8a8-9bff-4bc6-8661-765b33715918" name="Changes" comment="">
+    <list default="true" id="fc3359c2-4996-43c7-8e77-bf24af18dca1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeListsSpecific.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeListsSpecific.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mainUI.ui" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainUI.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/specificworker.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/specificworker.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/specificworker.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/specificworker.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui_mainUI.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui_mainUI.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +30,15 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectId" id="20geFm1JYRtnJC7B9ewCap4WG9p" />
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="210ZstoV62AAighrOfrdK7ADIx7" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -47,8 +52,6 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="cmake.loaded.for.project" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../classes/grid2d/grid.cpp" />
-    <property name="settings.editor.selected.configurable" value="editing.templates" />
   </component>
   <component name="RunManager" selected="CMake Application.Bug">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
@@ -66,7 +69,7 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ICES__home_alumno_robocomp_components_peix_P5_desarrollo_src" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Bug" TARGET_NAME="ICES__home_alumno_robocomp_components_peix_P5_desarrollo_src" CONFIG_NAME="Default">
+    <configuration name="ICES__home_alumno_Escritorio_Robotica_P5_desarrollo_src" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Bug" TARGET_NAME="ICES__home_alumno_Escritorio_Robotica_P5_desarrollo_src" CONFIG_NAME="Default">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -79,20 +82,18 @@
     <list>
       <item itemvalue="CMake Application.Bug" />
       <item itemvalue="CMake Application.Bug_autogen" />
-      <item itemvalue="CMake Application.ICES__home_alumno_robocomp_components_peix_P5_desarrollo_src" />
+      <item itemvalue="CMake Application.ICES__home_alumno_Escritorio_Robotica_P5_desarrollo_src" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="995ab8a8-9bff-4bc6-8661-765b33715918" name="Changes" comment="" />
-      <created>1636470556704</created>
+      <changelist id="fc3359c2-4996-43c7-8e77-bf24af18dca1" name="Changes" comment="" />
+      <created>1637080175043</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1636470556704</updated>
-      <workItem from="1636470557925" duration="10547000" />
-      <workItem from="1636557050349" duration="41000" />
-      <workItem from="1636557102961" duration="4806000" />
+      <updated>1637080175043</updated>
+      <workItem from="1637080186793" duration="6615000" />
     </task>
     <servers />
   </component>

@@ -18,6 +18,9 @@
  */
 #include "specificworker.h"
 #include <cppitertools/range.hpp>
+#include <cppitertools/sliding_window.hpp>
+#include <cppitertools/enumerate.hpp>
+
 #define MAX_ADV_SPEED 1000
 #define umbral 400
 
@@ -104,28 +107,61 @@ void SpecificWorker::compute()
 
     update_grid(ldata, r_state);
 
+    float adv = 0, rot = 0;
+    string state_str = "";
     switch (state)
     {
+        case State::IDLE:
+            state_str = "IDLE";
+            state = State::EXPLORING;
+            break;
         case State::EXPLORING:
+            state_str = "EXPLORING";
             // turn until zero derivative
+            rot = 0.2;
+            state = State::SEARCHING_DOOR;
             break;
         case State::SEARCHING_DOOR:
-            //
+        {
+            state_str = "SEARCHING_DOOR";
+            std::vector<float> derivates(ldata.size());
+            for (auto &&[k, p] : iter::sliding_window(ldata, 2) | iter::enumerate)
+            {
+                derivates[k] = p[1].dist - p[0].dist;
+                qInfo() << "Resta puntos: " << p[1].dist - p[0].dist;
+            }
+            auto max1 = std::ranges::max_element(derivates, [](float a, float b){ return abs(a) < abs(b);});
+            int pos = std::distance(derivates.begin(), max1);
+
+            derivates.erase(derivates.begin() + pos);
+            auto max2 = std::ranges::max_element(derivates, [](float a, float b){ return abs(a) < abs(b);});
+            pos = std::distance(derivates.begin(), max2);
+            if(*max1 > 1000 and *max2 > 1000)
+            {
+                Eigen::Vector2f p1_xy(sin(ldata[pos].angle) * *max1, cos(ldata[pos].angle) * *max1);
+                Eigen::Vector2f p2_xy(sin(ldata[pos].angle) * *max2, cos(ldata[pos].angle) * *max2);
+                if((p1_xy-p2_xy).norm() > 600)
+                    puertas.emplace_back(Door{p1_xy,p2_xy});
+            }
             break;
+        }
         case State::TO_DOOR:
+            state_str = "TO_DOOR";
             // goto
             break;
         case State::TO_MID_ROOM:
+            state_str = "TO_MID_ROOM";
             //
             break;
     }
+    cout << state_str << endl;
 
-//    auto &[adv, rot] = speeds;
-//    try
-//    {
+    try
+    {
 //        differentialrobot_proxy->setSpeedBase(adv, rot);
-//    }
-//    catch (const Ice::Exception &e){ std::cout << e.what() << std::endl;}
+//        cout << grid.percentage_changed() << endl;
+    }
+    catch (const Ice::Exception &e){ std::cout << e.what() << std::endl;}
 
 }
 
@@ -154,10 +190,8 @@ void SpecificWorker::update_grid(const RoboCompLaser::TLaserData &ldata, const R
     }
 
     auto change = grid.percentage_changed();
-    realtime_data_slot((change-ant)*200000);
-
-
-    qInfo() << __FUNCTION__ << (change-ant)*100000;
+    realtime_data_slot((change-ant)*20000);
+//    qInfo() << __FUNCTION__ << (change-ant)*100000;
     ant = change;
 
     draw_laser(poly, r_state);
