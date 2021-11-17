@@ -140,8 +140,8 @@ void SpecificWorker::compute()
             {
                 Eigen::Vector2f p1_xy(sin(ldata[pos].angle) * *max1, cos(ldata[pos].angle) * *max1);
                 Eigen::Vector2f p2_xy(sin(ldata[pos].angle) * *max2, cos(ldata[pos].angle) * *max2);
-                if((p1_xy-p2_xy).norm() > 600)
-                    puertas.emplace_back(Door{p1_xy,p2_xy});
+                if((p1_xy - p2_xy).norm() > 600)
+                    puertas.emplace_back(Door{p1_xy, p2_xy});
             }
             break;
         }
