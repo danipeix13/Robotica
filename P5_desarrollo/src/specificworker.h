@@ -67,10 +67,14 @@ private:
     {
         Eigen::Vector2f dPoint1, dPoint2;
 
-        bool comparar(Door d1, Door d2)
+        bool operator==(const Door &d1)
         {
-            return true; //TODO
+            const int EROR = 500;
+            return (dPoint1 - d1.dPoint1).norm() < EROR and (dPoint2 - d1.dPoint2).norm() < EROR or
+            (dPoint1 - d1.dPoint2).norm() < EROR and (dPoint2 - d1.dPoint1).norm() < EROR;
         };
+
+
     };
 
     Grid grid;
@@ -84,9 +88,10 @@ private:
 
     void update_grid(const RoboCompLaser::TLaserData &ldata, const RoboCompFullPoseEstimation::FullPoseEuler &r_state);
 
-    enum class State {IDLE, EXPLORING, TO_MID_ROOM, TO_DOOR, SEARCHING_DOOR};
+    enum class State {IDLE, INIT_TURN, EXPLORING, TO_MID_ROOM, TO_DOOR, SEARCHING_DOOR};
     State state;
     std::vector<Door> puertas;
+    Door selectedDoor;
 };
 
 #endif

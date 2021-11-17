@@ -109,46 +109,78 @@ void SpecificWorker::compute()
 
     float adv = 0, rot = 0;
     string state_str = "";
+    float init_angle;
+    int num_puertas = 0;
+    bool insert = true;
+
     switch (state)
     {
         case State::IDLE:
             state_str = "IDLE";
+            state = State::INIT_TURN;
+            break;
+        case State::INIT_TURN:
+            init_angle = r_state.rz;
+            num_puertas = puertas.size();
             state = State::EXPLORING;
             break;
         case State::EXPLORING:
             state_str = "EXPLORING";
             // turn until zero derivative
-            rot = 0.2;
-            state = State::SEARCHING_DOOR;
+            rot = 0.4;
+
+            if(r_state.rz + init_angle > 2*M_PI)
+                state = State::SEARCHING_DOOR;
+            else
+            {
+                state_str = "ELSE EXPLORING";
+                std::vector<float> derivates(ldata.size());
+
+                for (auto &&[k, p] : iter::sliding_window(ldata, 2) | iter::enumerate)
+                {
+                    derivates[k] = abs(p[1].dist - p[0].dist);
+                    //qInfo() << "Resta puntos: " << p[1].dist - p[0].dist;
+                }
+
+                auto max1 = std::ranges::max_element(derivates);
+                float max1f = *max1;
+                int pos = std::distance(derivates.begin(), max1);
+                derivates.erase(derivates.begin() + pos);
+
+                auto max2 = std::ranges::max_element(derivates);
+                float max2f = *max2;
+                int pos2 = std::distance(derivates.begin(), max2);
+
+                cout << "Max1: " << max1f << "Max2: " << max2f << endl;
+                if(max1f > 1000 and *max2 > 1000)
+                {
+                    cout << "Estamos a distancia sufienciete de la dooor" << endl;
+                    Eigen::Vector2f p1_xy(sin(ldata[pos].angle) * max1f, cos(ldata[pos].angle) * max1f);
+                    Eigen::Vector2f p2_xy(sin(ldata[pos2].angle) * max2f, cos(ldata[pos2].angle) * max2f);
+
+                    if((p1_xy - p2_xy).norm() > 600)
+                    {
+                        Door miDoor{p1_xy, p2_xy};
+                        if(auto res = std::ranges::find_if_not(puertas, [miDoor](Door &d1){return d1 == miDoor;}); res == puertas.end())
+                            puertas.emplace_back(miDoor);
+                    }
+
+                    cout << "Door size:" << puertas.size() << endl;
+                }
+                break;
+            }
             break;
         case State::SEARCHING_DOOR:
+            selectedDoor = puertas[0]; //chooseDor();
+            state = State::TO_DOOR;
+            break;
+        case State::TO_DOOR:
         {
-            state_str = "SEARCHING_DOOR";
-            std::vector<float> derivates(ldata.size());
-            for (auto &&[k, p] : iter::sliding_window(ldata, 2) | iter::enumerate)
-            {
-                derivates[k] = p[1].dist - p[0].dist;
-                qInfo() << "Resta puntos: " << p[1].dist - p[0].dist;
-            }
-            auto max1 = std::ranges::max_element(derivates, [](float a, float b){ return abs(a) < abs(b);});
-            int pos = std::distance(derivates.begin(), max1);
-
-            derivates.erase(derivates.begin() + pos);
-            auto max2 = std::ranges::max_element(derivates, [](float a, float b){ return abs(a) < abs(b);});
-            pos = std::distance(derivates.begin(), max2);
-            if(*max1 > 1000 and *max2 > 1000)
-            {
-                Eigen::Vector2f p1_xy(sin(ldata[pos].angle) * *max1, cos(ldata[pos].angle) * *max1);
-                Eigen::Vector2f p2_xy(sin(ldata[pos].angle) * *max2, cos(ldata[pos].angle) * *max2);
-                if((p1_xy - p2_xy).norm() > 600)
-                    puertas.emplace_back(Door{p1_xy, p2_xy});
-            }
+            state_str = "TO_DOOR";
+            // gotoxy
+            auto punto_medio = (selectedDoor.dPoint1 + selectedDoor.dPoint2) / 2;
             break;
         }
-        case State::TO_DOOR:
-            state_str = "TO_DOOR";
-            // goto
-            break;
         case State::TO_MID_ROOM:
             state_str = "TO_MID_ROOM";
             //
@@ -156,12 +188,11 @@ void SpecificWorker::compute()
     }
     cout << state_str << endl;
 
-    try
-    {
+//    try
+//    {
 //        differentialrobot_proxy->setSpeedBase(adv, rot);
-//        cout << grid.percentage_changed() << endl;
-    }
-    catch (const Ice::Exception &e){ std::cout << e.what() << std::endl;}
+//    }
+//    catch (const Ice::Exception &e){ std::cout << e.what() << std::endl;}
 
 }
 
