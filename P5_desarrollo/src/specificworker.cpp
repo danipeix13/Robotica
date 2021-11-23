@@ -20,6 +20,7 @@
 #include <cppitertools/range.hpp>
 #include <cppitertools/sliding_window.hpp>
 #include <cppitertools/enumerate.hpp>
+#include <cppitertools/combinations_with_replacement.hpp>
 
 #define MAX_ADV_SPEED 1000
 #define umbral 400
@@ -33,7 +34,7 @@ SpecificWorker::SpecificWorker(TuplePrx tprx, bool startup_check) : GenericWorke
 }
 
 /**
-* \brief Default destruct                       or
+* \brief Default destructor
 */
 SpecificWorker::~SpecificWorker()
 {
@@ -136,37 +137,70 @@ void SpecificWorker::compute()
                 state_str = "ELSE EXPLORING";
                 std::vector<float> derivates(ldata.size());
 
+
+
                 for (auto &&[k, p] : iter::sliding_window(ldata, 2) | iter::enumerate)
                 {
                     derivates[k] = abs(p[1].dist - p[0].dist);
                     //qInfo() << "Resta puntos: " << p[1].dist - p[0].dist;
                 }
 
-                auto max1 = std::ranges::max_element(derivates);
-                float max1f = *max1;
-                int pos = std::distance(derivates.begin(), max1);
-                derivates.erase(derivates.begin() + pos);
+//                auto max1 = std::ranges::max_element(derivates);
+//                float max1f = *max1;
+//                int pos = std::distance(derivates.begin(), max1);
+//                derivates.erase(derivates.begin() + pos);
+//
+//                auto max2 = std::ranges::max_element(derivates);
+//                float max2f = *max2;
+//                int pos2 = std::distance(derivates.begin(), max2) - 1;
 
-                auto max2 = std::ranges::max_element(derivates);
-                float max2f = *max2;
-                int pos2 = std::distance(derivates.begin(), max2);
+//                cout << "Max1: " << max1f << "Max2: " << max2f << endl;
+//                if(max1f > 1000 and max2f > 1000)
+//                {
+//                    cout << "Estamos a distancia sufienciete de la dooor" << endl;
+//                    Eigen::Vector2f p1_xy(sin(ldata[pos].angle) * ldata[pos].dist, cos(ldata[pos].angle) * ldata[pos].dist);
+//                    Eigen::Vector2f p2_xy(sin(ldata[pos2].angle) * ldata[pos2].dist, cos(ldata[pos2].angle) * ldata[pos2].dist);
+//
+//                    cout << "P1 1ºmaximo" << p1_xy[0] << " " << p1_xy[1] << endl;
+//                    cout << "P1 1ºmaximo" << p2_xy[0] << " " << p2_xy[1] << endl;
 
-                cout << "Max1: " << max1f << "Max2: " << max2f << endl;
-                if(max1f > 1000 and *max2 > 1000)
-                {
-                    cout << "Estamos a distancia sufienciete de la dooor" << endl;
-                    Eigen::Vector2f p1_xy(sin(ldata[pos].angle) * max1f, cos(ldata[pos].angle) * max1f);
-                    Eigen::Vector2f p2_xy(sin(ldata[pos2].angle) * max2f, cos(ldata[pos2].angle) * max2f);
+//                    if((p1_xy - p2_xy).norm() > 600)
+//                    {
+                for (auto&& c : iter::combinations_with_replacement(derivates, 2))
+                { // CHEK IF DISTANCE BETWEEN POINTS IS BETWEEN 1100 AND 900}
 
-                    if((p1_xy - p2_xy).norm() > 600)
+// draw
+                    static std::vector<QGraphicsItem*> door_points;
+                    for(auto dp : door_points) viewer->scene.removeItem(dp);
+                    door_points.clear();
+                    for(const auto p: derivates)
                     {
-                        Door miDoor{p1_xy, p2_xy};
-                        if(auto res = std::ranges::find_if_not(puertas, [miDoor](Door &d1){return d1 == miDoor;}); res == puertas.end())
-                            puertas.emplace_back(miDoor);
+                        door_points.push_back(viewer->scene.addRect(QRectF(p.x()-100, p.y()-100, 200, 200),
+                                                                    QPen(QColor("Magenta")), QBrush(QColor("Magenta"))));
+                        door_points.back()->setZValue(200);
                     }
 
-                    cout << "Door size:" << puertas.size() << endl;
-                }
+
+                       //Door miDoor{p1_xy, p2_xy};
+//                        auto p1_xyworld = robot2world(r_state, p1_xy);
+//                        auto p2_xyworld = robot2world(r_state, p2_xy);
+//
+//                        door_points.push_back(viewer->scene.addRect(QRectF(p1_xyworld[0], p1_xyworld[1], 200, 200),
+//                                                                    QPen(QColor("Blue")), QBrush(QColor("Blue"))));
+//
+//                        door_points.push_back(viewer->scene.addRect(QRectF(p2_xyworld[0], p2_xyworld[1], 200, 200),
+//                                                                   QPen(QColor("Magenta")), QBrush(QColor("Magenta"))));
+
+                        //door_points.back()->setZValue(200);
+
+
+
+//                        if(auto res = std::ranges::find_if_not(puertas, [miDoor](Door &d1){return d1 == miDoor;}); res == puertas.end())
+//                            puertas.emplace_back(miDoor);
+                    //}
+
+//                    cout << "Door size:" << puertas.size() << endl;
+                //}
                 break;
             }
             break;
