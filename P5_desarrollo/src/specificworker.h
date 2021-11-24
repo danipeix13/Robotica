@@ -69,7 +69,7 @@ private:
 
         bool operator==(const Door &d1)
         {
-            const int EROR = 300;
+            const int EROR = 500;
             return (dPoint1 - d1.dPoint1).norm() < EROR and (dPoint2 - d1.dPoint2).norm() < EROR or
             (dPoint1 - d1.dPoint2).norm() < EROR and (dPoint2 - d1.dPoint1).norm() < EROR;
         };

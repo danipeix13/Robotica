@@ -59,7 +59,7 @@ void SpecificWorker::initialize(int period)
 	{
 		timer.start(Period);
 	}
-    QRect dimensions(-10000, -5000, 20000, 10000);
+    QRect dimensions(-5100, -2600, 10200, 5200);
     viewer = new AbstractGraphicViewer(this->frame, dimensions);
     this->resize(1200,600);
     robot_polygon = viewer->add_robot(ROBOT_LENGTH);
@@ -90,7 +90,7 @@ void SpecificWorker::initialize(int period)
 
     connect(viewer, &AbstractGraphicViewer::new_mouse_coordinates, this, &SpecificWorker::new_target_slot);
     state = State::IDLE;
-    grid.initialize(dimensions, 200, &viewer->scene);
+    grid.initialize(dimensions, 100, &viewer->scene);
 }
 
 void SpecificWorker::compute()
@@ -128,84 +128,66 @@ void SpecificWorker::compute()
         case State::EXPLORING:
             state_str = "EXPLORING";
             // turn until zero derivative
-            rot = 0.4;
-
-            if(r_state.rz + init_angle > 2*M_PI)
-                state = State::SEARCHING_DOOR;
-            else
+            cout << r_state.rz + init_angle << endl;
+            if(r_state.rz + init_angle > M_PI)
             {
+                state = State::SEARCHING_DOOR;
+                cout << "TERMINA DE GIRAR PORFAVOR";
+            }
+            else {
+                rot = 0.4;
                 state_str = "ELSE EXPLORING";
-                std::vector<float> derivates(ldata.size());
-
-
-
-                for (auto &&[k, p] : iter::sliding_window(ldata, 2) | iter::enumerate)
-                {
-                    derivates[k] = abs(p[1].dist - p[0].dist);
+                std::vector<float> derivatives(ldata.size());
+                derivatives[0]=0;
+                for (auto &&[k, p]: iter::sliding_window(ldata, 2) | iter::enumerate) {
+                    derivatives[k+1] = p[1].dist - p[0].dist;
                     //qInfo() << "Resta puntos: " << p[1].dist - p[0].dist;
                 }
 
-//                auto max1 = std::ranges::max_element(derivates);
-//                float max1f = *max1;
-//                int pos = std::distance(derivates.begin(), max1);
-//                derivates.erase(derivates.begin() + pos);
-//
-//                auto max2 = std::ranges::max_element(derivates);
-//                float max2f = *max2;
-//                int pos2 = std::distance(derivates.begin(), max2) - 1;
-
-//                cout << "Max1: " << max1f << "Max2: " << max2f << endl;
-//                if(max1f > 1000 and max2f > 1000)
-//                {
-//                    cout << "Estamos a distancia sufienciete de la dooor" << endl;
-//                    Eigen::Vector2f p1_xy(sin(ldata[pos].angle) * ldata[pos].dist, cos(ldata[pos].angle) * ldata[pos].dist);
-//                    Eigen::Vector2f p2_xy(sin(ldata[pos2].angle) * ldata[pos2].dist, cos(ldata[pos2].angle) * ldata[pos2].dist);
-//
-//                    cout << "P1 1ºmaximo" << p1_xy[0] << " " << p1_xy[1] << endl;
-//                    cout << "P1 1ºmaximo" << p2_xy[0] << " " << p2_xy[1] << endl;
-
-//                    if((p1_xy - p2_xy).norm() > 600)
-//                    {
-                for (auto&& c : iter::combinations_with_replacement(derivates, 2))
-                { // CHEK IF DISTANCE BETWEEN POINTS IS BETWEEN 1100 AND 900}
-
-// draw
-                    static std::vector<QGraphicsItem*> door_points;
-                    for(auto dp : door_points) viewer->scene.removeItem(dp);
-                    door_points.clear();
-                    for(const auto p: derivates)
+                std::vector<Eigen::Vector2f> peaks;
+                for (const auto &&[k, der]: iter::enumerate(derivatives))
+                {
+                    if (der > 1000)
                     {
-                        door_points.push_back(viewer->scene.addRect(QRectF(p.x()-100, p.y()-100, 200, 200),
-                                                                    QPen(QColor("Magenta")), QBrush(QColor("Magenta"))));
-                        door_points.back()->setZValue(200);
+                        //Guarda el punto de la derivada anterior
+                        const auto &l = ldata.at(k - 1);
+                        peaks.push_back(robot2world(r_state, Eigen::Vector2f(l.dist * sin(l.angle), l.dist * cos(l.angle))));
+                    } else if (der < -1000)
+                    {
+                        //Guarda el punto de esta derivada
+                        const auto &l = ldata.at(k);
+                        peaks.push_back(robot2world(r_state, Eigen::Vector2f(l.dist * sin(l.angle), l.dist * cos(l.angle))));
                     }
+                }
+                //Tenemos todos los puntos de las puertas, ahora se busca la relacion entre ellas
+                for (auto &&c: iter::combinations_with_replacement(peaks, 2))
+                {
+                    if ((c[0] - c[1]).norm() < 1100 and (c[0] - c[1]).norm() > 600)
+                    {
+                        Door d{c[0], c[1]};
+                        if (auto r = std::find_if(puertas.begin(), puertas.end(), [d](auto a) { return d == a; }); r == puertas.end())
+                            puertas.emplace_back(d);
+                    }
+                }
 
+                cout << "Puertas: " << puertas.size() << endl;
 
-                       //Door miDoor{p1_xy, p2_xy};
-//                        auto p1_xyworld = robot2world(r_state, p1_xy);
-//                        auto p2_xyworld = robot2world(r_state, p2_xy);
-//
-//                        door_points.push_back(viewer->scene.addRect(QRectF(p1_xyworld[0], p1_xyworld[1], 200, 200),
-//                                                                    QPen(QColor("Blue")), QBrush(QColor("Blue"))));
-//
-//                        door_points.push_back(viewer->scene.addRect(QRectF(p2_xyworld[0], p2_xyworld[1], 200, 200),
-//                                                                   QPen(QColor("Magenta")), QBrush(QColor("Magenta"))));
+                static std::vector<QGraphicsItem *> door_lines;
+                for (auto dp: door_lines) viewer->scene.removeItem(dp);
+                door_lines.clear();
 
-                        //door_points.back()->setZValue(200);
+                for (const auto r: puertas)
+                {
+                    door_lines.push_back(viewer->scene.addLine(r.dPoint1[0], r.dPoint1[1], r.dPoint2[0], r.dPoint2[1], QPen(QColor("Blue"), 100)));
+                    door_lines.back()->setZValue(200);
+                }
 
-
-
-//                        if(auto res = std::ranges::find_if_not(puertas, [miDoor](Door &d1){return d1 == miDoor;}); res == puertas.end())
-//                            puertas.emplace_back(miDoor);
-                    //}
-
-//                    cout << "Door size:" << puertas.size() << endl;
-                //}
                 break;
-            }
+                }
             break;
         case State::SEARCHING_DOOR:
-            selectedDoor = puertas[0]; //chooseDor();
+            if(puertas.size() > 0 )
+                selectedDoor = puertas[0]; //chooseDor();
             state = State::TO_DOOR;
             break;
         case State::TO_DOOR:
@@ -222,11 +204,11 @@ void SpecificWorker::compute()
     }
     cout << state_str << endl;
 
-//    try
-//    {
-//        differentialrobot_proxy->setSpeedBase(adv, rot);
-//    }
-//    catch (const Ice::Exception &e){ std::cout << e.what() << std::endl;}
+    try
+    {
+        differentialrobot_proxy->setSpeedBase(adv, rot);
+    }
+    catch (const Ice::Exception &e){ std::cout << e.what() << std::endl;}
 
 }
 
