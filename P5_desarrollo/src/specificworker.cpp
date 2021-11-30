@@ -110,62 +110,59 @@ void SpecificWorker::compute()
 
     float adv = 0, rot = 0;
     string state_str = "";
-    float init_angle;
+    float initial_angle;
     int num_puertas = 0;
     bool insert = true;
 
-    switch (state)
-    {
+    switch (state) {
         case State::IDLE:
             state_str = "IDLE";
             state = State::INIT_TURN;
             break;
         case State::INIT_TURN:
-            init_angle = r_state.rz;
+            initial_angle = (r_state.rz < 0) ? (2 * M_PI + r_state.rz) : r_state.rz;
             num_puertas = puertas.size();
             state = State::EXPLORING;
             break;
         case State::EXPLORING:
+        {
             state_str = "EXPLORING";
             // turn until zero derivative
-            cout << r_state.rz + init_angle << endl;
-            if(r_state.rz + init_angle > M_PI)
-            {
+            cout << r_state.rz + initial_angle << endl;
+            float current = (r_state.rz < 0) ? (2 * M_PI + r_state.rz) : r_state.rz;
+            if (fabs(current - initial_angle) < (M_PI + 0.1) and fabs(current - initial_angle) > (M_PI - 0.1)) {
                 state = State::SEARCHING_DOOR;
                 cout << "TERMINA DE GIRAR PORFAVOR";
-            }
-            else {
+            } else {
                 rot = 0.4;
                 state_str = "ELSE EXPLORING";
                 std::vector<float> derivatives(ldata.size());
-                derivatives[0]=0;
+                derivatives[0] = 0;
                 for (auto &&[k, p]: iter::sliding_window(ldata, 2) | iter::enumerate) {
-                    derivatives[k+1] = p[1].dist - p[0].dist;
+                    derivatives[k + 1] = p[1].dist - p[0].dist;
                     //qInfo() << "Resta puntos: " << p[1].dist - p[0].dist;
                 }
 
                 std::vector<Eigen::Vector2f> peaks;
-                for (const auto &&[k, der]: iter::enumerate(derivatives))
-                {
-                    if (der > 1000)
-                    {
+                for (const auto &&[k, der]: iter::enumerate(derivatives)) {
+                    if (der > 1000) {
                         //Guarda el punto de la derivada anterior
                         const auto &l = ldata.at(k - 1);
-                        peaks.push_back(robot2world(r_state, Eigen::Vector2f(l.dist * sin(l.angle), l.dist * cos(l.angle))));
-                    } else if (der < -1000)
-                    {
+                        peaks.push_back(
+                                robot2world(r_state, Eigen::Vector2f(l.dist * sin(l.angle), l.dist * cos(l.angle))));
+                    } else if (der < -1000) {
                         //Guarda el punto de esta derivada
                         const auto &l = ldata.at(k);
-                        peaks.push_back(robot2world(r_state, Eigen::Vector2f(l.dist * sin(l.angle), l.dist * cos(l.angle))));
+                        peaks.push_back(
+                                robot2world(r_state, Eigen::Vector2f(l.dist * sin(l.angle), l.dist * cos(l.angle))));
                     }
                 }
                 //Tenemos todos los puntos de las puertas, ahora se busca la relacion entre ellas
-                for (auto &&c: iter::combinations_with_replacement(peaks, 2))
-                {
-                    if ((c[0] - c[1]).norm() < 1100 and (c[0] - c[1]).norm() > 600)
-                    {
+                for (auto &&c: iter::combinations_with_replacement(peaks, 2)) {
+                    if ((c[0] - c[1]).norm() < 1100 and (c[0] - c[1]).norm() > 500) {
                         Door d{c[0], c[1]};
-                        if (auto r = std::find_if(puertas.begin(), puertas.end(), [d](auto a) { return d == a; }); r == puertas.end())
+                        if (auto r = std::find_if(puertas.begin(), puertas.end(),
+                                                  [d](auto a) { return d == a; }); r == puertas.end())
                             puertas.emplace_back(d);
                     }
                 }
@@ -176,30 +173,66 @@ void SpecificWorker::compute()
                 for (auto dp: door_lines) viewer->scene.removeItem(dp);
                 door_lines.clear();
 
-                for (const auto r: puertas)
-                {
-                    door_lines.push_back(viewer->scene.addLine(r.dPoint1[0], r.dPoint1[1], r.dPoint2[0], r.dPoint2[1], QPen(QColor("Blue"), 100)));
+                for (const auto r: puertas) {
+                    door_lines.push_back(viewer->scene.addLine(r.dPoint1[0], r.dPoint1[1], r.dPoint2[0], r.dPoint2[1],
+                                                               QPen(QColor("Blue"), 100)));
                     door_lines.back()->setZValue(200);
                 }
-
-                break;
-                }
+//                break;
+            }
             break;
+        }
         case State::SEARCHING_DOOR:
             if(puertas.size() > 0 )
-                selectedDoor = puertas[0]; //chooseDor();
+                selectedDoor = puertas[puertas.size()-1]; //chooseDor();
             state = State::TO_DOOR;
             break;
         case State::TO_DOOR:
         {
             state_str = "TO_DOOR";
             // gotoxy
-            auto punto_medio = (selectedDoor.dPoint1 + selectedDoor.dPoint2) / 2;
+            auto punto_medio = selectedDoor.get_midpoint();
+            auto[x, y] = world2robot(r_state, punto_medio);
+            float dist = sqrt(pow(x, 2) + pow(y, 2));
+            cout << "Distancia:" << dist << endl;
+            if(dist > 300)
+            {
+                rot = atan2(-y, x) + M_PI_2;
+                float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0, reduc_angle = pow(M_E, -pow(rot*5, 2));
+                cout << "Reduc_distance: " << reduc_distance << endl;
+                cout << "Reduc_angle: " << reduc_angle << endl;
+                adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
+            }else
+                state = State::TO_MID_ROOM;
             break;
         }
         case State::TO_MID_ROOM:
             state_str = "TO_MID_ROOM";
-            //
+            auto medioInteriorSala = selectedDoor.get_internal_midpoint();
+            auto[x, y] = world2robot(r_state, medioInteriorSala);
+            float dist = sqrt(pow(x, 2) + pow(y, 2));
+            cout << "Distancia:" << dist << endl;
+            if(dist > 300)
+            {
+                rot = atan2(-y, x) + M_PI_2;
+                float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0, reduc_angle = pow(M_E, -pow(rot, 2));
+                cout << "Reduc_distance: " << reduc_distance << endl;
+                cout << "Reduc_angle: " << reduc_angle << endl;
+                adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
+            }
+            if(//medio de la puerta avanzamos :))))
+            auto medioSala = selectedDoor.get_external_midpoint();
+            auto[x, y] = world2robot(r_state, medioSala);
+            float dist = sqrt(pow(x, 2) + pow(y, 2));
+            cout << "Distancia:" << dist << endl;
+            if(dist > 300)
+            {
+                rot = atan2(-y, x) + M_PI_2;
+                float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0, reduc_angle = pow(M_E, -pow(rot, 2));
+                cout << "Reduc_distance: " << reduc_distance << endl;
+                cout << "Reduc_angle: " << reduc_angle << endl;
+                adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
+            }
             break;
     }
     cout << state_str << endl;
@@ -207,6 +240,7 @@ void SpecificWorker::compute()
     try
     {
         differentialrobot_proxy->setSpeedBase(adv, rot);
+        cout << "Velocidades: adv->" << adv << " rot->" << rot << endl;
     }
     catch (const Ice::Exception &e){ std::cout << e.what() << std::endl;}
 
@@ -285,15 +319,15 @@ void SpecificWorker::draw_laser(QPolygonF poly, RoboCompFullPoseEstimation::Full
     laser_polygon->setZValue(3);
 }
 
-std::tuple<float, float> SpecificWorker::world2robot(RoboCompGenericBase::TBaseState bState)
+std::tuple<float, float> SpecificWorker::world2robot(const RoboCompFullPoseEstimation::FullPoseEuler &r_state, const Eigen::Vector2f punto)
 {   //TODO: transpose
-//    float angle = bState.alpha;
-//    Eigen::Vector2f T(bState.x, bState.z), point_in_world(target.pos.x(),target.pos.y());
-//    Eigen::Matrix2f R;
-//    R <<  cos(angle), sin(angle),
-//         -sin(angle), cos(angle);
-//    Eigen::Vector2f point_in_robot = R * (point_in_world - T);
-//    return make_tuple(point_in_robot[0], point_in_robot[1]);//return target from robot's pov
+    float angle = r_state.rz;
+    Eigen::Vector2f T(r_state.x, r_state.y), point_in_world = punto;
+    Eigen::Matrix2f R;
+    R <<  cos(angle), sin(angle),
+         -sin(angle), cos(angle);
+    Eigen::Vector2f point_in_robot = R * (point_in_world - T);
+    return make_tuple(point_in_robot[0], point_in_robot[1]);//return target from robot's pov
 }
 
 Eigen::Vector2f SpecificWorker::robot2world(const RoboCompFullPoseEstimation::FullPoseEuler &bState, const Eigen::Vector2f &punto)
@@ -306,6 +340,7 @@ Eigen::Vector2f SpecificWorker::robot2world(const RoboCompFullPoseEstimation::Fu
     Eigen::Vector2f point_in_world = R * punto + robot;
     return point_in_world;
 }
+
 
 
 
