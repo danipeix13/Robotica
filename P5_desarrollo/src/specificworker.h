@@ -66,7 +66,7 @@ private:
     struct Door
     {
         Eigen::Vector2f dPoint1, dPoint2;
-
+        int fromRoom, toRoom;
         bool operator==(const Door &d1)
         {
             const int EROR = 500;
@@ -75,17 +75,16 @@ private:
         };
 
         Eigen::Vector2f get_midpoint() const {return dPoint1 + ((dPoint2-dPoint1)/2.0);};
-        Eigen::Vector2f get_external_midpoint() const
+        std::vector<Eigen::Vector2f> get_caminito(RoboCompFullPoseEstimation::FullPoseEuler &bState)
         {
-            Eigen::ParametrizedLine<float, 2> r =  Eigen::ParametrizedLine<float, 2>(get_midpoint(), (dPoint1-dPoint2).unitOrthogonal());
-            //qInfo() << __FUNCTION__ << r.pointAt(800.0).x() << r.pointAt(800.0).y();
-            return r.pointAt(1000.0);
-        };
-        Eigen::Vector2f get_internal_midpoint() const
-        {
-            Eigen::ParametrizedLine<float, 2> r =  Eigen::ParametrizedLine<float, 2>(get_midpoint(), (dPoint1-dPoint2).unitOrthogonal());
-            //qInfo() << __FUNCTION__ << r.pointAt(800.0).x() << r.pointAt(800.0).y();
-            return r.pointAt(-1000.0);
+            Eigen::ParametrizedLine<float, 2> r1 =  Eigen::ParametrizedLine<float, 2>(get_midpoint(), (dPoint1-dPoint2).unitOrthogonal());
+            Eigen::ParametrizedLine<float, 2> r2 =  Eigen::ParametrizedLine<float, 2>(get_midpoint(), (dPoint1-dPoint2).unitOrthogonal());
+            //qInfo() << __FUNCTION__ << r2.pointAt(800.0).x() << r.pointAt(800.0).y();
+            std::vector<Eigen::Vector2f> caminoPuerta {r1.pointAt(-1000.0), r2.pointAt(1000.0)};
+            auto robot = Eigen::Vector2f(bState.x,bState.y);
+            std::sort(caminoPuerta.begin(), caminoPuerta.end(), [=](auto &a, auto &b){ return (robot - a).norm() < (robot - b).norm();});
+            //sort(caminoPuerta.begin(), caminoPuerta.end(),[=](auto &a, auto &b){ return })
+            return caminoPuerta;
         };
 
     };
@@ -101,7 +100,7 @@ private:
 
     void update_grid(const RoboCompLaser::TLaserData &ldata, const RoboCompFullPoseEstimation::FullPoseEuler &r_state);
 
-    enum class State {IDLE, INIT_TURN, EXPLORING, TO_MID_ROOM, TO_DOOR, SEARCHING_DOOR};
+    enum class State {IDLE, INIT_TURN, EXPLORING, TO_MID_ROOM, TO_DOOR1, TO_DOOR2, SEARCHING_DOOR};
     State state;
     std::vector<Door> puertas;
     Door selectedDoor;

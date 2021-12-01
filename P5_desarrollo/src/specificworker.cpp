@@ -113,6 +113,7 @@ void SpecificWorker::compute()
     float initial_angle;
     int num_puertas = 0;
     bool insert = true;
+    static std::vector<Eigen::Vector2f> caminito;
 
     switch (state) {
         case State::IDLE:
@@ -185,54 +186,63 @@ void SpecificWorker::compute()
         case State::SEARCHING_DOOR:
             if(puertas.size() > 0 )
                 selectedDoor = puertas[puertas.size()-1]; //chooseDor();
-            state = State::TO_DOOR;
+
+            caminito = selectedDoor.get_caminito(r_state);
+            state = State::TO_DOOR1;
             break;
-        case State::TO_DOOR:
+        case State::TO_DOOR1:
         {
             state_str = "TO_DOOR";
             // gotoxy
-            auto punto_medio = selectedDoor.get_midpoint();
-            auto[x, y] = world2robot(r_state, punto_medio);
-            float dist = sqrt(pow(x, 2) + pow(y, 2));
-            cout << "Distancia:" << dist << endl;
-            if(dist > 300)
+            if (not caminito.empty())
             {
-                rot = atan2(-y, x) + M_PI_2;
-                float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0, reduc_angle = pow(M_E, -pow(rot*5, 2));
-                cout << "Reduc_distance: " << reduc_distance << endl;
-                cout << "Reduc_angle: " << reduc_angle << endl;
-                adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
+                auto punto_medio = caminito.front();
+                auto[x, y] = world2robot(r_state, punto_medio);
+                float dist = sqrt(pow(x, 2) + pow(y, 2));
+                cout << "Distancia:" << dist << endl;
+                if(dist > 300)
+                {
+                    rot = atan2(-y, x) + M_PI_2;
+                    float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0, reduc_angle = pow(M_E, -pow(rot*5, 2));
+                    cout << "Reduc_distance: " << reduc_distance << endl;
+                    cout << "Reduc_angle: " << reduc_angle << endl;
+                    adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
+                }else{
+                    caminito.erase(caminito.begin());
+                }
             }else
                 state = State::TO_MID_ROOM;
             break;
         }
         case State::TO_MID_ROOM:
-            state_str = "TO_MID_ROOM";
-            auto medioInteriorSala = selectedDoor.get_internal_midpoint();
-            auto[x, y] = world2robot(r_state, medioInteriorSala);
-            float dist = sqrt(pow(x, 2) + pow(y, 2));
-            cout << "Distancia:" << dist << endl;
-            if(dist > 300)
-            {
-                rot = atan2(-y, x) + M_PI_2;
-                float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0, reduc_angle = pow(M_E, -pow(rot, 2));
-                cout << "Reduc_distance: " << reduc_distance << endl;
-                cout << "Reduc_angle: " << reduc_angle << endl;
-                adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
-            }
-            if(//medio de la puerta avanzamos :))))
-            auto medioSala = selectedDoor.get_external_midpoint();
-            auto[x, y] = world2robot(r_state, medioSala);
-            float dist = sqrt(pow(x, 2) + pow(y, 2));
-            cout << "Distancia:" << dist << endl;
-            if(dist > 300)
-            {
-                rot = atan2(-y, x) + M_PI_2;
-                float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0, reduc_angle = pow(M_E, -pow(rot, 2));
-                cout << "Reduc_distance: " << reduc_distance << endl;
-                cout << "Reduc_angle: " << reduc_angle << endl;
-                adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
-            }
+            cout << "CACADEBACA" << endl;
+//            state_str = "TO_MID_ROOM";
+//            auto medioInteriorSala = selectedDoor.get_internal_midpoint();
+//            auto[x, y] = world2robot(r_state, medioInteriorSala);
+//            float dist = sqrt(pow(x, 2) + pow(y, 2));
+//            cout << "Distancia:" << dist << endl;
+//            if(dist > 300)
+//            {
+//                rot = atan2(-y, x) + M_PI_2;
+//                float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0, reduc_angle = pow(M_E, -pow(rot, 2));
+//                cout << "Reduc_distance: " << reduc_distance << endl;
+//                cout << "Reduc_angle: " << reduc_angle << endl;
+//                adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
+//            }
+//
+//            if(//medio de la puerta avanzamos :))))
+//            auto medioSala = selectedDoor.get_caminito();
+//            auto[x, y] = world2robot(r_state, medioSala);
+//            float dist = sqrt(pow(x, 2) + pow(y, 2));
+//            cout << "Distancia:" << dist << endl;
+//            if(dist > 300)
+//            {
+//                rot = atan2(-y, x) + M_PI_2;
+//                float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0, reduc_angle = pow(M_E, -pow(rot, 2));
+//                cout << "Reduc_distance: " << reduc_distance << endl;
+//                cout << "Reduc_angle: " << reduc_angle << endl;
+//                adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
+//            }
             break;
     }
     cout << state_str << endl;
