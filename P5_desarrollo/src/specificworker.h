@@ -78,9 +78,9 @@ private:
         std::vector<Eigen::Vector2f> get_caminito(RoboCompFullPoseEstimation::FullPoseEuler &bState)
         {
             Eigen::ParametrizedLine<float, 2> r1 =  Eigen::ParametrizedLine<float, 2>(get_midpoint(), (dPoint1-dPoint2).unitOrthogonal());
-            Eigen::ParametrizedLine<float, 2> r2 =  Eigen::ParametrizedLine<float, 2>(get_midpoint(), (dPoint1-dPoint2).unitOrthogonal());
+            //Eigen::ParametrizedLine<float, 2> r2 =  Eigen::ParametrizedLine<float, 2>(get_midpoint(), (dPoint1-dPoint2).unitOrthogonal());
             //qInfo() << __FUNCTION__ << r2.pointAt(800.0).x() << r.pointAt(800.0).y();
-            std::vector<Eigen::Vector2f> caminoPuerta {r1.pointAt(-1000.0), r2.pointAt(1000.0)};
+            std::vector<Eigen::Vector2f> caminoPuerta {r1.pointAt(-1000.0), r1.pointAt(1500.0)};
             auto robot = Eigen::Vector2f(bState.x,bState.y);
             std::sort(caminoPuerta.begin(), caminoPuerta.end(), [=](auto &a, auto &b){ return (robot - a).norm() < (robot - b).norm();});
             //sort(caminoPuerta.begin(), caminoPuerta.end(),[=](auto &a, auto &b){ return })

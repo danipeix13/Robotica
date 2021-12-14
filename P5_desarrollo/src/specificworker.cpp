@@ -146,12 +146,12 @@ void SpecificWorker::compute()
 
                 std::vector<Eigen::Vector2f> peaks;
                 for (const auto &&[k, der]: iter::enumerate(derivatives)) {
-                    if (der > 1000) {
+                    if (der > 800) {
                         //Guarda el punto de la derivada anterior
                         const auto &l = ldata.at(k - 1);
                         peaks.push_back(
                                 robot2world(r_state, Eigen::Vector2f(l.dist * sin(l.angle), l.dist * cos(l.angle))));
-                    } else if (der < -1000) {
+                    } else if (der < -800) {
                         //Guarda el punto de esta derivada
                         const auto &l = ldata.at(k);
                         peaks.push_back(
@@ -160,7 +160,7 @@ void SpecificWorker::compute()
                 }
                 //Tenemos todos los puntos de las puertas, ahora se busca la relacion entre ellas
                 for (auto &&c: iter::combinations_with_replacement(peaks, 2)) {
-                    if ((c[0] - c[1]).norm() < 1100 and (c[0] - c[1]).norm() > 500) {
+                    if ((c[0] - c[1]).norm() < 1100 and (c[0] - c[1]).norm() > 400) {
                         Door d{c[0], c[1]};
                         if (auto r = std::find_if(puertas.begin(), puertas.end(),
                                                   [d](auto a) { return d == a; }); r == puertas.end())
@@ -207,15 +207,19 @@ void SpecificWorker::compute()
                     cout << "Reduc_distance: " << reduc_distance << endl;
                     cout << "Reduc_angle: " << reduc_angle << endl;
                     adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
-                }else{
+                }
+                else
+                {
                     caminito.erase(caminito.begin());
                 }
-            }else
+            }
+            else
                 state = State::TO_MID_ROOM;
             break;
         }
         case State::TO_MID_ROOM:
             cout << "CACADEBACA" << endl;
+            state = State::EXPLORING;
 //            state_str = "TO_MID_ROOM";
 //            auto medioInteriorSala = selectedDoor.get_internal_midpoint();
 //            auto[x, y] = world2robot(r_state, medioInteriorSala);
