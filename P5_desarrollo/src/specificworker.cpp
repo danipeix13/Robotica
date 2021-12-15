@@ -61,7 +61,7 @@ void SpecificWorker::initialize(int period)
 	}
     QRect dimensions(-5100, -2600, 10200, 5200);
     viewer = new AbstractGraphicViewer(this->frame, dimensions);
-    this->resize(1200,600);
+    this->resize(900,400); //1200, 600
     robot_polygon = viewer->add_robot(ROBOT_LENGTH);
     laser_in_robot_polygon = new QGraphicsRectItem(-10, 10, 20, 20, robot_polygon);
     laser_in_robot_polygon->setPos(0, 190);     // move this to abstract
@@ -113,6 +113,7 @@ void SpecificWorker::compute()
     float initial_angle;
     int num_puertas = 0;
     bool insert = true;
+    static int current_room = 0;
     static std::vector<Eigen::Vector2f> caminito;
 
     switch (state) {
@@ -146,12 +147,12 @@ void SpecificWorker::compute()
 
                 std::vector<Eigen::Vector2f> peaks;
                 for (const auto &&[k, der]: iter::enumerate(derivatives)) {
-                    if (der > 800) {
+                    if (der > 600) {
                         //Guarda el punto de la derivada anterior
                         const auto &l = ldata.at(k - 1);
                         peaks.push_back(
                                 robot2world(r_state, Eigen::Vector2f(l.dist * sin(l.angle), l.dist * cos(l.angle))));
-                    } else if (der < -800) {
+                    } else if (der < -600) {
                         //Guarda el punto de esta derivada
                         const auto &l = ldata.at(k);
                         peaks.push_back(
@@ -160,8 +161,9 @@ void SpecificWorker::compute()
                 }
                 //Tenemos todos los puntos de las puertas, ahora se busca la relacion entre ellas
                 for (auto &&c: iter::combinations_with_replacement(peaks, 2)) {
-                    if ((c[0] - c[1]).norm() < 1100 and (c[0] - c[1]).norm() > 400) {
+                    if ((c[0] - c[1]).norm() < 1100 and (c[0] - c[1]).norm() > 500) {
                         Door d{c[0], c[1]};
+                        d.rooms.insert(current_room);
                         if (auto r = std::find_if(puertas.begin(), puertas.end(),
                                                   [d](auto a) { return d == a; }); r == puertas.end())
                             puertas.emplace_back(d);
@@ -184,10 +186,13 @@ void SpecificWorker::compute()
             break;
         }
         case State::SEARCHING_DOOR:
+            
             if(puertas.size() > 0 )
                 selectedDoor = puertas[puertas.size()-1]; //chooseDor();
 
             caminito = selectedDoor.get_caminito(r_state);
+            current_room += 1;
+
             state = State::TO_DOOR1;
             break;
         case State::TO_DOOR1:

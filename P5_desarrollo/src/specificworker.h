@@ -66,7 +66,7 @@ private:
     struct Door
     {
         Eigen::Vector2f dPoint1, dPoint2;
-        int fromRoom, toRoom;
+        std::set<int> rooms;
         bool operator==(const Door &d1)
         {
             const int EROR = 500;
