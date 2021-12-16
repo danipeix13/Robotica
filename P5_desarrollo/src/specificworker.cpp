@@ -17,10 +17,7 @@
  *    along with RoboComp.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "specificworker.h"
-#include <cppitertools/range.hpp>
-#include <cppitertools/sliding_window.hpp>
-#include <cppitertools/enumerate.hpp>
-#include <cppitertools/combinations_with_replacement.hpp>
+
 
 #define MAX_ADV_SPEED 1000
 #define umbral 400
@@ -61,7 +58,7 @@ void SpecificWorker::initialize(int period)
 	}
     QRect dimensions(-5100, -2600, 10200, 5200);
     viewer = new AbstractGraphicViewer(this->frame, dimensions);
-    this->resize(900,400); //1200, 600
+    this->resize(900,450); //1200, 600
     robot_polygon = viewer->add_robot(ROBOT_LENGTH);
     laser_in_robot_polygon = new QGraphicsRectItem(-10, 10, 20, 20, robot_polygon);
     laser_in_robot_polygon->setPos(0, 190);     // move this to abstract
@@ -114,7 +111,8 @@ void SpecificWorker::compute()
     int num_puertas = 0;
     bool insert = true;
     static int current_room = 0;
-    static std::vector<Eigen::Vector2f> caminito;
+    static Eigen::Vector2f caminito;
+    static Dynamic_Window dw;
 
     switch (state) {
         case State::IDLE:
@@ -122,7 +120,7 @@ void SpecificWorker::compute()
             state = State::INIT_TURN;
             break;
         case State::INIT_TURN:
-            initial_angle = (r_state.rz < 0) ? (2 * M_PI + r_state.rz) : r_state.rz;
+            //initial_angle = (r_state.rz < 0) ? (2 * M_PI + r_state.rz) : r_state.rz;
             num_puertas = puertas.size();
             state = State::EXPLORING;
             break;
@@ -130,13 +128,19 @@ void SpecificWorker::compute()
         {
             state_str = "EXPLORING";
             // turn until zero derivative
-            cout << r_state.rz + initial_angle << endl;
-            float current = (r_state.rz < 0) ? (2 * M_PI + r_state.rz) : r_state.rz;
-            if (fabs(current - initial_angle) < (M_PI + 0.1) and fabs(current - initial_angle) > (M_PI - 0.1)) {
+            //cout << r_state.rz + initial_angle << endl;
+            //float current = (r_state.rz < 0) ? (2 * M_PI + r_state.rz) : r_state.rz;
+            float stop = grid.percentage_changed()*1000;
+            cout << "STOP VALUE: " << stop << endl;
+            if (stop < 1.2)
+            {
+
+                    //fabs(current - initial_angle) < (M_PI + 0.1) and fabs(current - initial_angle) > (M_PI - 0.1)) {
                 state = State::SEARCHING_DOOR;
                 cout << "TERMINA DE GIRAR PORFAVOR";
-            } else {
-                rot = 0.4;
+            } else
+            {
+                rot = 0.5;
                 state_str = "ELSE EXPLORING";
                 std::vector<float> derivatives(ldata.size());
                 derivatives[0] = 0;
@@ -147,12 +151,13 @@ void SpecificWorker::compute()
 
                 std::vector<Eigen::Vector2f> peaks;
                 for (const auto &&[k, der]: iter::enumerate(derivatives)) {
-                    if (der > 600) {
+                    if (der > 600)
+                    {
                         //Guarda el punto de la derivada anterior
                         const auto &l = ldata.at(k - 1);
-                        peaks.push_back(
-                                robot2world(r_state, Eigen::Vector2f(l.dist * sin(l.angle), l.dist * cos(l.angle))));
-                    } else if (der < -600) {
+                        peaks.push_back(robot2world(r_state, Eigen::Vector2f(l.dist * sin(l.angle), l.dist * cos(l.angle))));
+                    } else if (der < -600)
+                    {
                         //Guarda el punto de esta derivada
                         const auto &l = ldata.at(k);
                         peaks.push_back(
@@ -190,7 +195,7 @@ void SpecificWorker::compute()
             if(puertas.size() > 0 )
                 selectedDoor = puertas[puertas.size()-1]; //chooseDor();
 
-            caminito = selectedDoor.get_caminito(r_state);
+            caminito = selectedDoor.get_external_midpoint();
             current_room += 1;
 
             state = State::TO_DOOR1;
@@ -199,59 +204,44 @@ void SpecificWorker::compute()
         {
             state_str = "TO_DOOR";
             // gotoxy
-            if (not caminito.empty())
+            //auto punto_medio = caminito.front();
+            auto[x, y] = world2robot(r_state, caminito);
+
+            // goto p0int
+            Eigen::Vector2f tr = {x,y};
+            float dist = tr.norm();
+            if(dist < 300)  // at target
             {
-                auto punto_medio = caminito.front();
-                auto[x, y] = world2robot(r_state, punto_medio);
-                float dist = sqrt(pow(x, 2) + pow(y, 2));
-                cout << "Distancia:" << dist << endl;
-                if(dist > 300)
-                {
-                    rot = atan2(-y, x) + M_PI_2;
-                    float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0, reduc_angle = pow(M_E, -pow(rot*5, 2));
-                    cout << "Reduc_distance: " << reduc_distance << endl;
-                    cout << "Reduc_angle: " << reduc_angle << endl;
-                    adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
-                }
-                else
-                {
-                    caminito.erase(caminito.begin());
-                }
+                //qInfo() << __FUNCTION__ << "    Robot reached target room" << data_state.next_room;
+                cout << "He llegado" << endl;
+                state = State::EXPLORING;
+
             }
-            else
-                state = State::TO_MID_ROOM;
-            break;
+            else  // continue to room
+            {
+                // call dynamic window
+                QPolygonF laser_poly;
+                for(auto &&l : ldata)
+                    laser_poly << QPointF(l.dist*sin(l.angle), l.dist*cos(l.angle));
+                auto [_, __, advance, rotation, ___] = dw.compute(tr, laser_poly,
+                                                         Eigen::Vector3f(r_state.x, r_state.y, r_state.rz),
+                                                         Eigen::Vector3f(r_state.vx, r_state.vy, r_state.vrz),
+                                                         nullptr /*&viewer_robot->scene*/);
+
+                cout << "Rotation: " << rotation << " Advance: " << advance << endl;
+                const float rgain = 0.8;
+                float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0;
+                rot = rgain*rotation;
+                //float dist_break = std::clamp(world2robot(target.to_eigen()).norm() / 1000.0, 0.0, 1.0);
+                adv = MAX_ADV_SPEED * reduc_distance * pow(M_E, -pow(rot*5, 2));
+
+            }
+        break;
         }
         case State::TO_MID_ROOM:
             cout << "CACADEBACA" << endl;
             state = State::EXPLORING;
-//            state_str = "TO_MID_ROOM";
-//            auto medioInteriorSala = selectedDoor.get_internal_midpoint();
-//            auto[x, y] = world2robot(r_state, medioInteriorSala);
-//            float dist = sqrt(pow(x, 2) + pow(y, 2));
-//            cout << "Distancia:" << dist << endl;
-//            if(dist > 300)
-//            {
-//                rot = atan2(-y, x) + M_PI_2;
-//                float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0, reduc_angle = pow(M_E, -pow(rot, 2));
-//                cout << "Reduc_distance: " << reduc_distance << endl;
-//                cout << "Reduc_angle: " << reduc_angle << endl;
-//                adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
-//            }
-//
-//            if(//medio de la puerta avanzamos :))))
-//            auto medioSala = selectedDoor.get_caminito();
-//            auto[x, y] = world2robot(r_state, medioSala);
-//            float dist = sqrt(pow(x, 2) + pow(y, 2));
-//            cout << "Distancia:" << dist << endl;
-//            if(dist > 300)
-//            {
-//                rot = atan2(-y, x) + M_PI_2;
-//                float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0, reduc_angle = pow(M_E, -pow(rot, 2));
-//                cout << "Reduc_distance: " << reduc_distance << endl;
-//                cout << "Reduc_angle: " << reduc_angle << endl;
-//                adv = MAX_ADV_SPEED * reduc_distance * reduc_angle;
-//            }
+
             break;
     }
     cout << state_str << endl;

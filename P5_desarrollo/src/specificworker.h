@@ -32,6 +32,11 @@
 #include <eigen3/Eigen/Eigen>
 #include <cppitertools/enumerate.hpp>
 #include <qcustomplot.h>
+#include <cppitertools/range.hpp>
+#include <cppitertools/sliding_window.hpp>
+#include <cppitertools/enumerate.hpp>
+#include <cppitertools/combinations_with_replacement.hpp>
+#include "dynamic_window.h"
 
 class SpecificWorker : public GenericWorker
 {
@@ -75,6 +80,7 @@ private:
         };
 
         Eigen::Vector2f get_midpoint() const {return dPoint1 + ((dPoint2-dPoint1)/2.0);};
+
         std::vector<Eigen::Vector2f> get_caminito(RoboCompFullPoseEstimation::FullPoseEuler &bState)
         {
             Eigen::ParametrizedLine<float, 2> r1 =  Eigen::ParametrizedLine<float, 2>(get_midpoint(), (dPoint1-dPoint2).unitOrthogonal());
@@ -87,6 +93,12 @@ private:
             return caminoPuerta;
         };
 
+        Eigen::Vector2f get_external_midpoint() const
+        {
+            Eigen::ParametrizedLine<float, 2> r =  Eigen::ParametrizedLine<float, 2>(get_midpoint(), (dPoint1-dPoint2).unitOrthogonal());
+            //qInfo() << __FUNCTION__ << r.pointAt(800.0).x() << r.pointAt(800.0).y();
+            return r.pointAt(1300.0);
+        };
     };
 
     Grid grid;
