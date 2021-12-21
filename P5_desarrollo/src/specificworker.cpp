@@ -57,7 +57,9 @@ void SpecificWorker::initialize(int period)
 		timer.start(Period);
 	}
     QRect dimensions(-5100, -2600, 10200, 5200);
-    viewer = new AbstractGraphicViewer(this->frame, dimensions);
+    viewer = new AbstractGraphicViewer(this->frame_grid, dimensions);
+    viewer_graph = new AbstractGraphicViewer(this->frame_graph, dimensions);
+
     this->resize(900,450); //1200, 600
     robot_polygon = viewer->add_robot(ROBOT_LENGTH);
     laser_in_robot_polygon = new QGraphicsRectItem(-10, 10, 20, 20, robot_polygon);
@@ -92,6 +94,7 @@ void SpecificWorker::initialize(int period)
 
 void SpecificWorker::compute()
 {
+    static vector<QRectF> puntitos;
     RoboCompFullPoseEstimation::FullPoseEuler r_state;
     RoboCompLaser::TLaserData ldata;
     try
@@ -110,7 +113,7 @@ void SpecificWorker::compute()
     float initial_angle;
     int num_puertas = 0;
     bool insert = true;
-    static int current_room = 0;
+    static int current_room = 0, n_rooms;
     static Eigen::Vector2f caminito;
     static Dynamic_Window dw;
 
@@ -120,43 +123,48 @@ void SpecificWorker::compute()
             state = State::INIT_TURN;
             break;
         case State::INIT_TURN:
-            //initial_angle = (r_state.rz < 0) ? (2 * M_PI + r_state.rz) : r_state.rz;
+            initial_angle = (r_state.rz < 0) ? (2 * M_PI + r_state.rz) : r_state.rz;
             num_puertas = puertas.size();
             state = State::EXPLORING;
             break;
         case State::EXPLORING:
         {
+            QRectF rect(r_state.x,r_state.y, 500 , 500);
+            puntitos.push_back(rect);
             state_str = "EXPLORING";
             // turn until zero derivative
             //cout << r_state.rz + initial_angle << endl;
-            //float current = (r_state.rz < 0) ? (2 * M_PI + r_state.rz) : r_state.rz;
+            float current = (r_state.rz < 0) ? (2 * M_PI + r_state.rz) : r_state.rz;
             float stop = grid.percentage_changed()*1000;
             cout << "STOP VALUE: " << stop << endl;
-            if (stop < 1.2)
+            if (fabs(current - initial_angle) < (M_PI + 0.1) and fabs(current - initial_angle) > (M_PI - 0.1))
             {
-
-                    //fabs(current - initial_angle) < (M_PI + 0.1) and fabs(current - initial_angle) > (M_PI - 0.1)) {
+                    // {
                 state = State::SEARCHING_DOOR;
                 cout << "TERMINA DE GIRAR PORFAVOR";
-            } else
+            }
+            else
             {
                 rot = 0.5;
                 state_str = "ELSE EXPLORING";
                 std::vector<float> derivatives(ldata.size());
                 derivatives[0] = 0;
-                for (auto &&[k, p]: iter::sliding_window(ldata, 2) | iter::enumerate) {
+                for (auto &&[k, p]: iter::sliding_window(ldata, 2) | iter::enumerate)
+                {
                     derivatives[k + 1] = p[1].dist - p[0].dist;
                     //qInfo() << "Resta puntos: " << p[1].dist - p[0].dist;
                 }
 
                 std::vector<Eigen::Vector2f> peaks;
-                for (const auto &&[k, der]: iter::enumerate(derivatives)) {
-                    if (der > 600)
+                for (const auto &&[k, der]: iter::enumerate(derivatives))
+                {
+                    if (der > 800)
                     {
                         //Guarda el punto de la derivada anterior
                         const auto &l = ldata.at(k - 1);
                         peaks.push_back(robot2world(r_state, Eigen::Vector2f(l.dist * sin(l.angle), l.dist * cos(l.angle))));
-                    } else if (der < -600)
+                    }
+                    else if (der < -800)
                     {
                         //Guarda el punto de esta derivada
                         const auto &l = ldata.at(k);
@@ -165,9 +173,12 @@ void SpecificWorker::compute()
                     }
                 }
                 //Tenemos todos los puntos de las puertas, ahora se busca la relacion entre ellas
-                for (auto &&c: iter::combinations_with_replacement(peaks, 2)) {
-                    if ((c[0] - c[1]).norm() < 1100 and (c[0] - c[1]).norm() > 500) {
+                for (auto &&c: iter::combinations_with_replacement(peaks, 2))
+                {
+                    if ((c[0] - c[1]).norm() < 1100 and (c[0] - c[1]).norm() > 600)
+                    {
                         Door d{c[0], c[1]};
+                        d.pasada = false;
                         d.rooms.insert(current_room);
                         if (auto r = std::find_if(puertas.begin(), puertas.end(),
                                                   [d](auto a) { return d == a; }); r == puertas.end())
@@ -181,7 +192,8 @@ void SpecificWorker::compute()
                 for (auto dp: door_lines) viewer->scene.removeItem(dp);
                 door_lines.clear();
 
-                for (const auto r: puertas) {
+                for (const auto r: puertas)
+                {
                     door_lines.push_back(viewer->scene.addLine(r.dPoint1[0], r.dPoint1[1], r.dPoint2[0], r.dPoint2[1],
                                                                QPen(QColor("Blue"), 100)));
                     door_lines.back()->setZValue(200);
@@ -193,11 +205,13 @@ void SpecificWorker::compute()
         case State::SEARCHING_DOOR:
             
             if(puertas.size() > 0 )
-                selectedDoor = puertas[puertas.size()-1]; //chooseDor();
+                selectedDoor = &puertas[puertas.size()-1]; //chooseDor();
 
-            caminito = selectedDoor.get_external_midpoint();
+            caminito = selectedDoor->get_external_midpoint();
             current_room += 1;
 
+            selectedDoor->rooms.insert(current_room);
+            pintarGrafo(puntitos);
             state = State::TO_DOOR1;
             break;
         case State::TO_DOOR1:
@@ -212,10 +226,17 @@ void SpecificWorker::compute()
             float dist = tr.norm();
             if(dist < 300)  // at target
             {
-                //qInfo() << __FUNCTION__ << "    Robot reached target room" << data_state.next_room;
+                selectedDoor->pasada = true;
+                if (puertas.size() == n_rooms)
+                {
+                    cout << "C A C A D E B A C A C A C A D E B A C A C A C A D E B A C A" << endl;
+                }
+                else
+                {
+                    n_rooms = puertas.size();
+                }
                 cout << "He llegado" << endl;
                 state = State::EXPLORING;
-
             }
             else  // continue to room
             {
@@ -228,13 +249,11 @@ void SpecificWorker::compute()
                                                          Eigen::Vector3f(r_state.vx, r_state.vy, r_state.vrz),
                                                          nullptr /*&viewer_robot->scene*/);
 
-                cout << "Rotation: " << rotation << " Advance: " << advance << endl;
-                const float rgain = 0.8;
+                //cout << "Rotation: " << rotation << " Advance: " << advance << endl;
+                const float rgain = 0.6;
                 float reduc_distance = (dist < 1000) ? dist / 1000.0 : 1.0;
                 rot = rgain*rotation;
-                //float dist_break = std::clamp(world2robot(target.to_eigen()).norm() / 1000.0, 0.0, 1.0);
-                adv = MAX_ADV_SPEED * reduc_distance * pow(M_E, -pow(rot*5, 2));
-
+                adv = MAX_ADV_SPEED * reduc_distance * pow(M_E, -pow(rot*6, 2));
             }
         break;
         }
@@ -246,13 +265,45 @@ void SpecificWorker::compute()
     }
     cout << state_str << endl;
 
+    /*CACADEBACA*/
+
+
     try
     {
         differentialrobot_proxy->setSpeedBase(adv, rot);
         cout << "Velocidades: adv->" << adv << " rot->" << rot << endl;
     }
     catch (const Ice::Exception &e){ std::cout << e.what() << std::endl;}
+}
 
+void SpecificWorker::pintarGrafo(std::vector<QRectF> p)
+{
+    std::vector<QString> c;
+    c.push_back("Black");
+    c.push_back("Red");
+    c.push_back("Blue");
+    int i = 0;
+
+    viewer_graph->scene.clear();
+//    QRectF rectangulito();
+//    viewer_graph->scene.addRect(rectangulito, QPen(QColor("Yellow")), QBrush(QColor("Yellow")));
+    for (auto &&punto: p)
+        viewer_graph->scene.addEllipse(punto, QPen(QColor("Yellow")), QBrush(QColor("Yellow")));
+
+    for (auto &&puerta: puertas)
+    {
+//        auto color = c[++i % c.size()];
+//        if(puerta.rooms.size() == 1)
+//            continue;
+//        int room1 = *puerta.rooms.begin();
+//        int room2 = *(std::next(puerta.rooms.begin()));
+//                //(puerta.rooms.size() == 2) ? *(++iter) : room1;
+//
+//        cout << "room1: " << room1 << " room2: " << room2 << endl;
+//        QLineF linea(p.at(room1).center().x(), p.at(room1).center().y(), p.at(room2).center().x()-300, p.at(room2).center().y()-300);
+//        viewer_graph->scene.addLine(linea, QPen(QColor(color),100));
+
+    }
 }
 
 void SpecificWorker::update_grid(const RoboCompLaser::TLaserData &ldata, const RoboCompFullPoseEstimation::FullPoseEuler &r_state)

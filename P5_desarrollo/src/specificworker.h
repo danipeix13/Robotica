@@ -54,9 +54,10 @@ public slots:
     void realtime_data_slot(double);
 
 private:
+
 	std::shared_ptr < InnerModel > innerModel;
 	bool startup_check_flag;
-    AbstractGraphicViewer *viewer;
+    AbstractGraphicViewer *viewer,*viewer_graph;
     const int ROBOT_LENGTH = 400;
     QGraphicsPolygonItem *robot_polygon;
     QGraphicsRectItem *laser_in_robot_polygon;
@@ -72,6 +73,8 @@ private:
     {
         Eigen::Vector2f dPoint1, dPoint2;
         std::set<int> rooms;
+        bool pasada;
+
         bool operator==(const Door &d1)
         {
             const int EROR = 500;
@@ -105,7 +108,7 @@ private:
     void draw_laser(QPolygonF poly, RoboCompFullPoseEstimation::FullPoseEuler bState);
     std::tuple<float, float> world2robot(const RoboCompFullPoseEstimation::FullPoseEuler &r_state, const Eigen::Vector2f punto);
     Eigen::Vector2f robot2world(const RoboCompFullPoseEstimation::FullPoseEuler &bState, const Eigen::Vector2f &punto);
-
+    void pintarGrafo(std::vector<QRectF> p);
     // timeserues
     QCustomPlot *customPlot;
     QTimer time_series_timer;
@@ -115,7 +118,7 @@ private:
     enum class State {IDLE, INIT_TURN, EXPLORING, TO_MID_ROOM, TO_DOOR1, TO_DOOR2, SEARCHING_DOOR};
     State state;
     std::vector<Door> puertas;
-    Door selectedDoor;
+    Door *selectedDoor;
 };
 
 #endif
