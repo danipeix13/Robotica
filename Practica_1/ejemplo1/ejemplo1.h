@@ -27,6 +27,7 @@ class ejemplo1 : public QWidget, public Ui_Counter
     private:
         bool stopped;
         int time, timerLimit;
+        QTimer *timer;
 };
 
 #endif // ejemplo1_H
