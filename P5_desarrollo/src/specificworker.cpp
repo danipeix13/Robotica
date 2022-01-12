@@ -116,36 +116,47 @@ void SpecificWorker::compute()
     static int current_room = 0, n_rooms;
     static Eigen::Vector2f caminito;
     static Dynamic_Window dw;
+    static bool hilo = true;
 
     switch (state) {
         case State::IDLE:
             state_str = "IDLE";
             state = State::INIT_TURN;
             break;
-        case State::INIT_TURN:
+        case State::INIT_TURN: {
             initial_angle = (r_state.rz < 0) ? (2 * M_PI + r_state.rz) : r_state.rz;
             num_puertas = puertas.size();
             state = State::EXPLORING;
             break;
+        }
         case State::EXPLORING:
         {
-
+            if (hilo){
+                std::thread t([=]() {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+                    QRectF rect(r_state.x, r_state.y, 500, 500);
+                    puntitos.push_back(rect);
+                    state = State::SEARCHING_DOOR;
+                });
+                t.detach();
+                hilo = false;
+            }
             state_str = "EXPLORING";
             // turn until zero derivative
             //cout << r_state.rz + initial_angle << endl;
             float current = (r_state.rz < 0) ? (2 * M_PI + r_state.rz) : r_state.rz;
             float stop = grid.percentage_changed()*1000;
             cout << "STOP VALUE: " << stop << endl;
-            if (fabs(current - initial_angle) < (M_PI + 0.1) and fabs(current - initial_angle) > (M_PI - 0.1))
-            {
-                    // {
-                QRectF rect(r_state.x,r_state.y, 500 , 500);
-                puntitos.push_back(rect);
-                state = State::SEARCHING_DOOR;
-                cout << "TERMINA DE GIRAR PORFAVOR";
-            }
-            else
-            {
+//            if (fabs(current - initial_angle) < (M_PI + 0.1) and fabs(current - initial_angle) > (M_PI - 0.1))
+//            {
+//                    // {
+//                QRectF rect(r_state.x,r_state.y, 500 , 500);
+//                puntitos.push_back(rect);
+//                state = State::SEARCHING_DOOR;
+//                cout << "TERMINA DE GIRAR PORFAVOR";
+//            }
+//            else
+//            {
                 rot = 0.5;
                 state_str = "ELSE EXPLORING";
                 std::vector<float> derivatives(ldata.size());
@@ -200,7 +211,7 @@ void SpecificWorker::compute()
                     door_lines.back()->setZValue(200);
                 }
 //                break;
-            }
+//            }
             break;
         }
         case State::SEARCHING_DOOR:
@@ -241,6 +252,7 @@ void SpecificWorker::compute()
                 }
                 cout << "He llegado" << endl;
                 state = State::EXPLORING;
+                hilo = true;
             }
             else  // continue to room
             {
