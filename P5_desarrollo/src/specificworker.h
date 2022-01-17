@@ -54,71 +54,49 @@ public slots:
     void realtime_data_slot(double);
 
 private:
-
-	std::shared_ptr < InnerModel > innerModel;
 	bool startup_check_flag;
     AbstractGraphicViewer *viewer,*viewer_graph;
     const int ROBOT_LENGTH = 400;
     QGraphicsPolygonItem *robot_polygon;
     QGraphicsRectItem *laser_in_robot_polygon;
-    QPointF last_point;
+    Grid grid;
+    QCustomPlot *customPlot;
 
-    struct Target
-    {
-        float a,b,c;
-        QPointF pos;
-        bool activo;
-    };
     struct Door
     {
         Eigen::Vector2f dPoint1, dPoint2;
         std::set<int> rooms;
-        bool pasada;
 
         bool operator==(const Door &d1)
         {
-            const int EROR = 500;
-            return (dPoint1 - d1.dPoint1).norm() < EROR and (dPoint2 - d1.dPoint2).norm() < EROR or
-            (dPoint1 - d1.dPoint2).norm() < EROR and (dPoint2 - d1.dPoint1).norm() < EROR;
+            const int ERROR = 500;
+            return ((dPoint1 - d1.dPoint1).norm() < ERROR && (dPoint2 - d1.dPoint2).norm() < ERROR) ||
+            ((dPoint1 - d1.dPoint2).norm() < ERROR && (dPoint2 - d1.dPoint1).norm() < ERROR);
         };
 
-        Eigen::Vector2f get_midpoint() const {return dPoint1 + ((dPoint2-dPoint1)/2.0);};
-
-        std::vector<Eigen::Vector2f> get_caminito(RoboCompFullPoseEstimation::FullPoseEuler &bState)
+        Eigen::Vector2f get_midpoint() const
         {
-            Eigen::ParametrizedLine<float, 2> r1 =  Eigen::ParametrizedLine<float, 2>(get_midpoint(), (dPoint1-dPoint2).unitOrthogonal());
-            //Eigen::ParametrizedLine<float, 2> r2 =  Eigen::ParametrizedLine<float, 2>(get_midpoint(), (dPoint1-dPoint2).unitOrthogonal());
-            //qInfo() << __FUNCTION__ << r2.pointAt(800.0).x() << r.pointAt(800.0).y();
-            std::vector<Eigen::Vector2f> caminoPuerta {r1.pointAt(-1000.0), r1.pointAt(1500.0)};
-            auto robot = Eigen::Vector2f(bState.x,bState.y);
-            std::sort(caminoPuerta.begin(), caminoPuerta.end(), [=](auto &a, auto &b){ return (robot - a).norm() < (robot - b).norm();});
-            //sort(caminoPuerta.begin(), caminoPuerta.end(),[=](auto &a, auto &b){ return })
-            return caminoPuerta;
+            return dPoint1 + ((dPoint2-dPoint1) / 2.0);
         };
 
         Eigen::Vector2f get_external_midpoint() const
         {
-            Eigen::ParametrizedLine<float, 2> r =  Eigen::ParametrizedLine<float, 2>(get_midpoint(), (dPoint1-dPoint2).unitOrthogonal());
-            //qInfo() << __FUNCTION__ << r.pointAt(800.0).x() << r.pointAt(800.0).y();
-            return r.pointAt(1300.0);
+            Eigen::ParametrizedLine<float, 2> r =  Eigen::ParametrizedLine<float, 2>(get_midpoint(), (dPoint1 - dPoint2).unitOrthogonal());
+            return r.pointAt(1750.0);
         };
     };
+    Door *selectedDoor;
+    std::vector<Door> puertas;
 
-    Grid grid;
+    enum class State {IDLE, EXPLORING, TO_DOOR, SEARCHING_DOOR};
+    State state;
+
     void draw_laser(QPolygonF poly, RoboCompFullPoseEstimation::FullPoseEuler bState);
     std::tuple<float, float> world2robot(const RoboCompFullPoseEstimation::FullPoseEuler &r_state, const Eigen::Vector2f punto);
     Eigen::Vector2f robot2world(const RoboCompFullPoseEstimation::FullPoseEuler &bState, const Eigen::Vector2f &punto);
-    void pintarGrafo(std::vector<QRectF> p);
-    // timeserues
-    QCustomPlot *customPlot;
-    QTimer time_series_timer;
-
+    void flip_text(QGraphicsTextItem *text);
+    void pintarGrafo(std::vector<QRectF> p, bool fin);
     void update_grid(const RoboCompLaser::TLaserData &ldata, const RoboCompFullPoseEstimation::FullPoseEuler &r_state);
-
-    enum class State {IDLE, INIT_TURN, EXPLORING, TO_MID_ROOM, TO_DOOR1, TO_DOOR2, SEARCHING_DOOR};
-    State state;
-    std::vector<Door> puertas;
-    Door *selectedDoor;
 };
 
 #endif
